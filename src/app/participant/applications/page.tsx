@@ -5,9 +5,17 @@ import { createClient } from "@/lib/supabase/server";
 const statusStyles: Record<string, string> = {
   qualified: "bg-blue-100 text-blue-800",
   rejected: "bg-red-100 text-red-800",
-  approved: "bg-green-100 text-green-800",
+  approved: "bg-emerald-100 text-emerald-800",
   scheduled: "bg-purple-100 text-purple-800",
   completed: "bg-zinc-800 text-white",
+};
+
+const statusLabels: Record<string, string> = {
+  qualified: "Qualified — pending review",
+  rejected: "Not a match",
+  approved: "Approved",
+  scheduled: "Scheduled",
+  completed: "Completed",
 };
 
 type ApplicationRow = {
@@ -69,7 +77,7 @@ export default async function MyApplicationsPage() {
                 <span
                   className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium ${statusStyles[application.status]}`}
                 >
-                  {application.status}
+                  {statusLabels[application.status]}
                 </span>
               </li>
             ))}

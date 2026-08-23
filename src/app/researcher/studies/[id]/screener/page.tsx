@@ -71,7 +71,7 @@ export default async function ScreenerPage({
                       {q.question_text}
                       {q.required && (
                         <span className="ml-2 text-xs text-zinc-400">
-                          required
+                          Required
                         </span>
                       )}
                     </p>
@@ -85,20 +85,20 @@ export default async function ScreenerPage({
                           .map((o) => (
                             <li
                               key={o.id}
-                              className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs ${
+                              className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
                                 o.decision === "accept"
-                                  ? "bg-green-100 text-green-800"
+                                  ? "bg-emerald-100 text-emerald-800"
                                   : "bg-red-100 text-red-800"
                               }`}
                             >
                               <span
                                 className={`h-1.5 w-1.5 rounded-full ${
                                   o.decision === "accept"
-                                    ? "bg-green-600"
+                                    ? "bg-emerald-600"
                                     : "bg-red-600"
                                 }`}
                               />
-                              {o.label} ({o.decision})
+                              {o.label} ({o.decision === "accept" ? "Accept" : "Reject"})
                             </li>
                           ))}
                       </ul>

@@ -5,8 +5,14 @@ import { publishStudy, closeStudy } from "./actions";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-zinc-200 text-zinc-700",
-  active: "bg-green-100 text-green-800",
+  active: "bg-emerald-100 text-emerald-800",
   closed: "bg-zinc-800 text-white",
+};
+
+const statusLabels: Record<string, string> = {
+  draft: "Draft",
+  active: "Active",
+  closed: "Closed",
 };
 
 const formatLabels: Record<string, string> = {
@@ -71,7 +77,7 @@ export default async function StudiesPage() {
                       <span
                         className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusStyles[study.status]}`}
                       >
-                        {study.status}
+                        {statusLabels[study.status]}
                       </span>
                     </div>
                     <p className="mt-1 text-sm text-zinc-600">
