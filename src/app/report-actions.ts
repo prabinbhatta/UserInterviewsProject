@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { one } from "@/lib/one";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type ReportFormState = { error: string | null; success: boolean };
 
@@ -58,7 +59,7 @@ export async function fileReport(
     reason,
   });
 
-  if (error) return { error: error.message, success: false };
+  if (error) return { error: friendlyError(error), success: false };
 
   return { error: null, success: true };
 }

@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/app/LanguageProvider";
+import { friendlyError } from "@/lib/friendlyError";
 
 type Role = "researcher" | "participant";
 
@@ -44,7 +45,7 @@ function SignupForm() {
     setLoading(false);
 
     if (signUpError) {
-      setError(signUpError.message);
+      setError(friendlyError(signUpError));
       return;
     }
 
@@ -134,10 +135,22 @@ function SignupForm() {
 
       {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
 
+      <p className="mt-4 text-center text-xs text-zinc-500">
+        {t("agreeToTerms")}{" "}
+        <Link href="/terms" className="underline">
+          {t("termsLink")}
+        </Link>{" "}
+        {t("and")}{" "}
+        <Link href="/privacy" className="underline">
+          {t("privacyLink")}
+        </Link>
+        .
+      </p>
+
       <button
         type="submit"
         disabled={loading}
-        className="mt-6 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
+        className="mt-4 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
       >
         {loading ? t("creatingAccount") : t("signUp")}
       </button>

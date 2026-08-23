@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { reopenStudyIfUnderCapacity } from "@/lib/closeStudyIfFull";
+import { friendlyError } from "@/lib/friendlyError";
 
 export async function withdrawApplication(applicationId: string) {
   const supabase = await createClient();
@@ -27,7 +28,7 @@ export async function withdrawApplication(applicationId: string) {
     .from("applications")
     .update({ status: "withdrawn" })
     .eq("id", applicationId);
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
 
   if (application.status === "approved") {
     await reopenStudyIfUnderCapacity(supabase, application.study_id);

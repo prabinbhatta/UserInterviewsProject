@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { sendIncentiveSentEmail } from "@/lib/email";
 import { one } from "@/lib/one";
 import { reopenStudyIfUnderCapacity } from "@/lib/closeStudyIfFull";
+import { friendlyError } from "@/lib/friendlyError";
 
 type StudyIncentive = { incentive_amount: number } | { incentive_amount: number }[] | null;
 
@@ -39,7 +40,7 @@ export async function markSessionCompleted(
     .from("applications")
     .update({ status: "completed" })
     .eq("id", applicationId);
-  if (statusError) throw new Error(statusError.message);
+  if (statusError) throw new Error(friendlyError(statusError));
 
   const amount = readIncentiveAmount(application.studies as StudyIncentive);
 
@@ -49,7 +50,7 @@ export async function markSessionCompleted(
       { application_id: applicationId, amount, status: "pending" },
       { onConflict: "application_id" },
     );
-  if (incentiveError) throw new Error(incentiveError.message);
+  if (incentiveError) throw new Error(friendlyError(incentiveError));
 
   revalidatePath(revalidateTargetPath);
 }
@@ -79,7 +80,7 @@ export async function markNoShow(
     .from("applications")
     .update({ status: "no_show" })
     .eq("id", applicationId);
-  if (statusError) throw new Error(statusError.message);
+  if (statusError) throw new Error(friendlyError(statusError));
 
   // Free the slot for reuse. Unlike a cancellation, the application itself
   // stays at 'no_show' rather than reverting to 'approved' — a researcher
@@ -89,7 +90,7 @@ export async function markNoShow(
     .from("study_slots")
     .update({ application_id: null })
     .eq("application_id", applicationId);
-  if (slotError) throw new Error(slotError.message);
+  if (slotError) throw new Error(friendlyError(slotError));
 
   // 'no_show' no longer counts toward participants_needed, so a study
   // that auto-closed at capacity may now have a spot open again.
@@ -110,7 +111,7 @@ export async function sendIncentive(
     .eq("status", "pending")
     .select("amount")
     .maybeSingle();
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath(revalidateTargetPath);
 
   if (updated) {
@@ -137,7 +138,7 @@ export async function confirmIncentiveReceived(
     .update({ status: "received", responded_at: new Date().toISOString() })
     .eq("application_id", applicationId)
     .eq("status", "sent");
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath(revalidateTargetPath);
 }
 
@@ -151,6 +152,6 @@ export async function reportIncentiveNotReceived(
     .update({ status: "not_received", responded_at: new Date().toISOString() })
     .eq("application_id", applicationId)
     .eq("status", "sent");
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath(revalidateTargetPath);
 }

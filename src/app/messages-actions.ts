@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { sendNewMessageEmail } from "@/lib/email";
 import { one } from "@/lib/one";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type MessageFormState = { error: string | null };
 
@@ -26,7 +27,7 @@ export async function sendMessage(
     .from("messages")
     .insert({ application_id: applicationId, sender_id: user.id, body });
 
-  if (error) return { error: error.message };
+  if (error) return { error: friendlyError(error) };
 
   revalidatePath(revalidateTargetPath);
 

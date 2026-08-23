@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { friendlyError } from "@/lib/friendlyError";
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -20,11 +21,11 @@ export async function releaseBookedSlot(
     .from("study_slots")
     .update({ application_id: null })
     .eq("application_id", applicationId);
-  if (slotError) throw new Error(slotError.message);
+  if (slotError) throw new Error(friendlyError(slotError));
 
   const { error: statusError } = await supabase
     .from("applications")
     .update({ status: "approved" })
     .eq("id", applicationId);
-  if (statusError) throw new Error(statusError.message);
+  if (statusError) throw new Error(friendlyError(statusError));
 }

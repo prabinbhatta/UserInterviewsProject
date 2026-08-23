@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type ProfileFormState = { error: string | null; saved?: boolean };
 
@@ -58,7 +59,7 @@ export async function updateParticipantProfile(
     { onConflict: "user_id" },
   );
 
-  if (error) return { error: error.message };
+  if (error) return { error: friendlyError(error) };
 
   revalidatePath("/participant/profile");
   revalidatePath("/participant");

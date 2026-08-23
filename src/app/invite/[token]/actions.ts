@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { closeStudyIfFull } from "@/lib/closeStudyIfFull";
+import { friendlyError } from "@/lib/friendlyError";
 
 export async function acceptInvite(token: string) {
   const supabase = await createClient();
@@ -43,7 +44,7 @@ export async function acceptInvite(token: string) {
         participant_id: user.id,
         status: "approved",
       });
-    if (applicationError) throw new Error(applicationError.message);
+    if (applicationError) throw new Error(friendlyError(applicationError));
 
     await closeStudyIfFull(supabase, invite.study_id);
   }
@@ -56,7 +57,7 @@ export async function acceptInvite(token: string) {
       accepted_by: user.id,
     })
     .eq("id", invite.id);
-  if (inviteError) throw new Error(inviteError.message);
+  if (inviteError) throw new Error(friendlyError(inviteError));
 
   redirect("/participant/applications");
 }

@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type StudyFormState = { error: string | null };
 
@@ -55,7 +56,7 @@ export async function createStudy(
     .from("studies")
     .insert({ ...parsed.values, researcher_id: user.id });
 
-  if (error) return { error: error.message };
+  if (error) return { error: friendlyError(error) };
 
   revalidatePath("/researcher/studies");
   redirect("/researcher/studies");
@@ -75,7 +76,7 @@ export async function updateStudy(
     .update(parsed.values)
     .eq("id", studyId);
 
-  if (error) return { error: error.message };
+  if (error) return { error: friendlyError(error) };
 
   revalidatePath("/researcher/studies");
   redirect("/researcher/studies");
@@ -87,7 +88,7 @@ export async function publishStudy(studyId: string) {
     .from("studies")
     .update({ status: "active" })
     .eq("id", studyId);
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath("/researcher/studies");
 }
 
@@ -97,6 +98,6 @@ export async function closeStudy(studyId: string) {
     .from("studies")
     .update({ status: "closed" })
     .eq("id", studyId);
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath("/researcher/studies");
 }

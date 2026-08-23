@@ -19,12 +19,20 @@ export async function GET(request: NextRequest) {
       token_hash: tokenHash,
     });
     if (!error) {
-      return NextResponse.redirect(`${origin}/login`);
+      return NextResponse.redirect(
+        `${origin}${type === "recovery" ? "/reset-password" : "/login"}`,
+      );
     }
   } else if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}/login`);
+      // Supabase's default (non-token_hash) email templates redirect here
+      // with just ?code=..., dropping the original type — so we carry it
+      // ourselves via the redirectTo URL passed when the flow started
+      // (see resetPasswordForEmail's redirectTo) and read it back here.
+      return NextResponse.redirect(
+        `${origin}${type === "recovery" ? "/reset-password" : "/login"}`,
+      );
     }
   }
 

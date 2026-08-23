@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type ApplyFormState = { error: string | null };
 
@@ -95,7 +96,9 @@ export async function applyToStudy(
     .single();
 
   if (applicationError || !application) {
-    return { error: applicationError?.message ?? "Could not submit application." };
+    return {
+      error: friendlyError(applicationError, "Could not submit application."),
+    };
   }
 
   if (answerRows.length > 0) {
@@ -106,7 +109,7 @@ export async function applyToStudy(
       );
     if (answersError) {
       await supabase.from("applications").delete().eq("id", application.id);
-      return { error: answersError.message };
+      return { error: friendlyError(answersError) };
     }
   }
 

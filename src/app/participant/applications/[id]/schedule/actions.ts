@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { sendSlotBookedEmail, sendBookingCancelledEmail } from "@/lib/email";
 import { one } from "@/lib/one";
 import { releaseBookedSlot } from "@/lib/cancelBooking";
+import { friendlyError } from "@/lib/friendlyError";
 
 export async function bookSlot(applicationId: string, slotId: string) {
   const supabase = await createClient();
@@ -21,7 +22,7 @@ export async function bookSlot(applicationId: string, slotId: string) {
     .select("id, starts_at, location")
     .maybeSingle();
 
-  if (claimError) throw new Error(claimError.message);
+  if (claimError) throw new Error(friendlyError(claimError));
   if (!claimedSlot) {
     throw new Error("That slot was just booked by someone else — pick another.");
   }
@@ -32,7 +33,7 @@ export async function bookSlot(applicationId: string, slotId: string) {
     .eq("id", applicationId)
     .eq("participant_id", user.id);
 
-  if (statusError) throw new Error(statusError.message);
+  if (statusError) throw new Error(friendlyError(statusError));
 
   revalidatePath(`/participant/applications/${applicationId}/schedule`);
   revalidatePath("/participant/applications");

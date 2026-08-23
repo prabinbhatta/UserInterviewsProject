@@ -217,9 +217,15 @@ export default function Home() {
           <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
             {t("footerTagline")}
           </p>
-          <p className="text-sm text-[var(--ink)]/60">
-            &copy; {new Date().getFullYear()} — {t("brand")}
-          </p>
+          <div className="flex items-center gap-4 text-sm text-[var(--ink)]/60">
+            <Link href="/terms" className="underline decoration-[var(--mist)] underline-offset-4 hover:decoration-[var(--coral)]">
+              {t("termsLink")}
+            </Link>
+            <Link href="/privacy" className="underline decoration-[var(--mist)] underline-offset-4 hover:decoration-[var(--coral)]">
+              {t("privacyLink")}
+            </Link>
+            <span>&copy; {new Date().getFullYear()} — {t("brand")}</span>
+          </div>
         </div>
       </footer>
     </div>

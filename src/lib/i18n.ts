@@ -94,6 +94,11 @@ export const translations = {
     submitApplication: "Submit application",
     submittingApplication: "Submitting...",
     reportStudy: "Report this study",
+
+    termsLink: "Terms of Service",
+    privacyLink: "Privacy Policy",
+    agreeToTerms: "By signing up, you agree to our",
+    and: "and",
   },
   ne: {
     brand: "अनुसन्धान प्लेटफर्म",
@@ -188,6 +193,11 @@ export const translations = {
     submitApplication: "आवेदन पेश गर्नुहोस्",
     submittingApplication: "पेश गर्दै...",
     reportStudy: "यो अध्ययन रिपोर्ट गर्नुहोस्",
+
+    termsLink: "सेवाका सर्तहरू",
+    privacyLink: "गोपनीयता नीति",
+    agreeToTerms: "साइन अप गरेर, तपाईं हाम्रो",
+    and: "र",
   },
 } as const;
 

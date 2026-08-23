@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { sendApprovedEmail } from "@/lib/email";
 import { one } from "@/lib/one";
 import { closeStudyIfFull } from "@/lib/closeStudyIfFull";
+import { friendlyError } from "@/lib/friendlyError";
 
 export async function approveApplication(studyId: string, applicationId: string) {
   const supabase = await createClient();
@@ -12,7 +13,7 @@ export async function approveApplication(studyId: string, applicationId: string)
     .from("applications")
     .update({ status: "approved" })
     .eq("id", applicationId);
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
 
   await closeStudyIfFull(supabase, studyId);
   revalidatePath(`/researcher/studies/${studyId}/applications`);
@@ -36,6 +37,6 @@ export async function rejectApplication(studyId: string, applicationId: string) 
     .from("applications")
     .update({ status: "rejected" })
     .eq("id", applicationId);
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath(`/researcher/studies/${studyId}/applications`);
 }

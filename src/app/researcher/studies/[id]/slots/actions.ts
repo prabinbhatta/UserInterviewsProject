@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { releaseBookedSlot } from "@/lib/cancelBooking";
 import { sendBookingCancelledEmail } from "@/lib/email";
 import { one } from "@/lib/one";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type SlotFormState = { error: string | null };
 
@@ -29,7 +30,7 @@ export async function addSlot(
     .from("study_slots")
     .insert({ study_id: studyId, starts_at: date.toISOString(), location });
 
-  if (error) return { error: error.message };
+  if (error) return { error: friendlyError(error) };
 
   revalidatePath(`/researcher/studies/${studyId}/slots`);
   return { error: null };
@@ -42,7 +43,7 @@ export async function deleteSlot(studyId: string, slotId: string) {
     .delete()
     .eq("id", slotId)
     .is("application_id", null);
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath(`/researcher/studies/${studyId}/slots`);
 }
 

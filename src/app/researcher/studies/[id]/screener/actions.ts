@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type ScreenerFormState = { error: string | null };
 
@@ -47,7 +48,7 @@ export async function addQuestion(
     .single();
 
   if (questionError || !question) {
-    return { error: questionError?.message ?? "Could not save question." };
+    return { error: friendlyError(questionError, "Could not save question.") };
   }
 
   if (CHOICE_TYPES.has(type)) {
@@ -66,7 +67,7 @@ export async function addQuestion(
       // Roll back the orphaned question so a failed save doesn't leave a
       // question with no options behind.
       await supabase.from("screener_questions").delete().eq("id", question.id);
-      return { error: optionsError.message };
+      return { error: friendlyError(optionsError) };
     }
   }
 
@@ -80,6 +81,6 @@ export async function deleteQuestion(studyId: string, questionId: string) {
     .from("screener_questions")
     .delete()
     .eq("id", questionId);
-  if (error) throw new Error(error.message);
+  if (error) throw new Error(friendlyError(error));
   revalidatePath(`/researcher/studies/${studyId}/screener`);
 }

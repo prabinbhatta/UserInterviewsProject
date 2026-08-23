@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { friendlyError } from "@/lib/friendlyError";
 
 export type InviteFormState = { error: string | null };
 
@@ -32,7 +33,7 @@ export async function createInvites(
     .from("study_invitations")
     .insert(emails.map((email) => ({ study_id: studyId, email })));
 
-  if (error) return { error: error.message };
+  if (error) return { error: friendlyError(error) };
 
   revalidatePath(`/researcher/studies/${studyId}/invite`);
   return { error: null };
