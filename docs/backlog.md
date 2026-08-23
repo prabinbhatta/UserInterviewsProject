@@ -61,20 +61,17 @@ A participant who applies and changes their mind has no way to withdraw —
 Needs a participant-initiated "withdraw" action for `qualified` or
 `approved` applications.
 
-### Report / block abusive user or spam study
-No moderation path exists for the messaging feature or for a
-researcher-posted study that turns out to be spam/scam. Needs at minimum a
-"report" action visible from a message thread or study page, surfaced to
-the admin dashboard's existing review surface.
+### ~~Report / block abusive user or spam study~~ — shipped 2026-08-23
+A "Report" link on both message threads and a study's detail page files
+into a new `reports` table, auto-resolving the reported user/study from
+context. Surfaced on `/admin` as an "Open reports" queue with a resolve
+action. See `0019_reports.sql`, `src/app/report-actions.ts`.
 
-### Location / meeting link on time slots
-`study_slots` (migration `0007_scheduling.sql`) currently only stores
-`starts_at`. Add a field for where the session happens — a physical
-address for in-person studies or a meeting link (Zoom/Meet/Teams URL) for
-online ones. Needs a migration adding a `location` text column, researcher
-slot-creation UI updated (branch on the study's `format` field for the
-label), surfaced to the participant on booking/applications views, and
-included in the slot-booked email notification.
+### ~~Location / meeting link on time slots~~ — shipped 2026-08-23
+Researchers can attach a meeting link, address, or call details to a time
+slot, labeled by the study's format. Shown to participants on the
+schedule page and included in the slot-booked email. See
+`0018_slot_location.sql`.
 
 ## P2 — Growth & usability enhancements
 
