@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "./LanguageProvider";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const { lang, setLang, t } = useLanguage();
 
   useEffect(() => {
     function onScroll() {
@@ -33,15 +35,43 @@ export function SiteHeader() {
             <rect x="23" y="7" width="3" height="4" rx="1.5" fill="var(--coral)" />
           </svg>
           <span className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
-            Research Platform
+            {t("brand")}
           </span>
         </div>
-        <Link
-          href="/login"
-          className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)] underline decoration-[var(--mist)] underline-offset-4 transition-colors hover:decoration-[var(--coral)]"
-        >
-          Log in
-        </Link>
+        <div className="flex items-center gap-5">
+          <div className="flex items-center rounded-full border border-[var(--mist)] p-0.5 font-mono-utility text-[11px] uppercase tracking-wider">
+            <button
+              type="button"
+              onClick={() => setLang("en")}
+              aria-pressed={lang === "en"}
+              className={`rounded-full px-2.5 py-1 transition-colors ${
+                lang === "en"
+                  ? "bg-[var(--ink)] text-white"
+                  : "text-[var(--ink)]/60 hover:text-[var(--ink)]"
+              }`}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang("ne")}
+              aria-pressed={lang === "ne"}
+              className={`rounded-full px-2.5 py-1 transition-colors ${
+                lang === "ne"
+                  ? "bg-[var(--ink)] text-white"
+                  : "text-[var(--ink)]/60 hover:text-[var(--ink)]"
+              }`}
+            >
+              ने
+            </button>
+          </div>
+          <Link
+            href="/login"
+            className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)] underline decoration-[var(--mist)] underline-offset-4 transition-colors hover:decoration-[var(--coral)]"
+          >
+            {t("logIn")}
+          </Link>
+        </div>
       </header>
     </div>
   );

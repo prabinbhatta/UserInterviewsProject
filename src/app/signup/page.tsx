@@ -4,10 +4,12 @@ import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { useLanguage } from "@/app/LanguageProvider";
 
 type Role = "researcher" | "participant";
 
 function SignupForm() {
+  const { t } = useLanguage();
   const searchParams = useSearchParams();
   const initialRole = searchParams.get("role");
   const [role, setRole] = useState<Role>(
@@ -53,14 +55,13 @@ function SignupForm() {
     return (
       <div className="w-full max-w-sm text-center">
         <h1 className="text-2xl font-semibold text-zinc-900">
-          Check your email
+          {t("checkEmailTitle")}
         </h1>
         <p className="mt-3 text-zinc-600">
-          We sent a confirmation link to <strong>{email}</strong>. Click it to
-          activate your account, then come back and log in.
+          {t("checkEmailBody")} <strong>{email}</strong>. {t("checkEmailBody2")}
         </p>
         <Link href="/login" className="mt-6 inline-block text-sm underline">
-          Go to login
+          {t("goToLogin")}
         </Link>
       </div>
     );
@@ -69,7 +70,7 @@ function SignupForm() {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-sm">
       <h1 className="text-2xl font-semibold text-zinc-900">
-        Create an account
+        {t("signupTitle")}
       </h1>
 
       <div className="mt-6 flex rounded-lg border border-zinc-300 p-1">
@@ -82,7 +83,7 @@ function SignupForm() {
               : "text-zinc-600"
           }`}
         >
-          I need research done
+          {t("tabResearcher")}
         </button>
         <button
           type="button"
@@ -93,12 +94,12 @@ function SignupForm() {
               : "text-zinc-600"
           }`}
         >
-          I want to join studies
+          {t("tabParticipant")}
         </button>
       </div>
 
       <label className="mt-5 block text-sm font-medium text-zinc-700">
-        Full name
+        {t("fullName")}
         <input
           type="text"
           required
@@ -109,7 +110,7 @@ function SignupForm() {
       </label>
 
       <label className="mt-4 block text-sm font-medium text-zinc-700">
-        Email
+        {t("email")}
         <input
           type="email"
           required
@@ -120,7 +121,7 @@ function SignupForm() {
       </label>
 
       <label className="mt-4 block text-sm font-medium text-zinc-700">
-        Password
+        {t("password")}
         <input
           type="password"
           required
@@ -138,22 +139,51 @@ function SignupForm() {
         disabled={loading}
         className="mt-6 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
       >
-        {loading ? "Creating account..." : "Sign up"}
+        {loading ? t("creatingAccount") : t("signUp")}
       </button>
 
       <p className="mt-4 text-center text-sm text-zinc-500">
-        Already have an account?{" "}
+        {t("alreadyHaveAccount")}{" "}
         <Link href="/login" className="underline">
-          Log in
+          {t("logInLink")}
         </Link>
       </p>
     </form>
   );
 }
 
+function LanguageToggle() {
+  const { lang, setLang } = useLanguage();
+  return (
+    <div className="absolute top-6 right-6 flex items-center rounded-full border border-zinc-300 p-0.5 text-xs">
+      <button
+        type="button"
+        onClick={() => setLang("en")}
+        aria-pressed={lang === "en"}
+        className={`rounded-full px-2.5 py-1 transition-colors ${
+          lang === "en" ? "bg-zinc-900 text-white" : "text-zinc-500"
+        }`}
+      >
+        EN
+      </button>
+      <button
+        type="button"
+        onClick={() => setLang("ne")}
+        aria-pressed={lang === "ne"}
+        className={`rounded-full px-2.5 py-1 transition-colors ${
+          lang === "ne" ? "bg-zinc-900 text-white" : "text-zinc-500"
+        }`}
+      >
+        ने
+      </button>
+    </div>
+  );
+}
+
 export default function SignupPage() {
   return (
-    <div className="flex flex-1 items-center justify-center bg-zinc-50 px-6 py-16">
+    <div className="relative flex flex-1 items-center justify-center bg-zinc-50 px-6 py-16">
+      <LanguageToggle />
       <Suspense>
         <SignupForm />
       </Suspense>
