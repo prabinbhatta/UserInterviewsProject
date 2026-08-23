@@ -33,9 +33,14 @@ consistently across every server action and form, plus fallback copy
 ("Something went wrong — try again") so nothing ever surfaces a raw stack
 trace or SQL error to a user.
 
-### DNS propagation
-`prabinbhatta.com.np` → Vercel nameservers — in progress, ETA 1-2 days from
-2026-08-23. Nothing to build; just tracking until it resolves.
+### ~~DNS propagation~~ — resolved 2026-08-23
+`prabinbhatta.com.np` nameservers now point to Vercel; both the apex and
+`www` resolve and serve the platform (confirmed via public resolvers and
+a direct HTTPS request). The domain now serves this app directly rather
+than the founder's portfolio site, which needs a new home if it's coming
+back online elsewhere. Follow-up: confirm `NEXT_PUBLIC_SITE_URL` in Vercel
+env vars is set to `https://prabinbhatta.com.np` so notification email
+links point at the real domain.
 
 ## P1 — Core marketplace-loop gaps (things that break trust once real people use it)
 
