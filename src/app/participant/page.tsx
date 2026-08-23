@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
@@ -40,9 +41,22 @@ export default async function ParticipantDashboard() {
           </form>
         </div>
         <p className="mt-4 text-zinc-600">
-          Participant dashboard — browsing and applying to studies is
-          coming in the next module.
+          Find studies that fit and apply for the ones you want to join.
         </p>
+        <div className="mt-6 flex gap-3">
+          <Link
+            href="/participant/studies"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-900 px-5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+          >
+            Browse studies
+          </Link>
+          <Link
+            href="/participant/applications"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-300 px-5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
+          >
+            Your applications
+          </Link>
+        </div>
       </div>
     </div>
   );
