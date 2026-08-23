@@ -84,44 +84,42 @@ schedule page and included in the slot-booked email. See
 
 ## P2 — Growth & usability enhancements
 
-### Search & filter on browse studies
-`/participant/studies` currently lists every active study with no
-filtering. Once there are more than a couple of open studies at once, needs
-filters for format, incentive range, session length, and (for in-person)
-district.
+### ~~Search & filter on browse studies~~ — shipped 2026-08-23
+Filters for format, incentive range, session length, and (for in-person)
+district, via a GET-based form on `/participant/studies`. Added a
+`district` column to `studies`. See `0022_study_district_search.sql`.
 
-### Bulk invite import via CSV/Excel upload
-Extends the existing researcher invite feature
-(`src/app/researcher/studies/[id]/invite/`), which today only accepts
-emails pasted into a textarea (`InviteForm.tsx`). Add a downloadable sample
-template (CSV with `email` required, `full_name` optional), file upload
-(`.csv`/`.xlsx`), validation with a preview/confirmation step before
-importing, and a `full_name` column on `study_invitations` (migration
-needed) to store it.
+### ~~Bulk invite import via CSV~~ — shipped 2026-08-23
+`CsvInviteForm` parses and previews a file client-side (valid/invalid/
+duplicate rows) before importing. Downloadable sample template at
+`/invite-template.csv`. Added `full_name` to `study_invitations`. Scope
+note: `.xlsx` support was dropped in favor of CSV-only, to avoid adding
+an unverified parsing dependency mid-session — worth reconsidering if
+researchers actually need Excel specifically. See
+`0023_invite_full_name.sql`, `src/lib/csv.ts`.
 
-### Researcher analytics
-No stats surface for a researcher beyond raw application lists — applicant
-funnel (applied → qualified → approved → scheduled → completed),
-disqualification rate from the screener, and average incentive paid would
-help researchers see whether a study is working.
+### ~~Researcher analytics~~ — shipped 2026-08-23
+New `/researcher/studies/[id]/analytics`: applicant funnel, a not-a-match
+rate (explicitly labeled as covering both automatic screener
+disqualification and manual rejection, since both share the `rejected`
+status — the schema can't currently distinguish them), and average
+confirmed-received incentive.
 
-### Export applicants to CSV
-Researchers currently can only view applicants in the review-queue UI —
-no way to export the list (e.g. for offline recruiting records or
-compliance).
+### ~~Export applicants to CSV~~ — shipped 2026-08-23
+`GET .../applications/export` streams a CSV of name, email, status,
+applied-at, and incentive status/amount.
 
-### Study templates / duplicate a study
-No way to reuse a screener or study setup — every new study starts from
-scratch. A "duplicate this study" action (copies title/format/screener
-questions as a new draft) would speed up repeat researchers.
+### ~~Study templates / duplicate a study~~ — shipped 2026-08-23
+`duplicateStudy` copies a study's fields plus its screener questions and
+options into a new draft, then redirects to its edit page.
 
-### Participant earnings summary
-No running total of incentives received shown to a participant — would sit
-naturally on the participant dashboard alongside profile completeness.
+### ~~Participant earnings summary~~ — shipped 2026-08-23
+Participant dashboard shows a running total of received incentives.
 
-### Notification preferences
-All email notification types (approved, scheduled, new message, incentive
-sent) are all-or-nothing today — no per-type opt-out.
+### ~~Notification preferences~~ — shipped 2026-08-23
+New `/settings` page (shared across roles) with per-type email opt-out
+(approved, scheduled, messages, incentives), backed by four boolean
+columns on `profiles` (default true). See `0024_notification_preferences.sql`.
 
 ## P3 — Polish
 
