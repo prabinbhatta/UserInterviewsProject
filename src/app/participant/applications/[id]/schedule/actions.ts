@@ -18,7 +18,7 @@ export async function bookSlot(applicationId: string, slotId: string) {
     .update({ application_id: applicationId })
     .eq("id", slotId)
     .is("application_id", null)
-    .select("id, starts_at")
+    .select("id, starts_at, location")
     .maybeSingle();
 
   if (claimError) throw new Error(claimError.message);
@@ -55,6 +55,7 @@ export async function bookSlot(applicationId: string, slotId: string) {
         dateStyle: "medium",
         timeStyle: "short",
       }),
+      claimedSlot.location,
     );
   }
 }

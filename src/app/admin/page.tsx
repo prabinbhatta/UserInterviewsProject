@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
-import { adminResolveIncentive } from "./actions";
+import { adminResolveIncentive, adminResolveReport } from "./actions";
 
 const studyStatuses = ["draft", "active", "closed"] as const;
 const applicationStatuses = [
@@ -42,7 +42,7 @@ export default async function AdminPage() {
     redirect("/researcher");
   }
 
-  const [studiesRes, applicationsRes, incentivesRes, profilesRes] =
+  const [studiesRes, applicationsRes, incentivesRes, profilesRes, reportsRes] =
     await Promise.all([
       supabase.from("studies").select("id, title, status, researcher_id"),
       supabase.from("applications").select("id, status, study_id, participant_id"),
@@ -50,11 +50,17 @@ export default async function AdminPage() {
         .from("incentive_records")
         .select("id, application_id, status, amount"),
       supabase.from("profiles").select("id, full_name"),
+      supabase
+        .from("reports")
+        .select("id, reporter_id, reported_user_id, study_id, reason, created_at")
+        .eq("status", "open")
+        .order("created_at", { ascending: true }),
     ]);
 
   const studies = studiesRes.data ?? [];
   const applications = applicationsRes.data ?? [];
   const incentives = incentivesRes.data ?? [];
+  const openReports = reportsRes.data ?? [];
   const nameById = new Map((profilesRes.data ?? []).map((p) => [p.id, p.full_name]));
   const studyById = new Map(studies.map((s) => [s.id, s]));
   const applicationById = new Map(applications.map((a) => [a.id, a]));
@@ -134,6 +140,50 @@ export default async function AdminPage() {
                   </form>
                 </li>
               ))}
+            </ul>
+          </div>
+        )}
+
+        {openReports.length > 0 && (
+          <div className="mt-8 rounded-lg border border-amber-200 bg-amber-50 p-5">
+            <h2 className="font-semibold text-amber-900">
+              Open reports ({openReports.length})
+            </h2>
+            <p className="mt-1 text-sm text-amber-800">
+              Users flagged these for review — abusive behavior or a
+              suspicious study.
+            </p>
+            <ul className="mt-4 space-y-2">
+              {openReports.map((report) => {
+                const study = report.study_id
+                  ? studyById.get(report.study_id)
+                  : undefined;
+                return (
+                  <li
+                    key={report.id}
+                    className="flex flex-col gap-2 rounded-lg bg-white p-3 sm:flex-row sm:items-start sm:justify-between"
+                  >
+                    <div className="text-sm">
+                      <p className="font-medium text-zinc-900">
+                        {nameById.get(report.reporter_id) ?? "Unknown"} reported{" "}
+                        {report.reported_user_id
+                          ? (nameById.get(report.reported_user_id) ?? "Unknown")
+                          : "a study"}
+                        {study ? ` — ${study.title}` : ""}
+                      </p>
+                      <p className="mt-1 text-zinc-600">{report.reason}</p>
+                    </div>
+                    <form action={adminResolveReport.bind(null, report.id)}>
+                      <button
+                        type="submit"
+                        className="shrink-0 rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+                      >
+                        Mark resolved
+                      </button>
+                    </form>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}

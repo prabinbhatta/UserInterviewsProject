@@ -93,6 +93,7 @@ export const translations = {
     requiredTag: "required",
     submitApplication: "Submit application",
     submittingApplication: "Submitting...",
+    reportStudy: "Report this study",
   },
   ne: {
     brand: "अनुसन्धान प्लेटफर्म",
@@ -186,6 +187,7 @@ export const translations = {
     requiredTag: "आवश्यक",
     submitApplication: "आवेदन पेश गर्नुहोस्",
     submittingApplication: "पेश गर्दै...",
+    reportStudy: "यो अध्ययन रिपोर्ट गर्नुहोस्",
   },
 } as const;
 

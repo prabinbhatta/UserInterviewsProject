@@ -3,7 +3,25 @@
 import { useActionState } from "react";
 import { addSlot } from "./actions";
 
-export function SlotForm({ studyId }: { studyId: string }) {
+const locationLabels: Record<string, string> = {
+  online: "Meeting link",
+  in_person: "Address",
+  phone: "Phone number or call details",
+};
+
+const locationPlaceholders: Record<string, string> = {
+  online: "https://meet.google.com/...",
+  in_person: "Kathmandu Mall, 3rd floor",
+  phone: "+977-...",
+};
+
+export function SlotForm({
+  studyId,
+  format,
+}: {
+  studyId: string;
+  format: string;
+}) {
   const boundAddSlot = addSlot.bind(null, studyId);
   const [state, formAction, pending] = useActionState(boundAddSlot, {
     error: null,
@@ -20,6 +38,17 @@ export function SlotForm({ studyId }: { studyId: string }) {
           type="datetime-local"
           name="starts_at"
           required
+          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+        />
+      </label>
+
+      <label className="mt-3 block text-sm font-medium text-zinc-700">
+        {locationLabels[format] ?? "Location"}{" "}
+        <span className="text-xs font-normal text-zinc-400">optional</span>
+        <input
+          type="text"
+          name="location"
+          placeholder={locationPlaceholders[format]}
           className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
         />
       </label>

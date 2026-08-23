@@ -31,7 +31,7 @@ export default async function ScheduleApplicationPage({
 
   const { data: slots } = await supabase
     .from("study_slots")
-    .select("id, starts_at, application_id")
+    .select("id, starts_at, location, application_id")
     .eq("study_id", application.study_id)
     .order("starts_at", { ascending: true });
 
@@ -64,6 +64,11 @@ export default async function ScheduleApplicationPage({
                 timeStyle: "short",
               })}
             </p>
+            {myBookedSlot.location && (
+              <p className="mt-1 text-sm text-zinc-600">
+                {myBookedSlot.location}
+              </p>
+            )}
             <form action={boundCancel} className="mt-4">
               <button
                 type="submit"
@@ -85,12 +90,19 @@ export default async function ScheduleApplicationPage({
                 key={slot.id}
                 className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white p-4"
               >
-                <p className="font-medium text-zinc-900">
-                  {new Date(slot.starts_at).toLocaleString(undefined, {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  })}
-                </p>
+                <div>
+                  <p className="font-medium text-zinc-900">
+                    {new Date(slot.starts_at).toLocaleString(undefined, {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}
+                  </p>
+                  {slot.location && (
+                    <p className="mt-0.5 text-sm text-zinc-500">
+                      {slot.location}
+                    </p>
+                  )}
+                </div>
                 <form action={boundBook.bind(null, slot.id)}>
                   <button
                     type="submit"

@@ -22,10 +22,12 @@ export async function addSlot(
     return { error: "Pick a time in the future." };
   }
 
+  const location = String(formData.get("location") ?? "").trim() || null;
+
   const supabase = await createClient();
   const { error } = await supabase
     .from("study_slots")
-    .insert({ study_id: studyId, starts_at: date.toISOString() });
+    .insert({ study_id: studyId, starts_at: date.toISOString(), location });
 
   if (error) return { error: error.message };
 

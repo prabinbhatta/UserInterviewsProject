@@ -107,6 +107,13 @@ export default async function StudyDetailPage({
         ) : (
           <ApplyForm studyId={study.id} questions={orderedQuestions} />
         )}
+
+        <Link
+          href={`/report?studyId=${study.id}`}
+          className="mt-8 inline-block text-sm text-zinc-400 underline hover:text-red-600"
+        >
+          {t("reportStudy")}
+        </Link>
       </div>
     </div>
   );

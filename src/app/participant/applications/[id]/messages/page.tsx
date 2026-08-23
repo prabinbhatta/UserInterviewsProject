@@ -50,7 +50,13 @@ export default async function ParticipantMessagesPage({
           {application.studies?.title}
         </h1>
         <p className="mt-1 text-sm text-zinc-600">
-          Conversation with {researcherName}
+          Conversation with {researcherName}{" "}
+          <Link
+            href={`/report?applicationId=${id}`}
+            className="text-zinc-400 underline hover:text-red-600"
+          >
+            Report
+          </Link>
         </p>
 
         <MessageThread

@@ -47,12 +47,13 @@ export async function sendSlotBookedEmail(
   studyTitle: string,
   participantName: string,
   slotTime: string,
+  location?: string | null,
 ) {
   await sendNotificationEmail({
     to,
     subject: `${participantName} booked a session for "${studyTitle}"`,
     html: wrap(
-      `<p><strong>${participantName}</strong> booked a session for <strong>${studyTitle}</strong>.</p><p>Time: ${slotTime}</p>`,
+      `<p><strong>${participantName}</strong> booked a session for <strong>${studyTitle}</strong>.</p><p>Time: ${slotTime}</p>${location ? `<p>Location: ${location}</p>` : ""}`,
       undefined,
       undefined,
     ),

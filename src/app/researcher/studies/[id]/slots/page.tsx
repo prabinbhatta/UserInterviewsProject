@@ -7,6 +7,7 @@ import { deleteSlot, cancelBooking } from "./actions";
 type SlotRow = {
   id: string;
   starts_at: string;
+  location: string | null;
   application_id: string | null;
   applications: { profiles: { full_name: string | null } | null } | null;
 };
@@ -26,7 +27,7 @@ export default async function StudySlotsPage({
 
   const { data: study } = await supabase
     .from("studies")
-    .select("id, title, researcher_id")
+    .select("id, title, format, researcher_id")
     .eq("id", id)
     .single();
 
@@ -36,7 +37,9 @@ export default async function StudySlotsPage({
 
   const { data: slots } = (await supabase
     .from("study_slots")
-    .select("id, starts_at, application_id, applications(profiles(full_name))")
+    .select(
+      "id, starts_at, location, application_id, applications(profiles(full_name))",
+    )
     .eq("study_id", id)
     .order("starts_at", { ascending: true })) as { data: SlotRow[] | null };
 
@@ -75,6 +78,11 @@ export default async function StudySlotsPage({
                       ? `Booked by ${slot.applications?.profiles?.full_name ?? "a participant"}`
                       : "Open"}
                   </p>
+                  {slot.location && (
+                    <p className="mt-0.5 text-sm text-zinc-500">
+                      {slot.location}
+                    </p>
+                  )}
                 </div>
                 {slot.application_id ? (
                   <form action={boundCancel.bind(null, slot.application_id)}>
@@ -101,7 +109,7 @@ export default async function StudySlotsPage({
         )}
 
         <div className="mt-8">
-          <SlotForm studyId={id} />
+          <SlotForm studyId={id} format={study.format} />
         </div>
       </div>
     </div>

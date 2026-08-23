@@ -13,3 +13,14 @@ export async function adminResolveIncentive(applicationId: string) {
   if (error) throw new Error(error.message);
   revalidatePath("/admin");
 }
+
+export async function adminResolveReport(reportId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("reports")
+    .update({ status: "resolved", resolved_at: new Date().toISOString() })
+    .eq("id", reportId)
+    .eq("status", "open");
+  if (error) throw new Error(error.message);
+  revalidatePath("/admin");
+}
