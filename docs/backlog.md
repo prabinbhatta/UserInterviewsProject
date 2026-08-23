@@ -39,12 +39,11 @@ trace or SQL error to a user.
 
 ## P1 — Core marketplace-loop gaps (things that break trust once real people use it)
 
-### Study capacity enforcement
-`studies.participants_needed` is captured and shown on researcher pages but
-never enforced — a study stays open and visible to participants even after
-enough people are approved. Needs auto-closing (or at least hiding from the
-public browse list) once approved-application count reaches
-`participants_needed`.
+### ~~Study capacity enforcement~~ — shipped 2026-08-23
+A study now auto-closes once approved-application count reaches
+`participants_needed`, checked from both the screener-approval path and
+invite-based auto-join. See `src/lib/closeStudyIfFull.ts`, migrations
+`0014_study_capacity.sql` / `0015_fix_study_visibility_recursion.sql`.
 
 ### Cancel / reschedule a booked time slot
 Once a participant books a `study_slots` row, neither side can change it —
