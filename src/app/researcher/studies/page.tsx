@@ -89,6 +89,12 @@ export default async function StudiesPage() {
 
                   <div className="flex shrink-0 flex-col items-end gap-2">
                     <Link
+                      href={`/researcher/studies/${study.id}/applications`}
+                      className="text-sm text-zinc-500 underline"
+                    >
+                      Applicants
+                    </Link>
+                    <Link
                       href={`/researcher/studies/${study.id}/screener`}
                       className="text-sm text-zinc-500 underline"
                     >

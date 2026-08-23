@@ -1,0 +1,123 @@
+import Link from "next/link";
+import { redirect, notFound } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { approveApplication, rejectApplication } from "./actions";
+
+const statusStyles: Record<string, string> = {
+  qualified: "bg-blue-100 text-blue-800",
+  rejected: "bg-red-100 text-red-800",
+  approved: "bg-emerald-100 text-emerald-800",
+  scheduled: "bg-purple-100 text-purple-800",
+  completed: "bg-zinc-800 text-white",
+};
+
+const statusLabels: Record<string, string> = {
+  qualified: "Qualified — pending review",
+  rejected: "Not a match",
+  approved: "Approved",
+  scheduled: "Scheduled",
+  completed: "Completed",
+};
+
+type ApplicationRow = {
+  id: string;
+  status: keyof typeof statusStyles;
+  created_at: string;
+  profiles: { full_name: string | null } | null;
+};
+
+export default async function StudyApplicationsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { data: study } = await supabase
+    .from("studies")
+    .select("id, title, researcher_id")
+    .eq("id", id)
+    .single();
+
+  if (!study || study.researcher_id !== user.id) {
+    notFound();
+  }
+
+  const { data: applications } = (await supabase
+    .from("applications")
+    .select("id, status, created_at, profiles(full_name)")
+    .eq("study_id", id)
+    .order("created_at", { ascending: true })) as {
+    data: ApplicationRow[] | null;
+  };
+
+  const boundApprove = approveApplication.bind(null, id);
+  const boundReject = rejectApplication.bind(null, id);
+
+  return (
+    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+      <div className="w-full max-w-xl">
+        <Link href="/researcher/studies" className="text-sm text-zinc-500 underline">
+          Back to studies
+        </Link>
+        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+          Applicants — {study.title}
+        </h1>
+
+        {!applications || applications.length === 0 ? (
+          <p className="mt-8 text-zinc-600">
+            No one has applied yet — check back once the study is published
+            and shared.
+          </p>
+        ) : (
+          <ul className="mt-8 space-y-3">
+            {applications.map((application) => (
+              <li
+                key={application.id}
+                className="flex flex-col gap-3 rounded-lg border border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div className="min-w-0">
+                  <p className="font-medium text-zinc-900">
+                    {application.profiles?.full_name ?? "Participant"}
+                  </p>
+                  <span
+                    className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${statusStyles[application.status]}`}
+                  >
+                    {statusLabels[application.status]}
+                  </span>
+                </div>
+
+                {application.status === "qualified" && (
+                  <div className="flex shrink-0 gap-2">
+                    <form action={boundApprove.bind(null, application.id)}>
+                      <button
+                        type="submit"
+                        className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+                      >
+                        Approve
+                      </button>
+                    </form>
+                    <form action={boundReject.bind(null, application.id)}>
+                      <button
+                        type="submit"
+                        className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
+                      >
+                        Not a fit
+                      </button>
+                    </form>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
