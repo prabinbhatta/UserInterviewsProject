@@ -9,29 +9,26 @@ Blocks transactional email to anyone other than the account owner until a
 custom sending domain is verified. Single biggest blocker for real launch —
 confirmation emails, notifications, everything depend on it.
 
-### Password reset / forgot password
-No "forgot password" flow exists anywhere in the app today. Any real user
-who mistypes or forgets their password is permanently locked out with no
-recovery path. Needs a `/forgot-password` page (email a reset link via
-Supabase Auth's built-in reset flow) and a `/reset-password` page to set the
-new one.
+### ~~Password reset / forgot password~~ — shipped 2026-08-23
+`/forgot-password` and `/reset-password` pages using Supabase Auth's
+recovery flow. Along the way, found and fixed a real bug via live
+testing: Supabase's default email template drops the recovery type by
+the time it reaches `/auth/callback` as a bare `?code=...`, so it's now
+carried through via the `redirectTo` URL. Verified end-to-end with a
+real reset email.
 
-### Terms of Service & Privacy Policy pages
-No legal pages exist. The app collects real PII (age, income band, district,
-phone-adjacent info via profiles) and handles money coordination between
-strangers — needs baseline ToS + Privacy Policy pages linked from
-signup/footer before onboarding real users, even in MVP form.
+### ~~Terms of Service & Privacy Policy pages~~ — shipped 2026-08-23
+`/terms` and `/privacy`, covering what the platform does, off-platform
+incentive payments, what data is collected and who can see it, and
+support contact. Linked from the landing page footer and signup
+(bilingual).
 
-### User-friendly error messages everywhere
-Several server actions currently throw or return the raw Postgres/Supabase
-error string straight to the UI (e.g. `throw new Error(error.message)` in
-`incentive-actions.ts`, `{ error: error.message }` in `messages-actions.ts`
-and most form actions). Needs a small mapping layer — a function that takes
-a Postgres/Supabase error (or known error codes: unique violation, RLS
-denial, not-found, etc.) and returns a plain-language message — applied
-consistently across every server action and form, plus fallback copy
-("Something went wrong — try again") so nothing ever surfaces a raw stack
-trace or SQL error to a user.
+### ~~User-friendly error messages everywhere~~ — shipped 2026-08-23
+`src/lib/friendlyError.ts` maps raw Postgres/PostgREST/Supabase Auth
+errors (known messages, Postgres error codes, HTTP status like 429 for
+rate limits) to plain-language copy, with a generic fallback. Applied
+across every server action and auth call that previously surfaced
+`error.message` directly.
 
 ### ~~DNS propagation~~ — resolved 2026-08-23
 `prabinbhatta.com.np` nameservers now point to Vercel; both the apex and
