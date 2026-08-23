@@ -9,6 +9,7 @@ const statusStyles: Record<string, string> = {
   approved: "bg-emerald-100 text-emerald-800",
   scheduled: "bg-purple-100 text-purple-800",
   completed: "bg-zinc-800 text-white",
+  no_show: "bg-amber-100 text-amber-800",
 };
 
 const statusLabels: Record<string, string> = {
@@ -17,6 +18,7 @@ const statusLabels: Record<string, string> = {
   approved: "Approved",
   scheduled: "Scheduled",
   completed: "Session completed",
+  no_show: "Marked as a missed session",
 };
 
 type ApplicationRow = {

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { approveApplication, rejectApplication } from "./actions";
-import { markSessionCompleted, sendIncentive } from "@/app/incentive-actions";
+import { markSessionCompleted, markNoShow, sendIncentive } from "@/app/incentive-actions";
 
 const statusStyles: Record<string, string> = {
   qualified: "bg-blue-100 text-blue-800",
@@ -10,6 +10,7 @@ const statusStyles: Record<string, string> = {
   approved: "bg-emerald-100 text-emerald-800",
   scheduled: "bg-purple-100 text-purple-800",
   completed: "bg-zinc-800 text-white",
+  no_show: "bg-amber-100 text-amber-800",
 };
 
 const statusLabels: Record<string, string> = {
@@ -18,6 +19,7 @@ const statusLabels: Record<string, string> = {
   approved: "Approved",
   scheduled: "Scheduled",
   completed: "Session completed",
+  no_show: "No-show",
 };
 
 const incentiveStyles: Record<string, string> = {
@@ -148,20 +150,36 @@ export default async function StudyApplicationsPage({
                     </>
                   )}
                   {application.status === "scheduled" && (
-                    <form
-                      action={markSessionCompleted.bind(
-                        null,
-                        application.id,
-                        revalidateTarget,
-                      )}
-                    >
-                      <button
-                        type="submit"
-                        className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+                    <>
+                      <form
+                        action={markSessionCompleted.bind(
+                          null,
+                          application.id,
+                          revalidateTarget,
+                        )}
                       >
-                        Mark session completed
-                      </button>
-                    </form>
+                        <button
+                          type="submit"
+                          className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+                        >
+                          Mark session completed
+                        </button>
+                      </form>
+                      <form
+                        action={markNoShow.bind(
+                          null,
+                          application.id,
+                          revalidateTarget,
+                        )}
+                      >
+                        <button
+                          type="submit"
+                          className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
+                        >
+                          Didn&apos;t show up
+                        </button>
+                      </form>
+                    </>
                   )}
                   {application.status === "completed" &&
                     application.incentive_records?.status === "pending" && (

@@ -53,6 +53,46 @@ export async function markSessionCompleted(
   revalidatePath(revalidateTargetPath);
 }
 
+export async function markNoShow(
+  applicationId: string,
+  revalidateTargetPath: string,
+) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("You must be logged in.");
+
+  const { data: application } = await supabase
+    .from("applications")
+    .select("id, status")
+    .eq("id", applicationId)
+    .single();
+
+  if (!application) throw new Error("Application not found.");
+  if (application.status !== "scheduled") {
+    throw new Error("Only a scheduled session can be marked as a no-show.");
+  }
+
+  const { error: statusError } = await supabase
+    .from("applications")
+    .update({ status: "no_show" })
+    .eq("id", applicationId);
+  if (statusError) throw new Error(statusError.message);
+
+  // Free the slot for reuse. Unlike a cancellation, the application itself
+  // stays at 'no_show' rather than reverting to 'approved' — a researcher
+  // who wants to give this participant another chance already has "Cancel
+  // booking" for that; this path is for when they don't.
+  const { error: slotError } = await supabase
+    .from("study_slots")
+    .update({ application_id: null })
+    .eq("application_id", applicationId);
+  if (slotError) throw new Error(slotError.message);
+
+  revalidatePath(revalidateTargetPath);
+}
+
 export async function sendIncentive(
   applicationId: string,
   revalidateTargetPath: string,
