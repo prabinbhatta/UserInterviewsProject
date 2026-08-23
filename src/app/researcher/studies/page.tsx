@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { publishStudy, closeStudy } from "./actions";
+import { publishStudy, closeStudy, duplicateStudy } from "./actions";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-zinc-200 text-zinc-700",
@@ -112,6 +112,12 @@ export default async function StudiesPage() {
                     >
                       Screener
                     </Link>
+                    <Link
+                      href={`/researcher/studies/${study.id}/analytics`}
+                      className="text-sm text-zinc-500 underline"
+                    >
+                      Analytics
+                    </Link>
                     {study.status === "draft" && (
                       <>
                         <Link
@@ -140,6 +146,14 @@ export default async function StudiesPage() {
                         </button>
                       </form>
                     )}
+                    <form action={duplicateStudy.bind(null, study.id)}>
+                      <button
+                        type="submit"
+                        className="text-sm text-zinc-500 underline"
+                      >
+                        Duplicate
+                      </button>
+                    </form>
                   </div>
                 </div>
               </li>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import type { StudyFormState } from "./actions";
+import { DISTRICTS } from "@/lib/districts";
 
 type StudyFormValues = {
   title: string;
@@ -10,6 +11,7 @@ type StudyFormValues = {
   session_length_minutes: number;
   participants_needed: number;
   incentive_amount: number;
+  district?: string | null;
 };
 
 export function StudyForm({
@@ -22,6 +24,7 @@ export function StudyForm({
   submitLabel: string;
 }) {
   const [state, formAction, pending] = useActionState(action, { error: null });
+  const [format, setFormat] = useState(defaultValues?.format ?? "online");
 
   return (
     <form action={formAction} className="w-full max-w-xl">
@@ -52,7 +55,10 @@ export function StudyForm({
           Format
           <select
             name="format"
-            defaultValue={defaultValues?.format ?? "online"}
+            value={format}
+            onChange={(e) =>
+              setFormat(e.target.value as "online" | "in_person" | "phone")
+            }
             className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
           >
             <option value="online">Online</option>
@@ -73,6 +79,24 @@ export function StudyForm({
           />
         </label>
       </div>
+
+      {format === "in_person" && (
+        <label className="mt-4 block text-sm font-medium text-zinc-700">
+          District
+          <select
+            name="district"
+            defaultValue={defaultValues?.district ?? ""}
+            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          >
+            <option value="">Select a district</option>
+            {DISTRICTS.map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         <label className="block text-sm font-medium text-zinc-700">

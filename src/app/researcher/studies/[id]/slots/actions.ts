@@ -54,13 +54,13 @@ export async function cancelBooking(studyId: string, applicationId: string) {
 
   const { data: application } = await supabase
     .from("applications")
-    .select("profiles(email), studies(title)")
+    .select("profiles(email, notify_scheduled), studies(title)")
     .eq("id", applicationId)
     .single();
 
   const participant = one(application?.profiles);
   const study = one(application?.studies);
-  if (participant?.email && study?.title) {
+  if (participant?.email && study?.title && participant.notify_scheduled) {
     await sendBookingCancelledEmail(
       participant.email,
       study.title,

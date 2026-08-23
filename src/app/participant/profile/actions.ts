@@ -3,18 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { friendlyError } from "@/lib/friendlyError";
+import { DISTRICTS } from "@/lib/districts";
 
 export type ProfileFormState = { error: string | null; saved?: boolean };
 
-const DISTRICTS = new Set([
-  "Kathmandu",
-  "Lalitpur",
-  "Bhaktapur",
-  "Pokhara",
-  "Chitwan",
-  "Biratnagar",
-  "Other",
-]);
+const DISTRICT_SET = new Set(DISTRICTS);
 
 export async function updateParticipantProfile(
   _prevState: ProfileFormState,
@@ -42,7 +35,7 @@ export async function updateParticipantProfile(
   const languages = formData.getAll("languages").map(String);
   const devices = formData.getAll("devices").map(String);
 
-  if (districtChoice && !DISTRICTS.has(districtChoice)) {
+  if (districtChoice && !DISTRICT_SET.has(districtChoice)) {
     return { error: "Invalid district selection." };
   }
 

@@ -36,7 +36,7 @@ export default async function StudyDetailPage({
   const { data: study } = await supabase
     .from("studies")
     .select(
-      "id, title, description, format, session_length_minutes, incentive_amount",
+      "id, title, description, format, session_length_minutes, incentive_amount, district",
     )
     .eq("id", id)
     .single();
@@ -86,8 +86,9 @@ export default async function StudyDetailPage({
           </span>
         </div>
         <p className="mt-1 text-sm text-zinc-600">
-          {formatLabels[study.format]} · {study.session_length_minutes}{" "}
-          {t("minutesSuffix")}
+          {formatLabels[study.format]}
+          {study.district ? ` · ${study.district}` : ""} ·{" "}
+          {study.session_length_minutes} {t("minutesSuffix")}
         </p>
         <p className="mt-4 text-zinc-700">{study.description}</p>
 

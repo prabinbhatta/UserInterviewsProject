@@ -2,16 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { updateParticipantProfile } from "./actions";
-
-const DISTRICTS = [
-  "Kathmandu",
-  "Lalitpur",
-  "Bhaktapur",
-  "Pokhara",
-  "Chitwan",
-  "Biratnagar",
-  "Other",
-];
+import { DISTRICTS } from "@/lib/districts";
 
 const INCOME_BANDS = [
   "Below NPR 20,000",

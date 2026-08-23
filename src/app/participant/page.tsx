@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
+import { one } from "@/lib/one";
 
 export default async function ParticipantDashboard() {
   const supabase = await createClient();
@@ -30,6 +31,16 @@ export default async function ParticipantDashboard() {
     .eq("user_id", user.id)
     .maybeSingle();
 
+  const { data: myApplications } = await supabase
+    .from("applications")
+    .select("incentive_records(status, amount)")
+    .eq("participant_id", user.id);
+
+  const totalEarned = (myApplications ?? [])
+    .map((a) => one(a.incentive_records))
+    .filter((i) => i?.status === "received")
+    .reduce((sum, i) => sum + (i?.amount ?? 0), 0);
+
   const fieldsFilled = [
     participantProfile?.district,
     participantProfile?.age,
@@ -47,14 +58,22 @@ export default async function ParticipantDashboard() {
           <h1 className="min-w-0 text-2xl font-semibold text-zinc-900">
             Welcome, {profile?.full_name ?? user.email}
           </h1>
-          <form action={signOut} className="shrink-0">
-            <button
-              type="submit"
+          <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href="/settings"
               className="whitespace-nowrap text-sm text-zinc-500 underline"
             >
-              Log out
-            </button>
-          </form>
+              Settings
+            </Link>
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="whitespace-nowrap text-sm text-zinc-500 underline"
+              >
+                Log out
+              </button>
+            </form>
+          </div>
         </div>
         <p className="mt-4 text-zinc-600">
           Find studies that fit and apply for the ones you want to join.
@@ -85,6 +104,13 @@ export default async function ParticipantDashboard() {
             </p>
           )}
         </Link>
+
+        <div className="mt-4 rounded-lg border border-zinc-200 bg-white p-4">
+          <p className="text-sm text-zinc-500">Total earned so far</p>
+          <p className="mt-1 text-2xl font-semibold text-zinc-900">
+            NPR {totalEarned}
+          </p>
+        </div>
 
         <div className="mt-6 flex gap-3">
           <Link

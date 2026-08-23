@@ -20,7 +20,7 @@ export default async function EditStudyPage({
   const { data: study } = await supabase
     .from("studies")
     .select(
-      "id, title, description, format, session_length_minutes, participants_needed, incentive_amount, status, researcher_id",
+      "id, title, description, format, session_length_minutes, participants_needed, incentive_amount, district, status, researcher_id",
     )
     .eq("id", id)
     .single();
@@ -54,6 +54,7 @@ export default async function EditStudyPage({
               session_length_minutes: study.session_length_minutes,
               participants_needed: study.participants_needed,
               incentive_amount: study.incentive_amount,
+              district: study.district,
             }}
             submitLabel="Save changes"
           />

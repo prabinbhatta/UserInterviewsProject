@@ -117,12 +117,12 @@ export async function sendIncentive(
   if (updated) {
     const { data: application } = await supabase
       .from("applications")
-      .select("profiles(email), studies(title)")
+      .select("profiles(email, notify_incentives), studies(title)")
       .eq("id", applicationId)
       .single();
     const participant = one(application?.profiles);
     const study = one(application?.studies);
-    if (participant?.email && study?.title) {
+    if (participant?.email && study?.title && participant.notify_incentives) {
       await sendIncentiveSentEmail(participant.email, study.title, updated.amount);
     }
   }

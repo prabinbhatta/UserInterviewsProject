@@ -31,14 +31,22 @@ export default async function ResearcherDashboard() {
           <h1 className="min-w-0 text-2xl font-semibold text-zinc-900">
             Welcome, {profile?.full_name ?? user.email}
           </h1>
-          <form action={signOut} className="shrink-0">
-            <button
-              type="submit"
+          <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href="/settings"
               className="whitespace-nowrap text-sm text-zinc-500 underline"
             >
-              Log out
-            </button>
-          </form>
+              Settings
+            </Link>
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="whitespace-nowrap text-sm text-zinc-500 underline"
+              >
+                Log out
+              </button>
+            </form>
+          </div>
         </div>
         <p className="mt-4 text-zinc-600">
           Manage the studies you&apos;re running and recruit participants.

@@ -40,14 +40,14 @@ export async function bookSlot(applicationId: string, slotId: string) {
 
   const { data: application } = await supabase
     .from("applications")
-    .select("profiles(full_name), studies(title, profiles(email))")
+    .select("profiles(full_name), studies(title, profiles(email, notify_scheduled))")
     .eq("id", applicationId)
     .single();
 
   const participant = one(application?.profiles);
   const study = one(application?.studies);
   const researcher = one(study?.profiles);
-  if (researcher?.email && study?.title) {
+  if (researcher?.email && study?.title && researcher.notify_scheduled) {
     await sendSlotBookedEmail(
       researcher.email,
       study.title,
@@ -75,14 +75,19 @@ export async function cancelMyBooking(applicationId: string) {
 
   const { data: application } = await supabase
     .from("applications")
-    .select("study_id, profiles(full_name), studies(title, profiles(email))")
+    .select("study_id, profiles(full_name), studies(title, profiles(email, notify_scheduled))")
     .eq("id", applicationId)
     .single();
 
   const participant = one(application?.profiles);
   const study = one(application?.studies);
   const researcher = one(study?.profiles);
-  if (researcher?.email && study?.title && application?.study_id) {
+  if (
+    researcher?.email &&
+    study?.title &&
+    application?.study_id &&
+    researcher.notify_scheduled
+  ) {
     await sendBookingCancelledEmail(
       researcher.email,
       study.title,

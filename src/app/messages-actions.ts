@@ -34,7 +34,7 @@ export async function sendMessage(
   const { data: application } = await supabase
     .from("applications")
     .select(
-      "participant_id, study_id, profiles(full_name, email), studies(title, researcher_id, profiles(full_name, email))",
+      "participant_id, study_id, profiles(full_name, email, notify_messages), studies(title, researcher_id, profiles(full_name, email, notify_messages))",
     )
     .eq("id", applicationId)
     .single();
@@ -56,7 +56,7 @@ export async function sendMessage(
       ? `/researcher/studies/${application.study_id}/applications/${applicationId}/messages`
       : `/participant/applications/${applicationId}/messages`;
 
-    if (recipient?.email && study?.title) {
+    if (recipient?.email && study?.title && recipient.notify_messages) {
       await sendNewMessageEmail(recipient.email, senderName, study.title, recipientMessagesPath);
     }
   }

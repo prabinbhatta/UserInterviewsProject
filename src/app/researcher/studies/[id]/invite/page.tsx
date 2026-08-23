@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { InviteForm } from "./InviteForm";
+import { CsvInviteForm } from "./CsvInviteForm";
 import { InviteLink } from "./InviteLink";
 
 export default async function StudyInvitePage({
@@ -29,7 +30,7 @@ export default async function StudyInvitePage({
 
   const { data: invitations } = await supabase
     .from("study_invitations")
-    .select("id, email, token, status, invited_at")
+    .select("id, email, full_name, token, status, invited_at")
     .eq("study_id", id)
     .order("invited_at", { ascending: false });
 
@@ -49,6 +50,7 @@ export default async function StudyInvitePage({
 
         <div className="mt-6">
           <InviteForm studyId={id} />
+          <CsvInviteForm studyId={id} />
         </div>
 
         {invitations && invitations.length > 0 && (
@@ -61,6 +63,7 @@ export default async function StudyInvitePage({
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium text-zinc-900">
                     {invite.email}
+                    {invite.full_name ? ` — ${invite.full_name}` : ""}
                   </p>
                   <span
                     className={`mt-0.5 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${

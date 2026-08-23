@@ -86,9 +86,17 @@ export default async function StudyApplicationsPage({
   return (
     <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
       <div className="w-full max-w-xl">
-        <Link href="/researcher/studies" className="text-sm text-zinc-500 underline">
-          Back to studies
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/researcher/studies" className="text-sm text-zinc-500 underline">
+            Back to studies
+          </Link>
+          <a
+            href={`/researcher/studies/${id}/applications/export`}
+            className="text-sm text-zinc-500 underline"
+          >
+            Export CSV
+          </a>
+        </div>
         <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
           Applicants — {study.title}
         </h1>
