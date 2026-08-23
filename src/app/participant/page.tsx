@@ -24,6 +24,22 @@ export default async function ParticipantDashboard() {
     redirect("/researcher");
   }
 
+  const { data: participantProfile } = await supabase
+    .from("participant_profiles")
+    .select("district, age, occupation, income_band, languages, devices")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  const fieldsFilled = [
+    participantProfile?.district,
+    participantProfile?.age,
+    participantProfile?.occupation,
+    participantProfile?.income_band,
+    participantProfile?.languages?.length ? "yes" : null,
+    participantProfile?.devices?.length ? "yes" : null,
+  ].filter(Boolean).length;
+  const strengthPercent = Math.round((fieldsFilled / 6) * 100);
+
   return (
     <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
       <div className="w-full max-w-2xl">
@@ -43,6 +59,33 @@ export default async function ParticipantDashboard() {
         <p className="mt-4 text-zinc-600">
           Find studies that fit and apply for the ones you want to join.
         </p>
+
+        <Link
+          href="/participant/profile"
+          className="mt-6 block rounded-lg border border-zinc-200 bg-white p-4 transition-colors hover:border-zinc-400"
+        >
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-medium text-zinc-900">
+              {strengthPercent === 100
+                ? "Your profile is complete"
+                : "Complete your profile"}
+            </span>
+            <span className="text-zinc-500">{strengthPercent}%</span>
+          </div>
+          <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-zinc-200">
+            <div
+              className="h-full rounded-full bg-emerald-500 transition-all"
+              style={{ width: `${strengthPercent}%` }}
+            />
+          </div>
+          {strengthPercent < 100 && (
+            <p className="mt-2 text-xs text-zinc-500">
+              A complete profile helps researchers see you&apos;re a good
+              match for their study.
+            </p>
+          )}
+        </Link>
+
         <div className="mt-6 flex gap-3">
           <Link
             href="/participant/studies"
