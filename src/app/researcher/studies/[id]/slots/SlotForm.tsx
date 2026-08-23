@@ -44,7 +44,7 @@ export function SlotForm({
 
       <label className={`mt-3 ${labelClasses}`}>
         {locationLabels[format] ?? "Location"}{" "}
-        <span className="text-xs font-normal text-[var(--ink)]/40">optional</span>
+        <span className="text-xs font-normal text-[var(--ink)]/60">optional</span>
         <input
           type="text"
           name="location"

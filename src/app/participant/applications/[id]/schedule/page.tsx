@@ -102,7 +102,7 @@ export default async function ScheduleApplicationPage({
                     })}
                   </p>
                   {slot.location && (
-                    <p className="mt-0.5 text-sm text-[var(--ink)]/50">
+                    <p className="mt-0.5 text-sm text-[var(--ink)]/70">
                       {slot.location}
                     </p>
                   )}

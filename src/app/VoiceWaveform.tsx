@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "./LanguageProvider";
 
 const QUOTES = [
   { text: "I switched banking apps because checkout took four taps too many.", tag: "Fintech usability study · Kathmandu" },
@@ -20,6 +21,7 @@ const BARS = Array.from({ length: BAR_COUNT }, (_, i) => {
 });
 
 export function VoiceWaveform() {
+  const { t } = useLanguage();
   const [active, setActive] = useState(false);
   const [quoteIndex, setQuoteIndex] = useState(0);
 
@@ -37,7 +39,7 @@ export function VoiceWaveform() {
         onMouseEnter={activate}
         onFocus={activate}
         onClick={activate}
-        aria-label="Play a sample moment from a research session"
+        aria-label={t("voicePlayAriaLabel")}
         className="group w-full cursor-pointer rounded-2xl border border-[var(--mist)] bg-white/70 p-6 text-left shadow-[0_1px_0_rgba(18,23,43,0.04)] backdrop-blur-sm transition-colors hover:border-[var(--coral)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--coral)]"
       >
         <div className="flex h-20 items-end gap-[3px] sm:h-24">
@@ -64,7 +66,7 @@ export function VoiceWaveform() {
               active ? "motion-safe:animate-[fadeIn_0.6s_ease-out]" : "opacity-60"
             }`}
           >
-            {active ? `“${quote.text}”` : "Hover to hear a moment from a real session."}
+            {active ? `“${quote.text}”` : t("voiceHoverHint")}
           </p>
           {active && (
             <p className="mt-2 font-mono-utility text-xs tracking-wide text-[var(--indigo)]/70 uppercase">

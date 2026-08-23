@@ -36,7 +36,7 @@ export function ApplyForm({
           <legend className="font-medium text-[var(--ink)]">
             {question.question_text}
             {question.required && (
-              <span className="ml-2 text-xs text-[var(--ink)]/40">{t("requiredTag")}</span>
+              <span className="ml-2 text-xs text-[var(--ink)]/60">{t("requiredTag")}</span>
             )}
           </legend>
 

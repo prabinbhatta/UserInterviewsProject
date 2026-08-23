@@ -77,7 +77,7 @@ export default async function MyApplicationsPage() {
                     <p className="font-medium text-[var(--ink)]">
                       {application.studies?.title}
                     </p>
-                    <p className="mt-0.5 text-sm text-[var(--ink)]/50">
+                    <p className="mt-0.5 text-sm text-[var(--ink)]/70">
                       NPR {application.studies?.incentive_amount}
                     </p>
                   </div>
@@ -124,7 +124,7 @@ export default async function MyApplicationsPage() {
                   application.incentive_records && (
                     <div className="mt-3 border-t border-[var(--mist)]/50 pt-3">
                       {application.incentive_records.status === "pending" && (
-                        <p className="text-sm text-[var(--ink)]/50">
+                        <p className="text-sm text-[var(--ink)]/70">
                           The researcher hasn&apos;t sent your incentive yet.
                         </p>
                       )}

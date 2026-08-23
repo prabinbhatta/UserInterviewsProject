@@ -56,7 +56,7 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
 
               <span
                 className={`font-mono-utility text-xs transition-colors duration-500 ${
-                  isActive ? "text-[var(--coral)]" : "text-[var(--ink)]/40"
+                  isActive ? "text-[var(--coral)]" : "text-[var(--ink)]/60"
                 }`}
               >
                 {step.time}

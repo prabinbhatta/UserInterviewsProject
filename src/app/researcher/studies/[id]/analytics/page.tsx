@@ -87,29 +87,29 @@ export default async function StudyAnalyticsPage({
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <Card>
-            <p className="text-sm text-[var(--ink)]/50">Total applicants</p>
+            <p className="text-sm text-[var(--ink)]/70">Total applicants</p>
             <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
               {totalApplied}
             </p>
           </Card>
           <Card>
-            <p className="text-sm text-[var(--ink)]/50">Not-a-match rate</p>
+            <p className="text-sm text-[var(--ink)]/70">Not-a-match rate</p>
             <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
               {totalApplied > 0 ? `${notMatchRate}%` : "—"}
             </p>
-            <p className="mt-1 text-xs text-[var(--ink)]/40">
+            <p className="mt-1 text-xs text-[var(--ink)]/60">
               Includes both automatic screener disqualifications and manual
               rejections.
             </p>
           </Card>
           <Card className="sm:col-span-2">
-            <p className="text-sm text-[var(--ink)]/50">Average incentive paid</p>
+            <p className="text-sm text-[var(--ink)]/70">Average incentive paid</p>
             <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
               {averageIncentive !== null
                 ? `NPR ${averageIncentive.toFixed(0)}`
                 : "—"}
             </p>
-            <p className="mt-1 text-xs text-[var(--ink)]/40">
+            <p className="mt-1 text-xs text-[var(--ink)]/60">
               Across {receivedIncentives.length} confirmed-received incentive
               {receivedIncentives.length === 1 ? "" : "s"}.
             </p>

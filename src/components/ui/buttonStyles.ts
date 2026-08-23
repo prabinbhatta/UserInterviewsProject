@@ -13,7 +13,7 @@ const VARIANTS: Record<ButtonVariant, string> = {
   primary: "bg-[var(--ink)] text-white hover:bg-[var(--indigo)] hover:-translate-y-0.5",
   secondary:
     "border border-[var(--ink)]/15 bg-white text-[var(--ink)] hover:border-[var(--coral)] hover:-translate-y-0.5",
-  ghost: "text-[var(--ink)]/50 underline underline-offset-4 decoration-[var(--mist)] hover:text-[var(--coral)] hover:decoration-[var(--coral)]",
+  ghost: "text-[var(--ink)]/70 underline underline-offset-4 decoration-[var(--mist)] hover:text-[var(--coral)] hover:decoration-[var(--coral)]",
 };
 
 export function buttonClasses(

@@ -53,7 +53,7 @@ export default async function ReportPage({
           Report a problem
         </h1>
         {context && <p className="mt-1 text-[var(--ink)]/70">{context}</p>}
-        <p className="mt-1 text-sm text-[var(--ink)]/50">
+        <p className="mt-1 text-sm text-[var(--ink)]/70">
           For urgent issues you can also reach support directly at{" "}
           <span className="font-medium text-[var(--ink)]/80">+977-9715633635</span>.
         </p>

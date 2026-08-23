@@ -63,14 +63,14 @@ export default async function ParticipantDashboard() {
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/settings"
-              className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
             >
               Settings
             </Link>
             <form action={signOut}>
               <button
                 type="submit"
-                className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+                className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
               >
                 Log out
               </button>
@@ -89,7 +89,7 @@ export default async function ParticipantDashboard() {
                   ? "Your profile is complete"
                   : "Complete your profile"}
               </span>
-              <span className="text-[var(--ink)]/50">{strengthPercent}%</span>
+              <span className="text-[var(--ink)]/70">{strengthPercent}%</span>
             </div>
             <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
               <div
@@ -98,7 +98,7 @@ export default async function ParticipantDashboard() {
               />
             </div>
             {strengthPercent < 100 && (
-              <p className="mt-2 text-xs text-[var(--ink)]/50">
+              <p className="mt-2 text-xs text-[var(--ink)]/70">
                 A complete profile helps researchers see you&apos;re a good
                 match for their study.
               </p>
@@ -107,7 +107,7 @@ export default async function ParticipantDashboard() {
         </Link>
 
         <Card className="mt-4">
-          <p className="text-sm text-[var(--ink)]/50">Total earned so far</p>
+          <p className="text-sm text-[var(--ink)]/70">Total earned so far</p>
           <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
             NPR {totalEarned}
           </p>

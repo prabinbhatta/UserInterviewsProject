@@ -54,7 +54,7 @@ export default async function ParticipantProfilePage() {
         <div className="mt-4">
           <div className="flex items-center justify-between text-sm">
             <span className="font-medium text-[var(--ink)]/80">Profile strength</span>
-            <span className="text-[var(--ink)]/50">{strengthPercent}%</span>
+            <span className="text-[var(--ink)]/70">{strengthPercent}%</span>
           </div>
           <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
             <div

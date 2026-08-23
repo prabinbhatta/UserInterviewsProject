@@ -24,7 +24,7 @@ export function InviteForm({ studyId }: { studyId: string }) {
           className={fieldClasses}
         />
       </label>
-      <p className="mt-1.5 text-xs text-[var(--ink)]/50">
+      <p className="mt-1.5 text-xs text-[var(--ink)]/70">
         Each address gets its own private link below — copy and send it
         however you&apos;d like. Anyone who opens it and signs up (or logs
         in) joins this study automatically, skipping the screener.

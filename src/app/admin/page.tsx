@@ -103,7 +103,7 @@ export default async function AdminPage() {
           <form action={signOut} className="shrink-0">
             <button
               type="submit"
-              className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
             >
               Log out
             </button>

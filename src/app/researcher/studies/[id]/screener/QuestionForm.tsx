@@ -135,7 +135,7 @@ function QuestionFields({
                     <button
                       type="button"
                       onClick={() => setOptions(options.filter((_, j) => j !== i))}
-                      className="shrink-0 text-sm text-[var(--ink)]/40 hover:text-[#a8371c]"
+                      className="shrink-0 text-sm text-[var(--ink)]/60 hover:text-[#a8371c]"
                       aria-label="Remove option"
                     >
                       Remove

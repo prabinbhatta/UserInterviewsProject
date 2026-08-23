@@ -140,7 +140,7 @@ function SignupForm() {
 
       {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
 
-      <p className="mt-4 text-center text-xs text-[var(--ink)]/50">
+      <p className="mt-4 text-center text-xs text-[var(--ink)]/70">
         {t("agreeToTerms")}{" "}
         <Link href="/terms" className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]">
           {t("termsLink")}
@@ -178,7 +178,7 @@ function LanguageToggle() {
         onClick={() => setLang("en")}
         aria-pressed={lang === "en"}
         className={`rounded-full px-2.5 py-1 transition-colors ${
-          lang === "en" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/50"
+          lang === "en" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/70"
         }`}
       >
         EN
@@ -188,7 +188,7 @@ function LanguageToggle() {
         onClick={() => setLang("ne")}
         aria-pressed={lang === "ne"}
         className={`rounded-full px-2.5 py-1 transition-colors ${
-          lang === "ne" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/50"
+          lang === "ne" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/70"
         }`}
       >
         ने

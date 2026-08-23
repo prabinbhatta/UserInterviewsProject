@@ -62,7 +62,7 @@ export default async function ResearcherMessagesPage({
           Conversation with {participantName}{" "}
           <Link
             href={`/report?applicationId=${applicationId}`}
-            className="text-[var(--ink)]/40 underline decoration-[var(--mist)] underline-offset-4 hover:text-[#a8371c]"
+            className="text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[#a8371c]"
           >
             Report
           </Link>

@@ -70,12 +70,12 @@ export default async function ScreenerPage({
                     <p className="font-medium text-[var(--ink)]">
                       {q.question_text}
                       {q.required && (
-                        <span className="ml-2 text-xs text-[var(--ink)]/40">
+                        <span className="ml-2 text-xs text-[var(--ink)]/60">
                           Required
                         </span>
                       )}
                     </p>
-                    <p className="mt-0.5 text-xs text-[var(--ink)]/50">
+                    <p className="mt-0.5 text-xs text-[var(--ink)]/70">
                       {typeLabels[q.type]}
                     </p>
                     {q.screener_options && q.screener_options.length > 0 && (
@@ -95,7 +95,7 @@ export default async function ScreenerPage({
                   <form action={boundDeleteQuestion.bind(null, q.id)}>
                     <button
                       type="submit"
-                      className="text-sm text-[var(--ink)]/40 hover:text-[#a8371c]"
+                      className="text-sm text-[var(--ink)]/60 hover:text-[#a8371c]"
                     >
                       Delete
                     </button>

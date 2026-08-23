@@ -52,7 +52,7 @@ export default async function InvitePage({
   return (
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <Card className="w-full max-w-lg">
-        <p className="text-sm font-medium text-[var(--ink)]/50">
+        <p className="text-sm font-medium text-[var(--ink)]/70">
           You&apos;re invited to join a study
         </p>
         <h1 className="mt-1 font-serif-display text-2xl font-medium text-[var(--ink)]">

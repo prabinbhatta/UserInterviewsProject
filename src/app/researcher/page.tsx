@@ -35,14 +35,14 @@ export default async function ResearcherDashboard() {
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/settings"
-              className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
             >
               Settings
             </Link>
             <form action={signOut}>
               <button
                 type="submit"
-                className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+                className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
               >
                 Log out
               </button>

@@ -14,7 +14,7 @@ export function LangToggle() {
         className={`rounded-full px-2.5 py-1 transition-colors ${
           lang === "en"
             ? "bg-[var(--ink)] text-white"
-            : "text-[var(--ink)]/50 hover:text-[var(--ink)]"
+            : "text-[var(--ink)]/70 hover:text-[var(--ink)]"
         }`}
       >
         EN
@@ -26,7 +26,7 @@ export function LangToggle() {
         className={`rounded-full px-2.5 py-1 transition-colors ${
           lang === "ne"
             ? "bg-[var(--ink)] text-white"
-            : "text-[var(--ink)]/50 hover:text-[var(--ink)]"
+            : "text-[var(--ink)]/70 hover:text-[var(--ink)]"
         }`}
       >
         ने

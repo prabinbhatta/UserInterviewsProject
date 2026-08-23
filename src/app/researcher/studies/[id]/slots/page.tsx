@@ -76,13 +76,13 @@ export default async function StudySlotsPage({
                       timeStyle: "short",
                     })}
                   </p>
-                  <p className="mt-0.5 text-sm text-[var(--ink)]/50">
+                  <p className="mt-0.5 text-sm text-[var(--ink)]/70">
                     {slot.application_id
                       ? `Booked by ${slot.applications?.profiles?.full_name ?? "a participant"}`
                       : "Open"}
                   </p>
                   {slot.location && (
-                    <p className="mt-0.5 text-sm text-[var(--ink)]/50">
+                    <p className="mt-0.5 text-sm text-[var(--ink)]/70">
                       {slot.location}
                     </p>
                   )}

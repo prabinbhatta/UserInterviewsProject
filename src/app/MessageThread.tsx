@@ -33,7 +33,7 @@ export function MessageThread({
   return (
     <div className="mt-8">
       {messages.length === 0 ? (
-        <p className="text-sm text-[var(--ink)]/50">
+        <p className="text-sm text-[var(--ink)]/70">
           No messages yet. Say hello to {otherPartyLabel}.
         </p>
       ) : (
@@ -57,7 +57,7 @@ export function MessageThread({
                   </p>
                   <p
                     className={`mt-1 text-xs ${
-                      mine ? "text-white/50" : "text-[var(--ink)]/40"
+                      mine ? "text-white/50" : "text-[var(--ink)]/60"
                     }`}
                   >
                     {new Date(message.created_at).toLocaleString(undefined, {

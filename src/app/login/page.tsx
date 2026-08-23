@@ -73,7 +73,7 @@ export default function LoginPage() {
         <p className="mt-2 text-right text-sm">
           <Link
             href="/forgot-password"
-            className="text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+            className="text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
           >
             Forgot password?
           </Link>

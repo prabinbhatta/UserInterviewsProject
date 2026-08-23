@@ -114,7 +114,7 @@ export default async function StudyDetailPage({
 
         <Link
           href={`/report?studyId=${study.id}`}
-          className="mt-8 inline-block text-sm text-[var(--ink)]/40 underline decoration-[var(--mist)] underline-offset-4 hover:text-[#a8371c]"
+          className="mt-8 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[#a8371c]"
         >
           {t("reportStudy")}
         </Link>

@@ -15,7 +15,7 @@ export default function TermsPage() {
         <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
           Terms of Service
         </h1>
-        <p className="mt-1 text-sm text-[var(--ink)]/50">Last updated 23 August 2026</p>
+        <p className="mt-1 text-sm text-[var(--ink)]/70">Last updated 23 August 2026</p>
 
         <div className="mt-8 space-y-6 text-[var(--ink)]/80">
           <p>
@@ -105,7 +105,7 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <p className="border-t border-[var(--mist)] pt-6 text-sm text-[var(--ink)]/50">
+          <p className="border-t border-[var(--mist)] pt-6 text-sm text-[var(--ink)]/70">
             This is a plain-language policy for an early-stage platform, not a
             substitute for independent legal advice.
           </p>
