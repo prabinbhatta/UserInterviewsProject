@@ -1,61 +1,154 @@
 # Backlog
 
-Running list of scoped-but-not-yet-built work. Update as items are added, started, or shipped.
+Running list of scoped-but-not-yet-built work, grouped by priority. Update as items are added, started, or shipped.
 
-## Requested 2026-08-23
+## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
-### 1. User-friendly error messages everywhere
+### Resend domain verification
+Blocks transactional email to anyone other than the account owner until a
+custom sending domain is verified. Single biggest blocker for real launch —
+confirmation emails, notifications, everything depend on it.
+
+### Password reset / forgot password
+No "forgot password" flow exists anywhere in the app today. Any real user
+who mistypes or forgets their password is permanently locked out with no
+recovery path. Needs a `/forgot-password` page (email a reset link via
+Supabase Auth's built-in reset flow) and a `/reset-password` page to set the
+new one.
+
+### Terms of Service & Privacy Policy pages
+No legal pages exist. The app collects real PII (age, income band, district,
+phone-adjacent info via profiles) and handles money coordination between
+strangers — needs baseline ToS + Privacy Policy pages linked from
+signup/footer before onboarding real users, even in MVP form.
+
+### User-friendly error messages everywhere
 Several server actions currently throw or return the raw Postgres/Supabase
 error string straight to the UI (e.g. `throw new Error(error.message)` in
 `incentive-actions.ts`, `{ error: error.message }` in `messages-actions.ts`
 and most form actions). Needs a small mapping layer — a function that takes
 a Postgres/Supabase error (or known error codes: unique violation, RLS
 denial, not-found, etc.) and returns a plain-language message — applied
-consistently across every server action and form. Should also cover
-network/unexpected-failure fallback copy ("Something went wrong — try
-again") so nothing ever surfaces a raw stack trace or SQL error to a user.
+consistently across every server action and form, plus fallback copy
+("Something went wrong — try again") so nothing ever surfaces a raw stack
+trace or SQL error to a user.
 
-### 2. Bulk invite import via CSV/Excel upload
-Extends the existing researcher invite feature
-(`src/app/researcher/studies/[id]/invite/`), which today only accepts
-emails pasted into a textarea (`InviteForm.tsx`). Add:
-- A downloadable sample template (CSV with `email` (required) and
-  `full_name` (optional) columns) shown before upload.
-- A file upload control accepting `.csv` and `.xlsx`.
-- Client- or server-side parsing (CSV is trivial; `.xlsx` needs a parser
-  library, e.g. `xlsx`/`exceljs` — pick one and check bundle size impact).
-- Validation before import: required email column present, valid email
-  format per row, dedupe against existing invitations for the study, and a
-  preview/confirmation step showing row count + any skipped/invalid rows
-  before committing.
-- `full_name` isn't currently stored on `study_invitations` — needs a
-  migration to add an optional `full_name` column if we want to prefill it
-  at signup/acceptance time.
+### DNS propagation
+`prabinbhatta.com.np` → Vercel nameservers — in progress, ETA 1-2 days from
+2026-08-23. Nothing to build; just tracking until it resolves.
 
-### 3. Location / meeting link on time slots
+## P1 — Core marketplace-loop gaps (things that break trust once real people use it)
+
+### Study capacity enforcement
+`studies.participants_needed` is captured and shown on researcher pages but
+never enforced — a study stays open and visible to participants even after
+enough people are approved. Needs auto-closing (or at least hiding from the
+public browse list) once approved-application count reaches
+`participants_needed`.
+
+### Cancel / reschedule a booked time slot
+Once a participant books a `study_slots` row, neither side can change it —
+no cancel, no reschedule. Real sessions get rescheduled constantly; needs a
+cancel action (re-opens the slot / returns application to `approved`) usable
+by both researcher and participant, ideally with an email notification.
+
+### No-show / session-didn't-happen handling
+There's no way to flag that a scheduled session didn't happen. Right now
+the only path forward from `scheduled` is `markSessionCompleted` — if a
+no-show occurs there's no status for it and no way to unblock the
+application without directly editing the database.
+
+### Withdraw an application
+A participant who applies and changes their mind has no way to withdraw —
+`applications` only moves forward via researcher actions (approve/reject).
+Needs a participant-initiated "withdraw" action for `qualified` or
+`approved` applications.
+
+### Report / block abusive user or spam study
+No moderation path exists for the messaging feature or for a
+researcher-posted study that turns out to be spam/scam. Needs at minimum a
+"report" action visible from a message thread or study page, surfaced to
+the admin dashboard's existing review surface.
+
+### Location / meeting link on time slots
 `study_slots` (migration `0007_scheduling.sql`) currently only stores
 `starts_at`. Add a field for where the session happens — a physical
 address for in-person studies or a meeting link (Zoom/Meet/Teams URL) for
-online ones. Needs:
-- A migration adding a `location` text column to `study_slots`.
-- Researcher-side slot creation UI updated to require/accept it (could
-  branch on the study's existing `format` field — online vs in_person —
-  to show "meeting link" vs "address" as the field label).
-- Surfaced to the participant on the scheduling/booking page and on their
-  applications view once a slot is booked, and included in the
-  slot-booked email notification (`sendSlotBookedEmail` in `src/lib/email.ts`).
+online ones. Needs a migration adding a `location` text column, researcher
+slot-creation UI updated (branch on the study's `format` field for the
+label), surfaced to the participant on booking/applications views, and
+included in the slot-booked email notification.
 
-## Previously identified, still open
-- **Resend domain verification** — blocks transactional email to anyone
-  other than the account owner until a custom sending domain is verified.
-  Single biggest blocker for real launch.
-- **DNS propagation** for `prabinbhatta.com.np` → Vercel nameservers — in
-  progress, ETA 1-2 days from 2026-08-23.
-- **Final product name** — deferred by founder; current working name is
-  "Research Platform."
-- **Bilingual coverage** — landing page, signup, and the participant
-  browse/study-detail/apply flow are translated. Researcher-side pages,
-  the rest of the participant dashboard (applications, messages,
-  scheduling, incentives), and admin are still English-only.
-- **VoiceWaveform hint text** ("Hover to hear a moment from a real
-  session.") on the landing page is still English-only.
+## P2 — Growth & usability enhancements
+
+### Search & filter on browse studies
+`/participant/studies` currently lists every active study with no
+filtering. Once there are more than a couple of open studies at once, needs
+filters for format, incentive range, session length, and (for in-person)
+district.
+
+### Bulk invite import via CSV/Excel upload
+Extends the existing researcher invite feature
+(`src/app/researcher/studies/[id]/invite/`), which today only accepts
+emails pasted into a textarea (`InviteForm.tsx`). Add a downloadable sample
+template (CSV with `email` required, `full_name` optional), file upload
+(`.csv`/`.xlsx`), validation with a preview/confirmation step before
+importing, and a `full_name` column on `study_invitations` (migration
+needed) to store it.
+
+### Researcher analytics
+No stats surface for a researcher beyond raw application lists — applicant
+funnel (applied → qualified → approved → scheduled → completed),
+disqualification rate from the screener, and average incentive paid would
+help researchers see whether a study is working.
+
+### Export applicants to CSV
+Researchers currently can only view applicants in the review-queue UI —
+no way to export the list (e.g. for offline recruiting records or
+compliance).
+
+### Study templates / duplicate a study
+No way to reuse a screener or study setup — every new study starts from
+scratch. A "duplicate this study" action (copies title/format/screener
+questions as a new draft) would speed up repeat researchers.
+
+### Participant earnings summary
+No running total of incentives received shown to a participant — would sit
+naturally on the participant dashboard alongside profile completeness.
+
+### Notification preferences
+All email notification types (approved, scheduled, new message, incentive
+sent) are all-or-nothing today — no per-type opt-out.
+
+## P3 — Polish
+
+### Remaining bilingual coverage
+Landing page, signup, and the participant browse/study-detail/apply flow
+are translated. Researcher-side pages, the rest of the participant
+dashboard (applications, messages, scheduling, incentives), and admin are
+still English-only.
+
+### VoiceWaveform hint text
+("Hover to hear a moment from a real session.") on the landing page is
+still English-only.
+
+### SEO / social share metadata
+No Open Graph / Twitter Card metadata on the landing page — links shared in
+WhatsApp/Facebook (likely primary sharing channels in Nepal) currently show
+no preview image or description.
+
+### Basic privacy-friendly analytics
+No pageview/funnel tracking at all — founder has no visibility into
+signup → application → completion conversion without querying the database
+directly.
+
+### Accessibility pass
+No dedicated a11y audit done yet — alt text, aria labels, color contrast,
+and keyboard navigation haven't been systematically checked.
+
+### Final product name
+Deferred by founder; current working name is "Research Platform."
+
+### Basic signup rate limiting
+No rate limiting on signup/login attempts — low risk at current scale but
+worth adding before wider launch to blunt basic abuse/enumeration attempts.
