@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { friendlyError } from "@/lib/friendlyError";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -34,16 +36,19 @@ export default function ForgotPasswordPage() {
 
   if (submitted) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-zinc-50 px-6 py-16">
+      <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
         <div className="w-full max-w-sm text-center">
-          <h1 className="text-2xl font-semibold text-zinc-900">
+          <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
             Check your email
           </h1>
-          <p className="mt-3 text-zinc-600">
+          <p className="mt-3 text-[var(--ink)]/70">
             If an account exists for <strong>{email}</strong>, we sent a link
             to reset your password.
           </p>
-          <Link href="/login" className="mt-6 inline-block text-sm underline">
+          <Link
+            href="/login"
+            className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+          >
             Back to login
           </Link>
         </div>
@@ -52,39 +57,38 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-zinc-900">
+        <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
           Reset your password
         </h1>
-        <p className="mt-2 text-sm text-zinc-600">
+        <p className="mt-2 text-sm text-[var(--ink)]/70">
           Enter the email on your account and we&apos;ll send you a link to
           set a new password.
         </p>
 
-        <label className="mt-6 block text-sm font-medium text-zinc-700">
+        <label className={`mt-6 ${labelClasses}`}>
           Email
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
 
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-6 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={loading} className="mt-6 w-full">
           {loading ? "Sending..." : "Send reset link"}
-        </button>
+        </Button>
 
-        <p className="mt-4 text-center text-sm text-zinc-500">
-          <Link href="/login" className="underline">
+        <p className="mt-4 text-center text-sm text-[var(--ink)]/60">
+          <Link
+            href="/login"
+            className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+          >
             Back to login
           </Link>
         </p>

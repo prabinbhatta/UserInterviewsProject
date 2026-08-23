@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
 import { one } from "@/lib/one";
+import { Card } from "@/components/ui/Card";
+import { LinkButton } from "@/components/ui/LinkButton";
 
 export default async function ParticipantDashboard() {
   const supabase = await createClient();
@@ -52,79 +54,72 @@ export default async function ParticipantDashboard() {
   const strengthPercent = Math.round((fieldsFilled / 6) * 100);
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-2xl">
         <div className="flex items-start justify-between gap-4">
-          <h1 className="min-w-0 text-2xl font-semibold text-zinc-900">
+          <h1 className="min-w-0 font-serif-display text-3xl font-medium text-[var(--ink)]">
             Welcome, {profile?.full_name ?? user.email}
           </h1>
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/settings"
-              className="whitespace-nowrap text-sm text-zinc-500 underline"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
             >
               Settings
             </Link>
             <form action={signOut}>
               <button
                 type="submit"
-                className="whitespace-nowrap text-sm text-zinc-500 underline"
+                className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
               >
                 Log out
               </button>
             </form>
           </div>
         </div>
-        <p className="mt-4 text-zinc-600">
+        <p className="mt-4 text-[var(--ink)]/70">
           Find studies that fit and apply for the ones you want to join.
         </p>
 
-        <Link
-          href="/participant/profile"
-          className="mt-6 block rounded-lg border border-zinc-200 bg-white p-4 transition-colors hover:border-zinc-400"
-        >
-          <div className="flex items-center justify-between text-sm">
-            <span className="font-medium text-zinc-900">
-              {strengthPercent === 100
-                ? "Your profile is complete"
-                : "Complete your profile"}
-            </span>
-            <span className="text-zinc-500">{strengthPercent}%</span>
-          </div>
-          <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-zinc-200">
-            <div
-              className="h-full rounded-full bg-emerald-500 transition-all"
-              style={{ width: `${strengthPercent}%` }}
-            />
-          </div>
-          {strengthPercent < 100 && (
-            <p className="mt-2 text-xs text-zinc-500">
-              A complete profile helps researchers see you&apos;re a good
-              match for their study.
-            </p>
-          )}
+        <Link href="/participant/profile" className="mt-6 block">
+          <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--coral)]">
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-medium text-[var(--ink)]">
+                {strengthPercent === 100
+                  ? "Your profile is complete"
+                  : "Complete your profile"}
+              </span>
+              <span className="text-[var(--ink)]/50">{strengthPercent}%</span>
+            </div>
+            <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
+              <div
+                className="h-full rounded-full bg-[var(--coral)] transition-all"
+                style={{ width: `${strengthPercent}%` }}
+              />
+            </div>
+            {strengthPercent < 100 && (
+              <p className="mt-2 text-xs text-[var(--ink)]/50">
+                A complete profile helps researchers see you&apos;re a good
+                match for their study.
+              </p>
+            )}
+          </Card>
         </Link>
 
-        <div className="mt-4 rounded-lg border border-zinc-200 bg-white p-4">
-          <p className="text-sm text-zinc-500">Total earned so far</p>
-          <p className="mt-1 text-2xl font-semibold text-zinc-900">
+        <Card className="mt-4">
+          <p className="text-sm text-[var(--ink)]/50">Total earned so far</p>
+          <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
             NPR {totalEarned}
           </p>
-        </div>
+        </Card>
 
         <div className="mt-6 flex gap-3">
-          <Link
-            href="/participant/studies"
-            className="inline-flex h-11 items-center justify-center rounded-full bg-zinc-900 px-5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-          >
+          <LinkButton href="/participant/studies" variant="primary">
             Browse studies
-          </Link>
-          <Link
-            href="/participant/applications"
-            className="inline-flex h-11 items-center justify-center rounded-full border border-zinc-300 px-5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
-          >
+          </LinkButton>
+          <LinkButton href="/participant/applications" variant="secondary">
             Your applications
-          </Link>
+          </LinkButton>
         </div>
       </div>
     </div>

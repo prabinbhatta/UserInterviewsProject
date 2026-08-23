@@ -6,6 +6,8 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/app/LanguageProvider";
 import { friendlyError } from "@/lib/friendlyError";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 type Role = "researcher" | "participant";
 
@@ -55,13 +57,16 @@ function SignupForm() {
   if (submitted) {
     return (
       <div className="w-full max-w-sm text-center">
-        <h1 className="text-2xl font-semibold text-zinc-900">
+        <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
           {t("checkEmailTitle")}
         </h1>
-        <p className="mt-3 text-zinc-600">
+        <p className="mt-3 text-[var(--ink)]/70">
           {t("checkEmailBody")} <strong>{email}</strong>. {t("checkEmailBody2")}
         </p>
-        <Link href="/login" className="mt-6 inline-block text-sm underline">
+        <Link
+          href="/login"
+          className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+        >
           {t("goToLogin")}
         </Link>
       </div>
@@ -70,18 +75,18 @@ function SignupForm() {
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-sm">
-      <h1 className="text-2xl font-semibold text-zinc-900">
+      <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
         {t("signupTitle")}
       </h1>
 
-      <div className="mt-6 flex rounded-lg border border-zinc-300 p-1">
+      <div className="mt-6 flex rounded-full border border-[var(--mist)] p-1">
         <button
           type="button"
           onClick={() => setRole("researcher")}
-          className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-full py-2 text-sm font-medium transition-colors ${
             role === "researcher"
-              ? "bg-zinc-900 text-white"
-              : "text-zinc-600"
+              ? "bg-[var(--ink)] text-white"
+              : "text-[var(--ink)]/60"
           }`}
         >
           {t("tabResearcher")}
@@ -89,39 +94,39 @@ function SignupForm() {
         <button
           type="button"
           onClick={() => setRole("participant")}
-          className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-full py-2 text-sm font-medium transition-colors ${
             role === "participant"
-              ? "bg-zinc-900 text-white"
-              : "text-zinc-600"
+              ? "bg-[var(--ink)] text-white"
+              : "text-[var(--ink)]/60"
           }`}
         >
           {t("tabParticipant")}
         </button>
       </div>
 
-      <label className="mt-5 block text-sm font-medium text-zinc-700">
+      <label className={`mt-5 ${labelClasses}`}>
         {t("fullName")}
         <input
           type="text"
           required
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
 
-      <label className="mt-4 block text-sm font-medium text-zinc-700">
+      <label className={`mt-4 ${labelClasses}`}>
         {t("email")}
         <input
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
 
-      <label className="mt-4 block text-sm font-medium text-zinc-700">
+      <label className={`mt-4 ${labelClasses}`}>
         {t("password")}
         <input
           type="password"
@@ -129,35 +134,34 @@ function SignupForm() {
           minLength={8}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
 
-      {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
 
-      <p className="mt-4 text-center text-xs text-zinc-500">
+      <p className="mt-4 text-center text-xs text-[var(--ink)]/50">
         {t("agreeToTerms")}{" "}
-        <Link href="/terms" className="underline">
+        <Link href="/terms" className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]">
           {t("termsLink")}
         </Link>{" "}
         {t("and")}{" "}
-        <Link href="/privacy" className="underline">
+        <Link href="/privacy" className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]">
           {t("privacyLink")}
         </Link>
         .
       </p>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="mt-4 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-      >
+      <Button type="submit" disabled={loading} className="mt-4 w-full">
         {loading ? t("creatingAccount") : t("signUp")}
-      </button>
+      </Button>
 
-      <p className="mt-4 text-center text-sm text-zinc-500">
+      <p className="mt-4 text-center text-sm text-[var(--ink)]/60">
         {t("alreadyHaveAccount")}{" "}
-        <Link href="/login" className="underline">
+        <Link
+          href="/login"
+          className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+        >
           {t("logInLink")}
         </Link>
       </p>
@@ -168,13 +172,13 @@ function SignupForm() {
 function LanguageToggle() {
   const { lang, setLang } = useLanguage();
   return (
-    <div className="absolute top-6 right-6 flex items-center rounded-full border border-zinc-300 p-0.5 text-xs">
+    <div className="absolute top-6 right-6 flex items-center rounded-full border border-[var(--mist)] p-0.5 text-xs">
       <button
         type="button"
         onClick={() => setLang("en")}
         aria-pressed={lang === "en"}
         className={`rounded-full px-2.5 py-1 transition-colors ${
-          lang === "en" ? "bg-zinc-900 text-white" : "text-zinc-500"
+          lang === "en" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/50"
         }`}
       >
         EN
@@ -184,7 +188,7 @@ function LanguageToggle() {
         onClick={() => setLang("ne")}
         aria-pressed={lang === "ne"}
         className={`rounded-full px-2.5 py-1 transition-colors ${
-          lang === "ne" ? "bg-zinc-900 text-white" : "text-zinc-500"
+          lang === "ne" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/50"
         }`}
       >
         ने
@@ -195,7 +199,7 @@ function LanguageToggle() {
 
 export default function SignupPage() {
   return (
-    <div className="relative flex flex-1 items-center justify-center bg-zinc-50 px-6 py-16">
+    <div className="relative flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <LanguageToggle />
       <Suspense>
         <SignupForm />

@@ -1,31 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Fraunces, Manrope, IBM_Plex_Mono } from "next/font/google";
 import { VoiceWaveform } from "./VoiceWaveform";
 import { Reveal } from "./Reveal";
 import { JourneyTimeline } from "./JourneyTimeline";
 import { SiteHeader } from "./SiteHeader";
 import { useLanguage } from "./LanguageProvider";
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-  weight: ["400", "500", "600", "700"],
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  variable: "--font-plex-mono",
-  weight: ["400", "500"],
-});
 
 export default function Home() {
   const { t } = useLanguage();
@@ -38,19 +18,7 @@ export default function Home() {
   ];
 
   return (
-    <div
-      style={
-        {
-          "--paper": "#F6F7FB",
-          "--ink": "#12172B",
-          "--indigo": "#2D3470",
-          "--coral": "#FF6B4A",
-          "--gold": "#F5B942",
-          "--mist": "#C7CCE0",
-        } as React.CSSProperties
-      }
-      className={`${fraunces.variable} ${manrope.variable} ${plexMono.variable} flex flex-1 flex-col bg-[var(--paper)] font-[family-name:var(--font-manrope)] text-[var(--ink)]`}
-    >
+    <div className="flex flex-1 flex-col bg-[var(--paper)] font-[family-name:var(--font-manrope)] text-[var(--ink)]">
       <SiteHeader />
 
       {/* Hero */}

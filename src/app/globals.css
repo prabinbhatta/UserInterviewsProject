@@ -5,17 +5,28 @@
  * these variables intentionally do NOT respond to prefers-color-scheme.
  * A stray dark-mode media query here previously made body text near-white
  * on any OS in dark mode, which was invisible against the light UI.
+ *
+ * Color and font tokens below are the same identity established on the
+ * landing page (originally scoped locally to that page) — now global so
+ * every page in the app can share it instead of each one reinventing it.
  */
 :root {
-  --background: #fafafa;
-  --foreground: #18181b;
+  --paper: #f6f7fb;
+  --ink: #12172b;
+  --indigo: #2d3470;
+  --coral: #ff6b4a;
+  --gold: #f5b942;
+  --mist: #c7cce0;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-plex-mono);
 }
 
 body {

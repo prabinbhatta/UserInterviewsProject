@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { friendlyError } from "@/lib/friendlyError";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,51 +42,55 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-zinc-900">Log in</h1>
+        <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+          Log in
+        </h1>
 
-        <label className="mt-6 block text-sm font-medium text-zinc-700">
+        <label className={`mt-6 ${labelClasses}`}>
           Email
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
 
-        <label className="mt-4 block text-sm font-medium text-zinc-700">
+        <label className={`mt-4 ${labelClasses}`}>
           Password
           <input
             type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
 
         <p className="mt-2 text-right text-sm">
-          <Link href="/forgot-password" className="text-zinc-500 underline">
+          <Link
+            href="/forgot-password"
+            className="text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+          >
             Forgot password?
           </Link>
         </p>
 
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-6 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={loading} className="mt-6 w-full">
           {loading ? "Logging in..." : "Log in"}
-        </button>
+        </Button>
 
-        <p className="mt-4 text-center text-sm text-zinc-500">
+        <p className="mt-4 text-center text-sm text-[var(--ink)]/60">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="underline">
+          <Link
+            href="/signup"
+            className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+          >
             Sign up
           </Link>
         </p>
