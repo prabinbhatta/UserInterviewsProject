@@ -95,6 +95,12 @@ export default async function StudiesPage() {
                       Applicants
                     </Link>
                     <Link
+                      href={`/researcher/studies/${study.id}/invite`}
+                      className="text-sm text-zinc-500 underline"
+                    >
+                      Invite
+                    </Link>
+                    <Link
                       href={`/researcher/studies/${study.id}/slots`}
                       className="text-sm text-zinc-500 underline"
                     >
