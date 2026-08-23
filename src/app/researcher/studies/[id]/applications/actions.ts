@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { sendApprovedEmail } from "@/lib/email";
 import { one } from "@/lib/one";
+import { closeStudyIfFull } from "@/lib/closeStudyIfFull";
 
 export async function approveApplication(studyId: string, applicationId: string) {
   const supabase = await createClient();
@@ -12,6 +13,8 @@ export async function approveApplication(studyId: string, applicationId: string)
     .update({ status: "approved" })
     .eq("id", applicationId);
   if (error) throw new Error(error.message);
+
+  await closeStudyIfFull(supabase, studyId);
   revalidatePath(`/researcher/studies/${studyId}/applications`);
 
   const { data: application } = await supabase

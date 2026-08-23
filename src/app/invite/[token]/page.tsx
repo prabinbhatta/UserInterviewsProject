@@ -19,7 +19,9 @@ export default async function InvitePage({
 
   const { data: invite } = await supabase
     .from("study_invitations")
-    .select("id, status, studies(title, description, format, session_length_minutes, incentive_amount)")
+    .select(
+      "id, status, studies(title, description, format, session_length_minutes, incentive_amount, status)",
+    )
     .eq("token", token)
     .single();
 
@@ -70,6 +72,11 @@ export default async function InvitePage({
                 View your applications
               </Link>
               .
+            </p>
+          ) : study?.status !== "active" ? (
+            <p className="text-sm text-zinc-600">
+              This study is no longer accepting participants — it&apos;s
+              already full.
             </p>
           ) : !user ? (
             <div>

@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { closeStudyIfFull } from "@/lib/closeStudyIfFull";
 
 export async function acceptInvite(token: string) {
   const supabase = await createClient();
@@ -26,6 +27,15 @@ export async function acceptInvite(token: string) {
     .maybeSingle();
 
   if (!existingApplication) {
+    const { data: study } = await supabase
+      .from("studies")
+      .select("status")
+      .eq("id", invite.study_id)
+      .single();
+    if (study?.status !== "active") {
+      throw new Error("This study is no longer accepting participants.");
+    }
+
     const { error: applicationError } = await supabase
       .from("applications")
       .insert({
@@ -34,6 +44,8 @@ export async function acceptInvite(token: string) {
         status: "approved",
       });
     if (applicationError) throw new Error(applicationError.message);
+
+    await closeStudyIfFull(supabase, invite.study_id);
   }
 
   const { error: inviteError } = await supabase
