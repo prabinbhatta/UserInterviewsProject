@@ -4,6 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 import { InviteForm } from "./InviteForm";
 import { CsvInviteForm } from "./CsvInviteForm";
 import { InviteLink } from "./InviteLink";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { mutedLinkClasses } from "@/components/ui/link";
 
 export default async function StudyInvitePage({
   params,
@@ -35,15 +38,15 @@ export default async function StudyInvitePage({
     .order("invited_at", { ascending: false });
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
-        <Link href="/researcher/studies" className="text-sm text-zinc-500 underline">
+        <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
           Back to studies
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
           Invite participants — {study.title}
         </h1>
-        <p className="mt-1 text-sm text-zinc-600">
+        <p className="mt-1 text-sm text-[var(--ink)]/60">
           Bring your own users straight into this study, without waiting
           for them to find it in the public list.
         </p>
@@ -56,29 +59,27 @@ export default async function StudyInvitePage({
         {invitations && invitations.length > 0 && (
           <ul className="mt-6 space-y-2">
             {invitations.map((invite) => (
-              <li
+              <Card
+                as="li"
                 key={invite.id}
-                className="flex items-center justify-between gap-3 rounded-lg border border-zinc-200 bg-white p-3"
+                className="flex items-center justify-between gap-3"
               >
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-zinc-900">
+                  <p className="truncate text-sm font-medium text-[var(--ink)]">
                     {invite.email}
                     {invite.full_name ? ` — ${invite.full_name}` : ""}
                   </p>
-                  <span
-                    className={`mt-0.5 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-                      invite.status === "accepted"
-                        ? "bg-emerald-100 text-emerald-800"
-                        : "bg-zinc-200 text-zinc-700"
-                    }`}
+                  <Badge
+                    tone={invite.status === "accepted" ? "success" : "neutral"}
+                    className="mt-0.5"
                   >
                     {invite.status === "accepted" ? "Joined" : "Invited"}
-                  </span>
+                  </Badge>
                 </div>
                 {invite.status !== "accepted" && (
                   <InviteLink token={invite.token} />
                 )}
-              </li>
+              </Card>
             ))}
           </ul>
         )}

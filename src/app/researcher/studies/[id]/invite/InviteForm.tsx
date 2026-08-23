@@ -2,6 +2,9 @@
 
 import { useActionState } from "react";
 import { createInvites } from "./actions";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 export function InviteForm({ studyId }: { studyId: string }) {
   const boundCreate = createInvites.bind(null, studyId);
@@ -10,32 +13,28 @@ export function InviteForm({ studyId }: { studyId: string }) {
   });
 
   return (
-    <form action={formAction} className="rounded-lg border border-zinc-200 bg-white p-5">
-      <label className="block text-sm font-medium text-zinc-700">
+    <Card as="form" action={formAction}>
+      <label className={labelClasses}>
         Invite by email
         <textarea
           name="emails"
           required
           rows={4}
           placeholder={"One email per line, or comma-separated —\nramesh@bank.com, sita@bank.com"}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
-      <p className="mt-1.5 text-xs text-zinc-500">
+      <p className="mt-1.5 text-xs text-[var(--ink)]/50">
         Each address gets its own private link below — copy and send it
         however you&apos;d like. Anyone who opens it and signs up (or logs
         in) joins this study automatically, skipping the screener.
       </p>
 
-      {state.error && <p className="mt-3 text-sm text-red-600">{state.error}</p>}
+      {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="mt-4 rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-      >
+      <Button type="submit" disabled={pending} className="mt-4">
         {pending ? "Generating..." : "Generate invite links"}
-      </button>
-    </form>
+      </Button>
+    </Card>
   );
 }

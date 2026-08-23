@@ -3,6 +3,8 @@
 import { useActionState, useState } from "react";
 import type { StudyFormState } from "./actions";
 import { DISTRICTS } from "@/lib/districts";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 type StudyFormValues = {
   title: string;
@@ -28,30 +30,30 @@ export function StudyForm({
 
   return (
     <form action={formAction} className="w-full max-w-xl">
-      <label className="block text-sm font-medium text-zinc-700">
+      <label className={labelClasses}>
         Study title
         <input
           type="text"
           name="title"
           required
           defaultValue={defaultValues?.title}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
 
-      <label className="mt-4 block text-sm font-medium text-zinc-700">
+      <label className={`mt-4 ${labelClasses}`}>
         Description
         <textarea
           name="description"
           required
           rows={4}
           defaultValue={defaultValues?.description}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
 
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className={labelClasses}>
           Format
           <select
             name="format"
@@ -59,7 +61,7 @@ export function StudyForm({
             onChange={(e) =>
               setFormat(e.target.value as "online" | "in_person" | "phone")
             }
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           >
             <option value="online">Online</option>
             <option value="in_person">In person</option>
@@ -67,7 +69,7 @@ export function StudyForm({
           </select>
         </label>
 
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className={labelClasses}>
           Session length (minutes)
           <input
             type="number"
@@ -75,18 +77,18 @@ export function StudyForm({
             required
             min={1}
             defaultValue={defaultValues?.session_length_minutes ?? 30}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
       </div>
 
       {format === "in_person" && (
-        <label className="mt-4 block text-sm font-medium text-zinc-700">
+        <label className={`mt-4 ${labelClasses}`}>
           District
           <select
             name="district"
             defaultValue={defaultValues?.district ?? ""}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           >
             <option value="">Select a district</option>
             {DISTRICTS.map((d) => (
@@ -99,7 +101,7 @@ export function StudyForm({
       )}
 
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className={labelClasses}>
           Participants needed
           <input
             type="number"
@@ -107,11 +109,11 @@ export function StudyForm({
             required
             min={1}
             defaultValue={defaultValues?.participants_needed ?? 5}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
 
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className={labelClasses}>
           Incentive (NPR)
           <input
             type="number"
@@ -120,20 +122,16 @@ export function StudyForm({
             min={0}
             step="0.01"
             defaultValue={defaultValues?.incentive_amount ?? 500}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
       </div>
 
-      {state.error && <p className="mt-3 text-sm text-red-600">{state.error}</p>}
+      {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="mt-6 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-      >
+      <Button type="submit" disabled={pending} className="mt-6 w-full">
         {pending ? "Saving..." : submitLabel}
-      </button>
+      </Button>
     </form>
   );
 }

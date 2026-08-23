@@ -2,6 +2,9 @@
 
 import { useActionState, useState } from "react";
 import { addQuestion, type ScreenerFormState } from "./actions";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 type OptionRow = { label: string; decision: "accept" | "reject" };
 type QuestionType = "pick_one" | "pick_any" | "short_answer" | "long_answer";
@@ -51,26 +54,26 @@ function QuestionFields({
   const isChoiceType = type === "pick_one" || type === "pick_any";
 
   return (
-    <form action={formAction} className="rounded-lg border border-zinc-200 bg-white p-5">
-      <label className="block text-sm font-medium text-zinc-700">
+    <Card as="form" action={formAction}>
+      <label className={labelClasses}>
         Question
         <input
           type="text"
           name="question_text"
           required
           placeholder="Do you have a laptop with a webcam?"
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
 
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className={labelClasses}>
           Answer type
           <select
             name="type"
             value={type}
             onChange={(e) => setType(e.target.value as QuestionType)}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           >
             <option value="pick_one">Pick one</option>
             <option value="pick_any">Pick any</option>
@@ -79,15 +82,20 @@ function QuestionFields({
           </select>
         </label>
 
-        <label className="mt-6 flex items-center gap-2 text-sm font-medium text-zinc-700">
-          <input type="checkbox" name="required" defaultChecked className="h-4 w-4" />
+        <label className="mt-6 flex items-center gap-2 text-sm font-medium text-[var(--ink)]/80">
+          <input
+            type="checkbox"
+            name="required"
+            defaultChecked
+            className="h-4 w-4 accent-[var(--indigo)]"
+          />
           Required
         </label>
       </div>
 
       {isChoiceType && (
         <div className="mt-4">
-          <p className="text-sm font-medium text-zinc-700">
+          <p className={labelClasses}>
             Answer options — mark each one Accept or Reject
           </p>
           <div className="mt-2 space-y-2">
@@ -104,7 +112,7 @@ function QuestionFields({
                     next[i] = { ...next[i], label: e.target.value };
                     setOptions(next);
                   }}
-                  className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none sm:flex-1"
+                  className={`${fieldClasses} mt-0 sm:flex-1`}
                 />
                 <div className="flex items-center gap-2">
                   <select
@@ -118,7 +126,7 @@ function QuestionFields({
                       };
                       setOptions(next);
                     }}
-                    className="flex-1 rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none sm:flex-none"
+                    className={`${fieldClasses} mt-0 flex-1 sm:flex-none`}
                   >
                     <option value="accept">Accept</option>
                     <option value="reject">Reject</option>
@@ -127,7 +135,7 @@ function QuestionFields({
                     <button
                       type="button"
                       onClick={() => setOptions(options.filter((_, j) => j !== i))}
-                      className="shrink-0 text-sm text-zinc-400 hover:text-red-600"
+                      className="shrink-0 text-sm text-[var(--ink)]/40 hover:text-[#a8371c]"
                       aria-label="Remove option"
                     >
                       Remove
@@ -140,22 +148,18 @@ function QuestionFields({
           <button
             type="button"
             onClick={() => setOptions([...options, { label: "", decision: "accept" }])}
-            className="mt-2 text-sm text-zinc-600 underline"
+            className="mt-2 text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]"
           >
             Add option
           </button>
         </div>
       )}
 
-      {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="mt-4 rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-      >
+      <Button type="submit" disabled={pending} className="mt-4">
         {pending ? "Adding..." : "Add question"}
-      </button>
-    </form>
+      </Button>
+    </Card>
   );
 }

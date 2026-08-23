@@ -3,6 +3,9 @@
 import { useActionState, useState } from "react";
 import { importInvitesFromCsv } from "./actions";
 import { parseCsv } from "@/lib/csv";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { mutedLinkClasses } from "@/components/ui/link";
 
 type ParsedRow = { email: string; full_name: string; valid: boolean };
 
@@ -62,15 +65,15 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
   const validRows = rows.filter((r) => r.valid);
 
   return (
-    <div className="mt-4 rounded-lg border border-zinc-200 bg-white p-5">
+    <Card className="mt-4">
       <div className="flex items-center justify-between gap-4">
-        <p className="text-sm font-medium text-zinc-700">
+        <p className="text-sm font-medium text-[var(--ink)]/80">
           Or import from a CSV file
         </p>
         <a
           href="/invite-template.csv"
           download
-          className="text-sm text-zinc-500 underline"
+          className={`text-sm ${mutedLinkClasses}`}
         >
           Download sample template
         </a>
@@ -80,14 +83,14 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
         type="file"
         accept=".csv"
         onChange={handleFile}
-        className="mt-3 w-full text-sm text-zinc-700"
+        className="mt-3 w-full text-sm text-[var(--ink)]/80"
       />
 
-      {parseError && <p className="mt-2 text-sm text-red-600">{parseError}</p>}
+      {parseError && <p className="mt-2 text-sm text-[#a8371c]">{parseError}</p>}
 
       {fileName && rows.length > 0 && (
         <div className="mt-4">
-          <p className="text-sm text-zinc-600">
+          <p className="text-sm text-[var(--ink)]/60">
             {validRows.length} of {rows.length} row
             {rows.length === 1 ? "" : "s"} look valid.
           </p>
@@ -96,7 +99,7 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
               <li
                 key={i}
                 className={`flex items-center justify-between gap-2 rounded px-2 py-1 ${
-                  row.valid ? "text-zinc-700" : "bg-red-50 text-red-700"
+                  row.valid ? "text-[var(--ink)]/80" : "bg-[var(--coral)]/10 text-[#a8371c]"
                 }`}
               >
                 <span className="truncate">
@@ -118,25 +121,21 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
                 validRows.map(({ email, full_name }) => ({ email, full_name })),
               )}
             />
-            <button
-              type="submit"
-              disabled={pending || validRows.length === 0}
-              className="rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-            >
+            <Button type="submit" disabled={pending || validRows.length === 0} size="sm">
               {pending
                 ? "Importing..."
                 : `Import ${validRows.length} invite${validRows.length === 1 ? "" : "s"}`}
-            </button>
+            </Button>
           </form>
         </div>
       )}
 
-      {state.error && <p className="mt-3 text-sm text-red-600">{state.error}</p>}
+      {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
       {state.imported !== null && (
         <p className="mt-3 text-sm text-emerald-700">
           Imported {state.imported} invite{state.imported === 1 ? "" : "s"}.
         </p>
       )}
-    </div>
+    </Card>
   );
 }

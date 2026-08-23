@@ -4,19 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 import { confirmIncentiveReceived, reportIncentiveNotReceived } from "@/app/incentive-actions";
 import { withdrawApplication } from "./actions";
 import { Card } from "@/components/ui/Card";
-import { Badge, type BadgeTone } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
-
-const statusTones: Record<string, BadgeTone> = {
-  qualified: "info",
-  rejected: "danger",
-  approved: "success",
-  scheduled: "warning",
-  completed: "strong",
-  no_show: "danger",
-  withdrawn: "neutral",
-};
+import { applicationStatusTones as statusTones } from "@/lib/applicationStatus";
 
 const statusLabels: Record<string, string> = {
   qualified: "Qualified — pending review",

@@ -3,6 +3,9 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { QuestionForm } from "./QuestionForm";
 import { deleteQuestion } from "./actions";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { mutedLinkClasses } from "@/components/ui/link";
 
 const typeLabels: Record<string, string> = {
   pick_one: "Pick one",
@@ -45,15 +48,15 @@ export default async function ScreenerPage({
   const boundDeleteQuestion = deleteQuestion.bind(null, id);
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
-        <Link href="/researcher/studies" className="text-sm text-zinc-500 underline">
+        <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
           Back to studies
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
           Screener — {study.title}
         </h1>
-        <p className="mt-1 text-sm text-zinc-600">
+        <p className="mt-1 text-sm text-[var(--ink)]/60">
           Applicants who answer with a Rejected option are automatically
           screened out. Everyone else lands in your review queue.
         </p>
@@ -61,21 +64,18 @@ export default async function ScreenerPage({
         {questions && questions.length > 0 && (
           <ul className="mt-8 space-y-3">
             {questions.map((q) => (
-              <li
-                key={q.id}
-                className="rounded-lg border border-zinc-200 bg-white p-4"
-              >
+              <Card as="li" key={q.id}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="font-medium text-zinc-900">
+                    <p className="font-medium text-[var(--ink)]">
                       {q.question_text}
                       {q.required && (
-                        <span className="ml-2 text-xs text-zinc-400">
+                        <span className="ml-2 text-xs text-[var(--ink)]/40">
                           Required
                         </span>
                       )}
                     </p>
-                    <p className="mt-0.5 text-xs text-zinc-500">
+                    <p className="mt-0.5 text-xs text-[var(--ink)]/50">
                       {typeLabels[q.type]}
                     </p>
                     {q.screener_options && q.screener_options.length > 0 && (
@@ -83,22 +83,10 @@ export default async function ScreenerPage({
                         {[...q.screener_options]
                           .sort((a, b) => a.sort_order - b.sort_order)
                           .map((o) => (
-                            <li
-                              key={o.id}
-                              className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
-                                o.decision === "accept"
-                                  ? "bg-emerald-100 text-emerald-800"
-                                  : "bg-red-100 text-red-800"
-                              }`}
-                            >
-                              <span
-                                className={`h-1.5 w-1.5 rounded-full ${
-                                  o.decision === "accept"
-                                    ? "bg-emerald-600"
-                                    : "bg-red-600"
-                                }`}
-                              />
-                              {o.label} ({o.decision === "accept" ? "Accept" : "Reject"})
+                            <li key={o.id}>
+                              <Badge tone={o.decision === "accept" ? "success" : "danger"}>
+                                {o.label} ({o.decision === "accept" ? "Accept" : "Reject"})
+                              </Badge>
                             </li>
                           ))}
                       </ul>
@@ -107,13 +95,13 @@ export default async function ScreenerPage({
                   <form action={boundDeleteQuestion.bind(null, q.id)}>
                     <button
                       type="submit"
-                      className="text-sm text-zinc-400 hover:text-red-600"
+                      className="text-sm text-[var(--ink)]/40 hover:text-[#a8371c]"
                     >
                       Delete
                     </button>
                   </form>
                 </div>
-              </li>
+              </Card>
             ))}
           </ul>
         )}

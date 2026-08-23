@@ -3,16 +3,11 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { approveApplication, rejectApplication } from "./actions";
 import { markSessionCompleted, markNoShow, sendIncentive } from "@/app/incentive-actions";
-
-const statusStyles: Record<string, string> = {
-  qualified: "bg-blue-100 text-blue-800",
-  rejected: "bg-red-100 text-red-800",
-  approved: "bg-emerald-100 text-emerald-800",
-  scheduled: "bg-purple-100 text-purple-800",
-  completed: "bg-zinc-800 text-white",
-  no_show: "bg-amber-100 text-amber-800",
-  withdrawn: "bg-zinc-200 text-zinc-600",
-};
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { mutedLinkClasses } from "@/components/ui/link";
+import { applicationStatusTones, incentiveStatusTones } from "@/lib/applicationStatus";
 
 const statusLabels: Record<string, string> = {
   qualified: "Qualified — pending review",
@@ -24,13 +19,6 @@ const statusLabels: Record<string, string> = {
   withdrawn: "Withdrawn by participant",
 };
 
-const incentiveStyles: Record<string, string> = {
-  pending: "bg-zinc-200 text-zinc-700",
-  sent: "bg-amber-100 text-amber-800",
-  received: "bg-emerald-100 text-emerald-800",
-  not_received: "bg-red-100 text-red-800",
-};
-
 const incentiveLabels: Record<string, string> = {
   pending: "Incentive not sent yet",
   sent: "Incentive sent — awaiting confirmation",
@@ -40,10 +28,10 @@ const incentiveLabels: Record<string, string> = {
 
 type ApplicationRow = {
   id: string;
-  status: keyof typeof statusStyles;
+  status: keyof typeof applicationStatusTones;
   created_at: string;
   profiles: { full_name: string | null } | null;
-  incentive_records: { status: keyof typeof incentiveStyles; amount: number } | null;
+  incentive_records: { status: keyof typeof incentiveStatusTones; amount: number } | null;
 };
 
 export default async function StudyApplicationsPage({
@@ -84,78 +72,71 @@ export default async function StudyApplicationsPage({
   const boundReject = rejectApplication.bind(null, id);
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <div className="flex items-center justify-between gap-4">
-          <Link href="/researcher/studies" className="text-sm text-zinc-500 underline">
+          <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
             Back to studies
           </Link>
           <a
             href={`/researcher/studies/${id}/applications/export`}
-            className="text-sm text-zinc-500 underline"
+            className={`text-sm ${mutedLinkClasses}`}
           >
             Export CSV
           </a>
         </div>
-        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
           Applicants — {study.title}
         </h1>
 
         {!applications || applications.length === 0 ? (
-          <p className="mt-8 text-zinc-600">
+          <p className="mt-8 text-[var(--ink)]/70">
             No one has applied yet — check back once the study is published
             and shared.
           </p>
         ) : (
           <ul className="mt-8 space-y-3">
             {applications.map((application) => (
-              <li
+              <Card
+                as="li"
                 key={application.id}
-                className="flex flex-col gap-3 rounded-lg border border-zinc-200 bg-white p-4 sm:flex-row sm:items-start sm:justify-between"
+                className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
               >
                 <div className="min-w-0">
-                  <p className="font-medium text-zinc-900">
+                  <p className="font-medium text-[var(--ink)]">
                     {application.profiles?.full_name ?? "Participant"}
                   </p>
-                  <span
-                    className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${statusStyles[application.status]}`}
-                  >
-                    {statusLabels[application.status]}
-                  </span>
-                  {application.status === "completed" &&
-                    application.incentive_records && (
-                      <span
-                        className={`mt-1 ml-2 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${incentiveStyles[application.incentive_records.status]}`}
-                      >
-                        {incentiveLabels[application.incentive_records.status]}
-                      </span>
-                    )}
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    <Badge tone={applicationStatusTones[application.status]}>
+                      {statusLabels[application.status]}
+                    </Badge>
+                    {application.status === "completed" &&
+                      application.incentive_records && (
+                        <Badge tone={incentiveStatusTones[application.incentive_records.status]}>
+                          {incentiveLabels[application.incentive_records.status]}
+                        </Badge>
+                      )}
+                  </div>
                 </div>
 
                 <div className="flex shrink-0 flex-wrap items-center gap-2">
                   <Link
                     href={`/researcher/studies/${id}/applications/${application.id}/messages`}
-                    className="text-sm text-zinc-500 underline"
+                    className={`text-sm ${mutedLinkClasses}`}
                   >
                     Message
                   </Link>
                   {application.status === "qualified" && (
                     <>
                       <form action={boundApprove.bind(null, application.id)}>
-                        <button
-                          type="submit"
-                          className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-                        >
+                        <Button type="submit" size="sm">
                           Approve
-                        </button>
+                        </Button>
                       </form>
                       <form action={boundReject.bind(null, application.id)}>
-                        <button
-                          type="submit"
-                          className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
-                        >
+                        <Button type="submit" size="sm" variant="secondary">
                           Not a fit
-                        </button>
+                        </Button>
                       </form>
                     </>
                   )}
@@ -168,12 +149,9 @@ export default async function StudyApplicationsPage({
                           revalidateTarget,
                         )}
                       >
-                        <button
-                          type="submit"
-                          className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-                        >
+                        <Button type="submit" size="sm">
                           Mark session completed
-                        </button>
+                        </Button>
                       </form>
                       <form
                         action={markNoShow.bind(
@@ -182,12 +160,9 @@ export default async function StudyApplicationsPage({
                           revalidateTarget,
                         )}
                       >
-                        <button
-                          type="submit"
-                          className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
-                        >
+                        <Button type="submit" size="sm" variant="secondary">
                           Didn&apos;t show up
-                        </button>
+                        </Button>
                       </form>
                     </>
                   )}
@@ -200,16 +175,13 @@ export default async function StudyApplicationsPage({
                           revalidateTarget,
                         )}
                       >
-                        <button
-                          type="submit"
-                          className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-                        >
+                        <Button type="submit" size="sm">
                           I&apos;ve sent the incentive
-                        </button>
+                        </Button>
                       </form>
                     )}
                 </div>
-              </li>
+              </Card>
             ))}
           </ul>
         )}
