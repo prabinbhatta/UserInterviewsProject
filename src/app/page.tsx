@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Fraunces, Manrope, IBM_Plex_Mono } from "next/font/google";
 import { VoiceWaveform } from "./VoiceWaveform";
+import { Reveal } from "./Reveal";
+import { JourneyTimeline } from "./JourneyTimeline";
+import { SiteHeader } from "./SiteHeader";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -59,31 +62,19 @@ export default function Home() {
       }
       className={`${fraunces.variable} ${manrope.variable} ${plexMono.variable} flex flex-1 flex-col bg-[var(--paper)] font-[family-name:var(--font-manrope)] text-[var(--ink)]`}
     >
-      {/* Header */}
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 sm:px-10">
-        <div className="flex items-center gap-2">
-          <svg width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true">
-            <rect x="0" y="6" width="3" height="6" rx="1.5" fill="var(--coral)" />
-            <rect x="6" y="2" width="3" height="14" rx="1.5" fill="var(--ink)" />
-            <rect x="12" y="0" width="3" height="18" rx="1.5" fill="var(--indigo)" />
-            <rect x="18" y="4" width="3" height="10" rx="1.5" fill="var(--ink)" />
-            <rect x="23" y="7" width="3" height="4" rx="1.5" fill="var(--coral)" />
-          </svg>
-          <span className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
-            Research Platform
-          </span>
-        </div>
-        <Link
-          href="/login"
-          className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)] underline decoration-[var(--mist)] underline-offset-4 transition-colors hover:decoration-[var(--coral)]"
-        >
-          Log in
-        </Link>
-      </header>
+      <SiteHeader />
 
       {/* Hero */}
-      <section className="mx-auto w-full max-w-6xl px-6 pt-8 pb-20 sm:px-10 sm:pt-14">
-        <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <section className="relative mx-auto w-full max-w-6xl overflow-hidden px-6 pt-8 pb-20 sm:px-10 sm:pt-14">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-24 -right-32 h-[26rem] w-[26rem] rounded-full bg-gradient-to-br from-[var(--coral)]/25 via-[var(--gold)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_14s_ease-in-out_infinite]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/3 -left-24 h-72 w-72 rounded-full bg-gradient-to-tr from-[var(--indigo)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_18s_ease-in-out_infinite_reverse]"
+        />
+        <div className="relative grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="motion-safe:animate-[riseIn_0.7s_ease-out]">
             <p className="font-mono-utility text-xs uppercase tracking-[0.2em] text-[var(--coral)]">
               User research · Starting in Nepal
@@ -122,115 +113,120 @@ export default function Home() {
       {/* Two paths */}
       <section className="border-t border-[var(--mist)]/70 bg-white/40">
         <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
-          <h2 className="font-serif-display max-w-md text-3xl font-medium sm:text-4xl">
-            Two sides. One conversation.
-          </h2>
+          <Reveal>
+            <h2 className="font-serif-display max-w-md text-3xl font-medium sm:text-4xl">
+              Two sides. One conversation.
+            </h2>
+          </Reveal>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-[var(--mist)] bg-[var(--indigo)] p-8 text-white">
-              <p className="font-mono-utility text-xs uppercase tracking-widest text-white/60">
-                For companies
-              </p>
-              <h3 className="font-serif-display mt-3 text-2xl font-medium">
-                Teams who build things people use
-              </h3>
-              <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/80">
-                <li>A screener that actually disqualifies bad-fit applicants — automatically.</li>
-                <li>A review queue of people who already match your criteria.</li>
-                <li>Scheduling that doesn&rsquo;t live in your email.</li>
-              </ul>
-              <Link
-                href="/signup?role=researcher"
-                className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-[var(--indigo)] transition-transform hover:-translate-y-0.5"
-              >
-                Start a study
-              </Link>
-            </div>
+            <Reveal delay={80}>
+              <div className="group h-full rounded-2xl border border-[var(--mist)] bg-[var(--indigo)] p-8 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(45,52,112,0.5)]">
+                <p className="font-mono-utility text-xs uppercase tracking-widest text-white/60">
+                  For companies
+                </p>
+                <h3 className="font-serif-display mt-3 text-2xl font-medium">
+                  Teams who build things people use
+                </h3>
+                <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/80">
+                  <li>A screener that actually disqualifies bad-fit applicants — automatically.</li>
+                  <li>A review queue of people who already match your criteria.</li>
+                  <li>Scheduling that doesn&rsquo;t live in your email.</li>
+                </ul>
+                <Link
+                  href="/signup?role=researcher"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white px-5 text-sm font-semibold text-[var(--indigo)] transition-transform group-hover:-translate-y-0.5"
+                >
+                  Start a study
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                    →
+                  </span>
+                </Link>
+              </div>
+            </Reveal>
 
-            <div className="rounded-2xl border border-[var(--mist)] bg-[var(--gold)] p-8 text-[var(--ink)]">
-              <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
-                For participants
-              </p>
-              <h3 className="font-serif-display mt-3 text-2xl font-medium">
-                People with opinions worth paying for
-              </h3>
-              <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-[var(--ink)]/80">
-                <li>Apply to studies that actually fit your background.</li>
-                <li>Get paid directly by the researcher — no platform holding your money.</li>
-                <li>Build your profile once, apply in seconds from then on.</li>
-              </ul>
-              <Link
-                href="/signup?role=participant"
-                className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
-              >
-                Browse open studies
-              </Link>
-            </div>
+            <Reveal delay={200}>
+              <div className="group h-full rounded-2xl border border-[var(--mist)] bg-[var(--gold)] p-8 text-[var(--ink)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(245,185,66,0.5)]">
+                <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
+                  For participants
+                </p>
+                <h3 className="font-serif-display mt-3 text-2xl font-medium">
+                  People with opinions worth paying for
+                </h3>
+                <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-[var(--ink)]/80">
+                  <li>Apply to studies that actually fit your background.</li>
+                  <li>Get paid directly by the researcher — no platform holding your money.</li>
+                  <li>Build your profile once, apply in seconds from then on.</li>
+                </ul>
+                <Link
+                  href="/signup?role=participant"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white transition-transform group-hover:-translate-y-0.5"
+                >
+                  Browse open studies
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                    →
+                  </span>
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* How it works */}
       <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
-        <h2 className="font-serif-display max-w-md text-3xl font-medium sm:text-4xl">
-          One study, start to finish.
-        </h2>
-        <p className="mt-3 max-w-lg text-[var(--ink)]/70">
-          The same session, timestamped like the recording it becomes.
-        </p>
+        <Reveal>
+          <h2 className="font-serif-display max-w-md text-3xl font-medium sm:text-4xl">
+            One study, start to finish.
+          </h2>
+          <p className="mt-3 max-w-lg text-[var(--ink)]/70">
+            The same session, timestamped like the recording it becomes.
+            Hover a step, or just watch it play through.
+          </p>
+        </Reveal>
 
-        <ol className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step) => (
-            <li key={step.time} className="border-l-2 border-[var(--mist)] pl-5">
-              <span className="font-mono-utility text-xs text-[var(--coral)]">
-                {step.time}
-              </span>
-              <h3 className="font-serif-display mt-2 text-lg font-medium">
-                {step.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-[var(--ink)]/70">
-                {step.body}
-              </p>
-            </li>
-          ))}
-        </ol>
+        <Reveal delay={120}>
+          <JourneyTimeline steps={steps} />
+        </Reveal>
       </section>
 
       {/* Honest trust section */}
       <section className="border-t border-[var(--mist)]/70 bg-white/40">
         <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
-          <h2 className="font-serif-display max-w-lg text-3xl font-medium sm:text-4xl">
-            No client logos. Just how it actually works.
-          </h2>
-          <p className="mt-3 max-w-lg text-[var(--ink)]/70">
-            We&rsquo;re early, and we&rsquo;d rather earn your trust with the
-            mechanics than borrow it with a logo wall.
-          </p>
+          <Reveal>
+            <h2 className="font-serif-display max-w-lg text-3xl font-medium sm:text-4xl">
+              No client logos. Just how it actually works.
+            </h2>
+            <p className="mt-3 max-w-lg text-[var(--ink)]/70">
+              We&rsquo;re early, and we&rsquo;d rather earn your trust with the
+              mechanics than borrow it with a logo wall.
+            </p>
+          </Reveal>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            <div>
-              <div className="h-9 w-9 rounded-full bg-[var(--coral)]" />
+            <Reveal delay={80} className="group">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--coral)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
               <h3 className="mt-4 font-semibold">A screener that screens</h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--ink)]/70">
                 Every disqualifying answer is caught the moment someone
                 applies — not three weeks later in a spreadsheet.
               </p>
-            </div>
-            <div>
-              <div className="h-9 w-9 rounded-full bg-[var(--indigo)]" />
+            </Reveal>
+            <Reveal delay={180} className="group">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--indigo)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
               <h3 className="mt-4 font-semibold">You control the calendar</h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--ink)]/70">
                 Post the times that work for you. Participants book directly
                 — no back-and-forth to find a slot.
               </p>
-            </div>
-            <div>
-              <div className="h-9 w-9 rounded-full bg-[var(--gold)]" />
+            </Reveal>
+            <Reveal delay={280} className="group">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
               <h3 className="mt-4 font-semibold">A person checks every payment</h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--ink)]/70">
                 Incentives move directly between you and the participant. We
                 verify each one by hand and you can always reach support.
               </p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
