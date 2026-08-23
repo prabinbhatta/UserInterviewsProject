@@ -93,26 +93,34 @@ export default async function StudyApplicationsPage({
                   </span>
                 </div>
 
-                {application.status === "qualified" && (
-                  <div className="flex shrink-0 gap-2">
-                    <form action={boundApprove.bind(null, application.id)}>
-                      <button
-                        type="submit"
-                        className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-                      >
-                        Approve
-                      </button>
-                    </form>
-                    <form action={boundReject.bind(null, application.id)}>
-                      <button
-                        type="submit"
-                        className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
-                      >
-                        Not a fit
-                      </button>
-                    </form>
-                  </div>
-                )}
+                <div className="flex shrink-0 items-center gap-2">
+                  <Link
+                    href={`/researcher/studies/${id}/applications/${application.id}/messages`}
+                    className="text-sm text-zinc-500 underline"
+                  >
+                    Message
+                  </Link>
+                  {application.status === "qualified" && (
+                    <>
+                      <form action={boundApprove.bind(null, application.id)}>
+                        <button
+                          type="submit"
+                          className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+                        >
+                          Approve
+                        </button>
+                      </form>
+                      <form action={boundReject.bind(null, application.id)}>
+                        <button
+                          type="submit"
+                          className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
+                        >
+                          Not a fit
+                        </button>
+                      </form>
+                    </>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

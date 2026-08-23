@@ -75,6 +75,14 @@ export default async function MyApplicationsPage() {
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
+                  {application.status !== "rejected" && (
+                    <Link
+                      href={`/participant/applications/${application.id}/messages`}
+                      className="text-sm underline"
+                    >
+                      Message
+                    </Link>
+                  )}
                   {(application.status === "approved" ||
                     application.status === "scheduled") && (
                     <Link
