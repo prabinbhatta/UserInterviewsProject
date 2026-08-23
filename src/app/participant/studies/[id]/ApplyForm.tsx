@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { applyToStudy } from "./actions";
+import { useLanguage } from "@/app/LanguageProvider";
 
 type Option = { id: string; label: string };
 type Question = {
@@ -23,6 +24,7 @@ export function ApplyForm({
   const [state, formAction, pending] = useActionState(boundApply, {
     error: null,
   });
+  const { t } = useLanguage();
 
   return (
     <form action={formAction} className="mt-8 space-y-6">
@@ -31,7 +33,7 @@ export function ApplyForm({
           <legend className="font-medium text-zinc-900">
             {question.question_text}
             {question.required && (
-              <span className="ml-2 text-xs text-zinc-400">required</span>
+              <span className="ml-2 text-xs text-zinc-400">{t("requiredTag")}</span>
             )}
           </legend>
 
@@ -101,7 +103,7 @@ export function ApplyForm({
         disabled={pending}
         className="w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
       >
-        {pending ? "Submitting..." : "Submit application"}
+        {pending ? t("submittingApplication") : t("submitApplication")}
       </button>
     </form>
   );

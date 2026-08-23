@@ -1,15 +1,18 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-
-const formatLabels: Record<string, string> = {
-  online: "Online",
-  in_person: "In person",
-  phone: "Phone",
-};
+import { getLang } from "@/lib/getLang";
+import { LangToggle } from "@/app/LangToggle";
 
 export default async function BrowseStudiesPage() {
   const supabase = await createClient();
+  const { t } = await getLang();
+
+  const formatLabels: Record<string, string> = {
+    online: t("formatOnline"),
+    in_person: t("formatInPerson"),
+    phone: t("formatPhone"),
+  };
 
   const {
     data: { user },
@@ -27,17 +30,18 @@ export default async function BrowseStudiesPage() {
   return (
     <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
       <div className="w-full max-w-2xl">
-        <Link href="/participant" className="text-sm text-zinc-500 underline">
-          Back to dashboard
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link href="/participant" className="text-sm text-zinc-500 underline">
+            {t("backToDashboard")}
+          </Link>
+          <LangToggle />
+        </div>
         <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
-          Open studies
+          {t("openStudies")}
         </h1>
 
         {!studies || studies.length === 0 ? (
-          <p className="mt-8 text-zinc-600">
-            No open studies right now — check back soon.
-          </p>
+          <p className="mt-8 text-zinc-600">{t("noOpenStudies")}</p>
         ) : (
           <ul className="mt-8 space-y-4">
             {studies.map((study) => (
@@ -53,7 +57,7 @@ export default async function BrowseStudiesPage() {
                       </h2>
                       <p className="mt-1 text-sm text-zinc-600">
                         {formatLabels[study.format]} ·{" "}
-                        {study.session_length_minutes} min
+                        {study.session_length_minutes} {t("minutesSuffix")}
                       </p>
                       <p className="mt-2 line-clamp-2 text-sm text-zinc-600">
                         {study.description}

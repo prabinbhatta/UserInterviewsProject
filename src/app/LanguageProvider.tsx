@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { translations, type Lang, type TranslationKey } from "@/lib/i18n";
 
 type LanguageContextValue = {
@@ -13,24 +14,23 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 const STORAGE_KEY = "lang";
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
-
-  useEffect(() => {
-    // Reads the persisted preference from localStorage on mount and syncs
-    // it into state — this is the "synchronize with an external system"
-    // case the lint rule itself allows, not derived/redundant state. It
-    // has to run post-mount (not a lazy useState initializer) because the
-    // server always renders "en" with no access to the browser's
-    // localStorage; doing it here avoids a hydration mismatch.
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (stored === "en" || stored === "ne") setLangState(stored);
-  }, []);
+export function LanguageProvider({
+  initialLang,
+  children,
+}: {
+  initialLang: Lang;
+  children: ReactNode;
+}) {
+  const [lang, setLangState] = useState<Lang>(initialLang);
+  const router = useRouter();
 
   function setLang(next: Lang) {
     setLangState(next);
-    window.localStorage.setItem(STORAGE_KEY, next);
+    // A plain, non-sensitive preference cookie (not localStorage) so server
+    // components — most pages in this app — can read it via next/headers
+    // and render already-translated HTML instead of flashing English first.
+    document.cookie = `${STORAGE_KEY}=${next}; path=/; max-age=31536000`;
+    router.refresh();
   }
 
   function t(key: TranslationKey): string {
