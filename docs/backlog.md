@@ -55,11 +55,18 @@ A researcher can flag a scheduled session that never happened via "Didn't
 show up," a new terminal `no_show` application status. Frees the slot for
 reuse but creates no incentive record. See `0017_no_show.sql`.
 
-### Withdraw an application
-A participant who applies and changes their mind has no way to withdraw —
-`applications` only moves forward via researcher actions (approve/reject).
-Needs a participant-initiated "withdraw" action for `qualified` or
-`approved` applications.
+### ~~Withdraw an application~~ — shipped 2026-08-23
+A participant can withdraw a `qualified` or `approved` application via a
+new `withdrawn` status. Withdrawing an approved application reopens its
+study if that frees a spot under `participants_needed`. See
+`0020_withdraw_application.sql`.
+
+**Bonus fix while testing this**: `closeStudyIfFull`/
+`reopenStudyIfUnderCapacity` silently no-op'd when called from a
+participant-initiated action (only researchers had RLS UPDATE rights on
+`studies`) — this affected the invite-accept auto-close path too, not
+just withdrawal. Fixed with `SECURITY DEFINER` Postgres functions. See
+`0021_fix_capacity_rls_gap.sql`.
 
 ### ~~Report / block abusive user or spam study~~ — shipped 2026-08-23
 A "Report" link on both message threads and a study's detail page files
