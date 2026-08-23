@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { sendIncentiveSentEmail } from "@/lib/email";
 import { one } from "@/lib/one";
+import { reopenStudyIfUnderCapacity } from "@/lib/closeStudyIfFull";
 
 type StudyIncentive = { incentive_amount: number } | { incentive_amount: number }[] | null;
 
@@ -65,7 +66,7 @@ export async function markNoShow(
 
   const { data: application } = await supabase
     .from("applications")
-    .select("id, status")
+    .select("id, status, study_id")
     .eq("id", applicationId)
     .single();
 
@@ -89,6 +90,10 @@ export async function markNoShow(
     .update({ application_id: null })
     .eq("application_id", applicationId);
   if (slotError) throw new Error(slotError.message);
+
+  // 'no_show' no longer counts toward participants_needed, so a study
+  // that auto-closed at capacity may now have a spot open again.
+  await reopenStudyIfUnderCapacity(supabase, application.study_id);
 
   revalidatePath(revalidateTargetPath);
 }

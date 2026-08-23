@@ -10,6 +10,8 @@ const applicationStatuses = [
   "approved",
   "scheduled",
   "completed",
+  "no_show",
+  "withdrawn",
 ] as const;
 const incentiveStatuses = ["pending", "sent", "received", "not_received"] as const;
 
@@ -206,7 +208,9 @@ export default async function AdminPage() {
             <dl className="mt-3 space-y-1 text-sm">
               {applicationStatuses.map((s) => (
                 <div key={s} className="flex justify-between">
-                  <dt className="text-zinc-600 capitalize">{s}</dt>
+                  <dt className="text-zinc-600 capitalize">
+                    {s.replace("_", " ")}
+                  </dt>
                   <dd className="font-medium text-zinc-900">
                     {applicationCounts[s]}
                   </dd>

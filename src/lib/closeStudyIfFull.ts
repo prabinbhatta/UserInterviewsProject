@@ -2,27 +2,25 @@ import { createClient } from "@/lib/supabase/server";
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
+// Delegates to a SECURITY DEFINER Postgres function rather than doing the
+// check-then-update here — this gets called from both researcher- and
+// participant-initiated actions, and only a researcher has RLS UPDATE
+// rights on `studies`. The function bypasses RLS regardless of caller.
 export async function closeStudyIfFull(
   supabase: SupabaseServerClient,
   studyId: string,
 ) {
-  const { data: study } = await supabase
-    .from("studies")
-    .select("status, participants_needed")
-    .eq("id", studyId)
-    .single();
+  await supabase.rpc("close_study_if_full", { target_study_id: studyId });
+}
 
-  if (!study || study.status !== "active" || study.participants_needed <= 0) {
-    return;
-  }
-
-  const { count } = await supabase
-    .from("applications")
-    .select("id", { count: "exact", head: true })
-    .eq("study_id", studyId)
-    .in("status", ["approved", "scheduled", "completed"]);
-
-  if ((count ?? 0) >= study.participants_needed) {
-    await supabase.from("studies").update({ status: "closed" }).eq("id", studyId);
-  }
+// The reverse case: a study that auto-closed because it filled up can
+// free a spot again — a participant withdraws, or a researcher marks
+// someone a no-show. Reopen it so new applicants can be considered.
+export async function reopenStudyIfUnderCapacity(
+  supabase: SupabaseServerClient,
+  studyId: string,
+) {
+  await supabase.rpc("reopen_study_if_under_capacity", {
+    target_study_id: studyId,
+  });
 }

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { confirmIncentiveReceived, reportIncentiveNotReceived } from "@/app/incentive-actions";
+import { withdrawApplication } from "./actions";
 
 const statusStyles: Record<string, string> = {
   qualified: "bg-blue-100 text-blue-800",
@@ -10,6 +11,7 @@ const statusStyles: Record<string, string> = {
   scheduled: "bg-purple-100 text-purple-800",
   completed: "bg-zinc-800 text-white",
   no_show: "bg-amber-100 text-amber-800",
+  withdrawn: "bg-zinc-200 text-zinc-600",
 };
 
 const statusLabels: Record<string, string> = {
@@ -19,6 +21,7 @@ const statusLabels: Record<string, string> = {
   scheduled: "Scheduled",
   completed: "Session completed",
   no_show: "Marked as a missed session",
+  withdrawn: "Withdrawn",
 };
 
 type ApplicationRow = {
@@ -105,6 +108,19 @@ export default async function MyApplicationsPage() {
                           ? "View time"
                           : "Pick a time"}
                       </Link>
+                    )}
+                    {(application.status === "qualified" ||
+                      application.status === "approved") && (
+                      <form
+                        action={withdrawApplication.bind(null, application.id)}
+                      >
+                        <button
+                          type="submit"
+                          className="text-sm text-zinc-400 underline hover:text-red-600"
+                        >
+                          Withdraw
+                        </button>
+                      </form>
                     )}
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-medium ${statusStyles[application.status]}`}

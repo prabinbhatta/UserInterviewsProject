@@ -11,6 +11,7 @@ const statusStyles: Record<string, string> = {
   scheduled: "bg-purple-100 text-purple-800",
   completed: "bg-zinc-800 text-white",
   no_show: "bg-amber-100 text-amber-800",
+  withdrawn: "bg-zinc-200 text-zinc-600",
 };
 
 const statusLabels: Record<string, string> = {
@@ -20,6 +21,7 @@ const statusLabels: Record<string, string> = {
   scheduled: "Scheduled",
   completed: "Session completed",
   no_show: "No-show",
+  withdrawn: "Withdrawn by participant",
 };
 
 const incentiveStyles: Record<string, string> = {
