@@ -45,11 +45,10 @@ A study now auto-closes once approved-application count reaches
 invite-based auto-join. See `src/lib/closeStudyIfFull.ts`, migrations
 `0014_study_capacity.sql` / `0015_fix_study_visibility_recursion.sql`.
 
-### Cancel / reschedule a booked time slot
-Once a participant books a `study_slots` row, neither side can change it —
-no cancel, no reschedule. Real sessions get rescheduled constantly; needs a
-cancel action (re-opens the slot / returns application to `approved`) usable
-by both researcher and participant, ideally with an email notification.
+### ~~Cancel / reschedule a booked time slot~~ — shipped 2026-08-23
+Either side can now cancel a scheduled session — the slot reopens and the
+application reverts to `approved`, with a best-effort email to the other
+party. See `src/lib/cancelBooking.ts`, migration `0016_cancel_booking.sql`.
 
 ### No-show / session-didn't-happen handling
 There's no way to flag that a scheduled session didn't happen. Right now
