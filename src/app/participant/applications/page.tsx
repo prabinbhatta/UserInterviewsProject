@@ -64,7 +64,7 @@ export default async function MyApplicationsPage() {
             {applications.map((application) => (
               <li
                 key={application.id}
-                className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 bg-white p-4"
+                className="flex flex-col gap-2 rounded-lg border border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div>
                   <p className="font-medium text-zinc-900">
@@ -74,11 +74,24 @@ export default async function MyApplicationsPage() {
                     NPR {application.studies?.incentive_amount}
                   </p>
                 </div>
-                <span
-                  className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium ${statusStyles[application.status]}`}
-                >
-                  {statusLabels[application.status]}
-                </span>
+                <div className="flex shrink-0 items-center gap-3">
+                  {(application.status === "approved" ||
+                    application.status === "scheduled") && (
+                    <Link
+                      href={`/participant/applications/${application.id}/schedule`}
+                      className="text-sm underline"
+                    >
+                      {application.status === "scheduled"
+                        ? "View time"
+                        : "Pick a time"}
+                    </Link>
+                  )}
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${statusStyles[application.status]}`}
+                  >
+                    {statusLabels[application.status]}
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
