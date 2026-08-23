@@ -129,23 +129,32 @@ are translated. Researcher-side pages, the rest of the participant
 dashboard (applications, messages, scheduling, incentives), and admin are
 still English-only.
 
-### VoiceWaveform hint text
-("Hover to hear a moment from a real session.") on the landing page is
-still English-only.
+### ~~VoiceWaveform hint text~~ — shipped 2026-08-24
+"Hover to hear a moment from a real session." now translates via
+`useLanguage()`/`t()`, matching the rest of the landing page. The
+fabricated testimonial quotes themselves were deliberately left
+untranslated (translating them would misrepresent authenticity).
 
-### SEO / social share metadata
-No Open Graph / Twitter Card metadata on the landing page — links shared in
-WhatsApp/Facebook (likely primary sharing channels in Nepal) currently show
-no preview image or description.
+### ~~SEO / social share metadata~~ — shipped 2026-08-24
+Dynamic Open Graph image (`src/app/opengraph-image.tsx`, via `next/og`)
+plus Open Graph/Twitter Card metadata in `layout.tsx`. Links shared in
+WhatsApp/Facebook now show a title, description, and preview image.
 
 ### Basic privacy-friendly analytics
 No pageview/funnel tracking at all — founder has no visibility into
 signup → application → completion conversion without querying the database
 directly.
 
-### Accessibility pass
-No dedicated a11y audit done yet — alt text, aria labels, color contrast,
-and keyboard navigation haven't been systematically checked.
+### ~~Accessibility pass~~ — shipped 2026-08-24
+Computed WCAG 2.1 contrast ratios for the app's muted-text convention and
+found `text-ink/40` and `/50` both failed AA (2.51:1 and 3.34:1 vs the
+4.5:1 minimum) — bumped app-wide to `/60`/`/70` (46 occurrences across
+~28 files, including the shared `mutedLinkClasses` and Button `ghost`
+variant). Added a visible focus ring to `fieldClasses` for keyboard
+navigation. Audited for missing `alt`/`aria-label`: no raw `<img>` tags
+in the app, and the one icon-only SVG (site logo) is correctly
+`aria-hidden` next to visible text; existing icon buttons already had
+`aria-label`s.
 
 ### Final product name
 Deferred by founder; current working name is "Research Platform."
