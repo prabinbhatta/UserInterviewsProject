@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { sendSlotBookedEmail } from "@/lib/email";
+import { one } from "@/lib/one";
 
 export async function bookSlot(applicationId: string, slotId: string) {
   const supabase = await createClient();
@@ -15,7 +17,7 @@ export async function bookSlot(applicationId: string, slotId: string) {
     .update({ application_id: applicationId })
     .eq("id", slotId)
     .is("application_id", null)
-    .select("id")
+    .select("id, starts_at")
     .maybeSingle();
 
   if (claimError) throw new Error(claimError.message);
@@ -33,4 +35,25 @@ export async function bookSlot(applicationId: string, slotId: string) {
 
   revalidatePath(`/participant/applications/${applicationId}/schedule`);
   revalidatePath("/participant/applications");
+
+  const { data: application } = await supabase
+    .from("applications")
+    .select("profiles(full_name), studies(title, profiles(email))")
+    .eq("id", applicationId)
+    .single();
+
+  const participant = one(application?.profiles);
+  const study = one(application?.studies);
+  const researcher = one(study?.profiles);
+  if (researcher?.email && study?.title) {
+    await sendSlotBookedEmail(
+      researcher.email,
+      study.title,
+      participant?.full_name ?? "A participant",
+      new Date(claimedSlot.starts_at).toLocaleString(undefined, {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }),
+    );
+  }
 }

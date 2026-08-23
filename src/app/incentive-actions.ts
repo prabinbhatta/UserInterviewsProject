@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { sendIncentiveSentEmail } from "@/lib/email";
+import { one } from "@/lib/one";
 
 type StudyIncentive = { incentive_amount: number } | { incentive_amount: number }[] | null;
 
@@ -56,13 +58,28 @@ export async function sendIncentive(
   revalidateTargetPath: string,
 ) {
   const supabase = await createClient();
-  const { error } = await supabase
+  const { data: updated, error } = await supabase
     .from("incentive_records")
     .update({ status: "sent", sent_at: new Date().toISOString() })
     .eq("application_id", applicationId)
-    .eq("status", "pending");
+    .eq("status", "pending")
+    .select("amount")
+    .maybeSingle();
   if (error) throw new Error(error.message);
   revalidatePath(revalidateTargetPath);
+
+  if (updated) {
+    const { data: application } = await supabase
+      .from("applications")
+      .select("profiles(email), studies(title)")
+      .eq("id", applicationId)
+      .single();
+    const participant = one(application?.profiles);
+    const study = one(application?.studies);
+    if (participant?.email && study?.title) {
+      await sendIncentiveSentEmail(participant.email, study.title, updated.amount);
+    }
+  }
 }
 
 export async function confirmIncentiveReceived(

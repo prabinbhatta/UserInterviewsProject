@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { sendApprovedEmail } from "@/lib/email";
+import { one } from "@/lib/one";
 
 export async function approveApplication(studyId: string, applicationId: string) {
   const supabase = await createClient();
@@ -11,6 +13,18 @@ export async function approveApplication(studyId: string, applicationId: string)
     .eq("id", applicationId);
   if (error) throw new Error(error.message);
   revalidatePath(`/researcher/studies/${studyId}/applications`);
+
+  const { data: application } = await supabase
+    .from("applications")
+    .select("profiles(email), studies(title)")
+    .eq("id", applicationId)
+    .single();
+
+  const participant = one(application?.profiles);
+  const study = one(application?.studies);
+  if (participant?.email && study?.title) {
+    await sendApprovedEmail(participant.email, study.title);
+  }
 }
 
 export async function rejectApplication(studyId: string, applicationId: string) {
