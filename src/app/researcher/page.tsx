@@ -27,14 +27,14 @@ export default async function ResearcherDashboard() {
   return (
     <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
       <div className="w-full max-w-2xl">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-zinc-900">
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="min-w-0 text-2xl font-semibold text-zinc-900">
             Welcome, {profile?.full_name ?? user.email}
           </h1>
-          <form action={signOut}>
+          <form action={signOut} className="shrink-0">
             <button
               type="submit"
-              className="text-sm text-zinc-500 underline"
+              className="whitespace-nowrap text-sm text-zinc-500 underline"
             >
               Log out
             </button>

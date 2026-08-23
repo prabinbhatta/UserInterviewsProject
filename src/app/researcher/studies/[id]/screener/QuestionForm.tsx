@@ -92,7 +92,7 @@ function QuestionFields({
           </p>
           <div className="mt-2 space-y-2">
             {options.map((option, i) => (
-              <div key={i} className="flex items-center gap-2">
+              <div key={i} className="flex flex-col gap-2 sm:flex-row sm:items-center">
                 <input
                   type="text"
                   name="option_label"
@@ -104,34 +104,36 @@ function QuestionFields({
                     next[i] = { ...next[i], label: e.target.value };
                     setOptions(next);
                   }}
-                  className="flex-1 rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+                  className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none sm:flex-1"
                 />
-                <select
-                  name="option_decision"
-                  value={option.decision}
-                  onChange={(e) => {
-                    const next = [...options];
-                    next[i] = {
-                      ...next[i],
-                      decision: e.target.value as "accept" | "reject",
-                    };
-                    setOptions(next);
-                  }}
-                  className="rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
-                >
-                  <option value="accept">Accept</option>
-                  <option value="reject">Reject</option>
-                </select>
-                {options.length > 2 && (
-                  <button
-                    type="button"
-                    onClick={() => setOptions(options.filter((_, j) => j !== i))}
-                    className="text-sm text-zinc-400 hover:text-red-600"
-                    aria-label="Remove option"
+                <div className="flex items-center gap-2">
+                  <select
+                    name="option_decision"
+                    value={option.decision}
+                    onChange={(e) => {
+                      const next = [...options];
+                      next[i] = {
+                        ...next[i],
+                        decision: e.target.value as "accept" | "reject",
+                      };
+                      setOptions(next);
+                    }}
+                    className="flex-1 rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none sm:flex-none"
                   >
-                    Remove
-                  </button>
-                )}
+                    <option value="accept">Accept</option>
+                    <option value="reject">Reject</option>
+                  </select>
+                  {options.length > 2 && (
+                    <button
+                      type="button"
+                      onClick={() => setOptions(options.filter((_, j) => j !== i))}
+                      className="shrink-0 text-sm text-zinc-400 hover:text-red-600"
+                      aria-label="Remove option"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
