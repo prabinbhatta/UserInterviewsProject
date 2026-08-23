@@ -50,11 +50,10 @@ Either side can now cancel a scheduled session — the slot reopens and the
 application reverts to `approved`, with a best-effort email to the other
 party. See `src/lib/cancelBooking.ts`, migration `0016_cancel_booking.sql`.
 
-### No-show / session-didn't-happen handling
-There's no way to flag that a scheduled session didn't happen. Right now
-the only path forward from `scheduled` is `markSessionCompleted` — if a
-no-show occurs there's no status for it and no way to unblock the
-application without directly editing the database.
+### ~~No-show / session-didn't-happen handling~~ — shipped 2026-08-23
+A researcher can flag a scheduled session that never happened via "Didn't
+show up," a new terminal `no_show` application status. Frees the slot for
+reuse but creates no incentive record. See `0017_no_show.sql`.
 
 ### Withdraw an application
 A participant who applies and changes their mind has no way to withdraw —
