@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { bookSlot } from "./actions";
+import { bookSlot, cancelMyBooking } from "./actions";
 
 export default async function ScheduleApplicationPage({
   params,
@@ -43,6 +43,7 @@ export default async function ScheduleApplicationPage({
   const title = Array.isArray(studyTitle) ? studyTitle[0]?.title : studyTitle?.title;
 
   const boundBook = bookSlot.bind(null, application.id);
+  const boundCancel = cancelMyBooking.bind(null, application.id);
 
   return (
     <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
@@ -63,6 +64,14 @@ export default async function ScheduleApplicationPage({
                 timeStyle: "short",
               })}
             </p>
+            <form action={boundCancel} className="mt-4">
+              <button
+                type="submit"
+                className="text-sm text-zinc-500 underline hover:text-red-600"
+              >
+                Cancel booking
+              </button>
+            </form>
           </div>
         ) : openSlots.length === 0 ? (
           <p className="mt-8 text-zinc-600">

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SlotForm } from "./SlotForm";
-import { deleteSlot } from "./actions";
+import { deleteSlot, cancelBooking } from "./actions";
 
 type SlotRow = {
   id: string;
@@ -41,6 +41,7 @@ export default async function StudySlotsPage({
     .order("starts_at", { ascending: true })) as { data: SlotRow[] | null };
 
   const boundDelete = deleteSlot.bind(null, id);
+  const boundCancel = cancelBooking.bind(null, id);
 
   return (
     <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
@@ -75,7 +76,16 @@ export default async function StudySlotsPage({
                       : "Open"}
                   </p>
                 </div>
-                {!slot.application_id && (
+                {slot.application_id ? (
+                  <form action={boundCancel.bind(null, slot.application_id)}>
+                    <button
+                      type="submit"
+                      className="shrink-0 text-sm text-zinc-400 hover:text-red-600"
+                    >
+                      Cancel booking
+                    </button>
+                  </form>
+                ) : (
                   <form action={boundDelete.bind(null, slot.id)}>
                     <button
                       type="submit"

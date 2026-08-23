@@ -76,6 +76,23 @@ export async function sendNewMessageEmail(
   });
 }
 
+export async function sendBookingCancelledEmail(
+  to: string,
+  studyTitle: string,
+  cancelledByLabel: string,
+  ctaPath: string,
+) {
+  await sendNotificationEmail({
+    to,
+    subject: `Your session for "${studyTitle}" was cancelled`,
+    html: wrap(
+      `<p>${cancelledByLabel} cancelled the scheduled session for <strong>${studyTitle}</strong>.</p><p>Pick a new time when you're ready.</p>`,
+      `${SITE_URL}${ctaPath}`,
+      "View options",
+    ),
+  });
+}
+
 export async function sendIncentiveSentEmail(to: string, studyTitle: string, amount: number) {
   await sendNotificationEmail({
     to,

@@ -2,8 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { sendSlotBookedEmail } from "@/lib/email";
+import { sendSlotBookedEmail, sendBookingCancelledEmail } from "@/lib/email";
 import { one } from "@/lib/one";
+import { releaseBookedSlot } from "@/lib/cancelBooking";
 
 export async function bookSlot(applicationId: string, slotId: string) {
   const supabase = await createClient();
@@ -54,6 +55,37 @@ export async function bookSlot(applicationId: string, slotId: string) {
         dateStyle: "medium",
         timeStyle: "short",
       }),
+    );
+  }
+}
+
+export async function cancelMyBooking(applicationId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("You must be logged in.");
+
+  await releaseBookedSlot(supabase, applicationId);
+
+  revalidatePath(`/participant/applications/${applicationId}/schedule`);
+  revalidatePath("/participant/applications");
+
+  const { data: application } = await supabase
+    .from("applications")
+    .select("study_id, profiles(full_name), studies(title, profiles(email))")
+    .eq("id", applicationId)
+    .single();
+
+  const participant = one(application?.profiles);
+  const study = one(application?.studies);
+  const researcher = one(study?.profiles);
+  if (researcher?.email && study?.title && application?.study_id) {
+    await sendBookingCancelledEmail(
+      researcher.email,
+      study.title,
+      participant?.full_name ?? "The participant",
+      `/researcher/studies/${application.study_id}/slots`,
     );
   }
 }
