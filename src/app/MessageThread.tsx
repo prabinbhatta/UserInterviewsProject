@@ -2,6 +2,8 @@
 
 import { useActionState } from "react";
 import { sendMessage } from "./messages-actions";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses } from "@/components/ui/field";
 
 type Message = {
   id: string;
@@ -31,7 +33,7 @@ export function MessageThread({
   return (
     <div className="mt-8">
       {messages.length === 0 ? (
-        <p className="text-sm text-zinc-500">
+        <p className="text-sm text-[var(--ink)]/50">
           No messages yet. Say hello to {otherPartyLabel}.
         </p>
       ) : (
@@ -46,8 +48,8 @@ export function MessageThread({
                 <div
                   className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm ${
                     mine
-                      ? "bg-zinc-900 text-white"
-                      : "border border-zinc-200 bg-white text-zinc-900"
+                      ? "bg-[var(--ink)] text-white"
+                      : "border border-[var(--mist)] bg-white text-[var(--ink)]"
                   }`}
                 >
                   <p className="leading-relaxed whitespace-pre-wrap">
@@ -55,7 +57,7 @@ export function MessageThread({
                   </p>
                   <p
                     className={`mt-1 text-xs ${
-                      mine ? "text-white/50" : "text-zinc-400"
+                      mine ? "text-white/50" : "text-[var(--ink)]/40"
                     }`}
                   >
                     {new Date(message.created_at).toLocaleString(undefined, {
@@ -76,18 +78,14 @@ export function MessageThread({
           required
           rows={3}
           placeholder={`Message ${otherPartyLabel}...`}
-          className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
         {state.error && (
-          <p className="mt-2 text-sm text-red-600">{state.error}</p>
+          <p className="mt-2 text-sm text-[#a8371c]">{state.error}</p>
         )}
-        <button
-          type="submit"
-          disabled={pending}
-          className="mt-3 rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={pending} className="mt-3">
           {pending ? "Sending..." : "Send"}
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { MessageThread } from "@/app/MessageThread";
+import { mutedLinkClasses } from "@/components/ui/link";
 
 type ApplicationDetail = {
   id: string;
@@ -41,19 +42,19 @@ export default async function ParticipantMessagesPage({
   const researcherName = application.studies?.profiles?.full_name ?? "the researcher";
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
-        <Link href="/participant/applications" className="text-sm text-zinc-500 underline">
+        <Link href="/participant/applications" className={`text-sm ${mutedLinkClasses}`}>
           Back to your applications
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
           {application.studies?.title}
         </h1>
-        <p className="mt-1 text-sm text-zinc-600">
+        <p className="mt-1 text-sm text-[var(--ink)]/60">
           Conversation with {researcherName}{" "}
           <Link
             href={`/report?applicationId=${id}`}
-            className="text-zinc-400 underline hover:text-red-600"
+            className="text-[var(--ink)]/40 underline decoration-[var(--mist)] underline-offset-4 hover:text-[#a8371c]"
           >
             Report
           </Link>

@@ -3,15 +3,19 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { confirmIncentiveReceived, reportIncentiveNotReceived } from "@/app/incentive-actions";
 import { withdrawApplication } from "./actions";
+import { Card } from "@/components/ui/Card";
+import { Badge, type BadgeTone } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { mutedLinkClasses } from "@/components/ui/link";
 
-const statusStyles: Record<string, string> = {
-  qualified: "bg-blue-100 text-blue-800",
-  rejected: "bg-red-100 text-red-800",
-  approved: "bg-emerald-100 text-emerald-800",
-  scheduled: "bg-purple-100 text-purple-800",
-  completed: "bg-zinc-800 text-white",
-  no_show: "bg-amber-100 text-amber-800",
-  withdrawn: "bg-zinc-200 text-zinc-600",
+const statusTones: Record<string, BadgeTone> = {
+  qualified: "info",
+  rejected: "danger",
+  approved: "success",
+  scheduled: "warning",
+  completed: "strong",
+  no_show: "danger",
+  withdrawn: "neutral",
 };
 
 const statusLabels: Record<string, string> = {
@@ -26,7 +30,7 @@ const statusLabels: Record<string, string> = {
 
 type ApplicationRow = {
   id: string;
-  status: keyof typeof statusStyles;
+  status: keyof typeof statusTones;
   created_at: string;
   studies: { id: string; title: string; incentive_amount: number } | null;
   incentive_records: {
@@ -56,19 +60,19 @@ export default async function MyApplicationsPage() {
   const revalidateTarget = "/participant/applications";
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
-        <Link href="/participant" className="text-sm text-zinc-500 underline">
+        <Link href="/participant" className={`text-sm ${mutedLinkClasses}`}>
           Back to dashboard
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
           Your applications
         </h1>
 
         {!applications || applications.length === 0 ? (
-          <p className="mt-8 text-zinc-600">
+          <p className="mt-8 text-[var(--ink)]/70">
             You haven&apos;t applied to any studies yet.{" "}
-            <Link href="/participant/studies" className="underline">
+            <Link href="/participant/studies" className={mutedLinkClasses}>
               Browse open studies
             </Link>
             .
@@ -76,16 +80,13 @@ export default async function MyApplicationsPage() {
         ) : (
           <ul className="mt-8 space-y-3">
             {applications.map((application) => (
-              <li
-                key={application.id}
-                className="rounded-lg border border-zinc-200 bg-white p-4"
-              >
+              <Card as="li" key={application.id}>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="font-medium text-zinc-900">
+                    <p className="font-medium text-[var(--ink)]">
                       {application.studies?.title}
                     </p>
-                    <p className="mt-0.5 text-sm text-zinc-500">
+                    <p className="mt-0.5 text-sm text-[var(--ink)]/50">
                       NPR {application.studies?.incentive_amount}
                     </p>
                   </div>
@@ -93,7 +94,7 @@ export default async function MyApplicationsPage() {
                     {application.status !== "rejected" && (
                       <Link
                         href={`/participant/applications/${application.id}/messages`}
-                        className="text-sm underline"
+                        className={`text-sm ${mutedLinkClasses}`}
                       >
                         Message
                       </Link>
@@ -102,7 +103,7 @@ export default async function MyApplicationsPage() {
                       application.status === "scheduled") && (
                       <Link
                         href={`/participant/applications/${application.id}/schedule`}
-                        className="text-sm underline"
+                        className={`text-sm ${mutedLinkClasses}`}
                       >
                         {application.status === "scheduled"
                           ? "View time"
@@ -116,32 +117,30 @@ export default async function MyApplicationsPage() {
                       >
                         <button
                           type="submit"
-                          className="text-sm text-zinc-400 underline hover:text-red-600"
+                          className={`text-sm ${mutedLinkClasses}`}
                         >
                           Withdraw
                         </button>
                       </form>
                     )}
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-medium ${statusStyles[application.status]}`}
-                    >
+                    <Badge tone={statusTones[application.status]}>
                       {statusLabels[application.status]}
-                    </span>
+                    </Badge>
                   </div>
                 </div>
 
                 {application.status === "completed" &&
                   application.incentive_records && (
-                    <div className="mt-3 border-t border-zinc-100 pt-3">
+                    <div className="mt-3 border-t border-[var(--mist)]/50 pt-3">
                       {application.incentive_records.status === "pending" && (
-                        <p className="text-sm text-zinc-500">
+                        <p className="text-sm text-[var(--ink)]/50">
                           The researcher hasn&apos;t sent your incentive yet.
                         </p>
                       )}
 
                       {application.incentive_records.status === "sent" && (
                         <div>
-                          <p className="text-sm text-zinc-700">
+                          <p className="text-sm text-[var(--ink)]/80">
                             The researcher marked your NPR{" "}
                             {application.incentive_records.amount} incentive
                             as sent. Have you received it?
@@ -154,12 +153,9 @@ export default async function MyApplicationsPage() {
                                 revalidateTarget,
                               )}
                             >
-                              <button
-                                type="submit"
-                                className="rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-                              >
+                              <Button type="submit" size="sm">
                                 Yes, I received it
-                              </button>
+                              </Button>
                             </form>
                             <form
                               action={reportIncentiveNotReceived.bind(
@@ -168,12 +164,9 @@ export default async function MyApplicationsPage() {
                                 revalidateTarget,
                               )}
                             >
-                              <button
-                                type="submit"
-                                className="rounded-full border border-zinc-300 px-4 py-1.5 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
-                              >
+                              <Button type="submit" size="sm" variant="secondary">
                                 No, I haven&apos;t
-                              </button>
+                              </Button>
                             </form>
                           </div>
                         </div>
@@ -187,7 +180,7 @@ export default async function MyApplicationsPage() {
 
                       {application.incentive_records.status ===
                         "not_received" && (
-                        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-800">
+                        <div className="rounded-lg bg-[var(--coral)]/10 p-3 text-sm text-[#a8371c]">
                           <p className="font-medium">
                             You reported this incentive as not received.
                           </p>
@@ -203,7 +196,7 @@ export default async function MyApplicationsPage() {
                       )}
                     </div>
                   )}
-              </li>
+              </Card>
             ))}
           </ul>
         )}

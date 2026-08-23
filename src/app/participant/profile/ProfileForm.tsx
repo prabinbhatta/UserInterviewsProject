@@ -3,6 +3,8 @@
 import { useActionState, useState } from "react";
 import { updateParticipantProfile } from "./actions";
 import { DISTRICTS } from "@/lib/districts";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 const INCOME_BANDS = [
   "Below NPR 20,000",
@@ -38,13 +40,13 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
 
   return (
     <form action={formAction} className="w-full max-w-xl">
-      <label className="block text-sm font-medium text-zinc-700">
+      <label className={labelClasses}>
         District
         <select
           name="district"
           value={district}
           onChange={(e) => setDistrict(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         >
           <option value="">Select a district</option>
           {DISTRICTS.map((d) => (
@@ -56,19 +58,19 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
       </label>
 
       {district === "Other" && (
-        <label className="mt-4 block text-sm font-medium text-zinc-700">
+        <label className={`mt-4 ${labelClasses}`}>
           Enter your district or municipality
           <input
             type="text"
             name="district_other"
             defaultValue={isKnownDistrict ? "" : initialDistrict}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
       )}
 
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className={labelClasses}>
           Age
           <input
             type="number"
@@ -76,27 +78,27 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
             min={1}
             max={120}
             defaultValue={defaultValues.age ?? ""}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
 
-        <label className="block text-sm font-medium text-zinc-700">
+        <label className={labelClasses}>
           Occupation
           <input
             type="text"
             name="occupation"
             defaultValue={defaultValues.occupation ?? ""}
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+            className={fieldClasses}
           />
         </label>
       </div>
 
-      <label className="mt-4 block text-sm font-medium text-zinc-700">
+      <label className={`mt-4 ${labelClasses}`}>
         Monthly household income
         <select
           name="income_band"
           defaultValue={defaultValues.income_band ?? ""}
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         >
           <option value="">Prefer not to answer</option>
           {INCOME_BANDS.map((band) => (
@@ -108,19 +110,19 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
       </label>
 
       <div className="mt-4">
-        <p className="text-sm font-medium text-zinc-700">Languages you speak</p>
+        <p className={labelClasses}>Languages you speak</p>
         <div className="mt-2 flex flex-wrap gap-3">
           {LANGUAGES.map((lang) => (
             <label
               key={lang}
-              className="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700"
+              className="flex items-center gap-2 rounded-lg border border-[var(--mist)] px-3 py-2 text-sm text-[var(--ink)]/80"
             >
               <input
                 type="checkbox"
                 name="languages"
                 value={lang}
                 defaultChecked={defaultValues.languages.includes(lang)}
-                className="h-4 w-4"
+                className="h-4 w-4 accent-[var(--indigo)]"
               />
               {lang}
             </label>
@@ -129,21 +131,19 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
       </div>
 
       <div className="mt-4">
-        <p className="text-sm font-medium text-zinc-700">
-          Devices available to you
-        </p>
+        <p className={labelClasses}>Devices available to you</p>
         <div className="mt-2 flex flex-wrap gap-3">
           {DEVICES.map((device) => (
             <label
               key={device}
-              className="flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700"
+              className="flex items-center gap-2 rounded-lg border border-[var(--mist)] px-3 py-2 text-sm text-[var(--ink)]/80"
             >
               <input
                 type="checkbox"
                 name="devices"
                 value={device}
                 defaultChecked={defaultValues.devices.includes(device)}
-                className="h-4 w-4"
+                className="h-4 w-4 accent-[var(--indigo)]"
               />
               {device}
             </label>
@@ -151,18 +151,14 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
         </div>
       </div>
 
-      {state.error && <p className="mt-4 text-sm text-red-600">{state.error}</p>}
+      {state.error && <p className="mt-4 text-sm text-[#a8371c]">{state.error}</p>}
       {state.saved && !state.error && (
         <p className="mt-4 text-sm text-emerald-700">Profile saved.</p>
       )}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="mt-6 w-full rounded-full bg-zinc-900 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-      >
+      <Button type="submit" disabled={pending} className="mt-6 w-full">
         {pending ? "Saving..." : "Save profile"}
-      </button>
+      </Button>
     </form>
   );
 }

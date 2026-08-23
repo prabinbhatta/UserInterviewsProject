@@ -1,9 +1,16 @@
-export function Card({
+type CardProps<T extends React.ElementType> = {
+  as?: T;
+  className?: string;
+} & Omit<React.ComponentPropsWithoutRef<T>, "as" | "className">;
+
+export function Card<T extends React.ElementType = "div">({
+  as,
   className = "",
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: CardProps<T>) {
+  const Component = as ?? "div";
   return (
-    <div
+    <Component
       className={`rounded-2xl border border-[var(--mist)] bg-white p-5 ${className}`}
       {...props}
     />

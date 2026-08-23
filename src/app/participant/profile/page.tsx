@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ProfileForm } from "./ProfileForm";
+import { mutedLinkClasses } from "@/components/ui/link";
 
 export default async function ParticipantProfilePage() {
   const supabase = await createClient();
@@ -37,27 +38,27 @@ export default async function ParticipantProfilePage() {
   const strengthPercent = Math.round((fieldsFilled / 6) * 100);
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
-        <Link href="/participant" className="text-sm text-zinc-500 underline">
+        <Link href="/participant" className={`text-sm ${mutedLinkClasses}`}>
           Back to dashboard
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
           Your profile
         </h1>
-        <p className="mt-1 text-sm text-zinc-600">
+        <p className="mt-1 text-sm text-[var(--ink)]/60">
           A complete profile helps researchers see you&apos;re a good match
           for their study.
         </p>
 
         <div className="mt-4">
           <div className="flex items-center justify-between text-sm">
-            <span className="font-medium text-zinc-700">Profile strength</span>
-            <span className="text-zinc-500">{strengthPercent}%</span>
+            <span className="font-medium text-[var(--ink)]/80">Profile strength</span>
+            <span className="text-[var(--ink)]/50">{strengthPercent}%</span>
           </div>
-          <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-zinc-200">
+          <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
             <div
-              className="h-full rounded-full bg-emerald-500 transition-all"
+              className="h-full rounded-full bg-[var(--coral)] transition-all"
               style={{ width: `${strengthPercent}%` }}
             />
           </div>
