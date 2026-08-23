@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
 import { adminResolveIncentive, adminResolveReport } from "./actions";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 
 const studyStatuses = ["draft", "active", "closed"] as const;
 const applicationStatuses = [
@@ -87,21 +89,21 @@ export default async function AdminPage() {
     });
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-3xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-zinc-500">
+            <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
               Admin
             </p>
-            <h1 className="mt-1 text-2xl font-semibold text-zinc-900">
+            <h1 className="mt-1 font-serif-display text-2xl font-medium text-[var(--ink)]">
               Platform overview
             </h1>
           </div>
           <form action={signOut} className="shrink-0">
             <button
               type="submit"
-              className="text-sm text-zinc-500 underline whitespace-nowrap"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/50 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
             >
               Log out
             </button>
@@ -109,11 +111,11 @@ export default async function AdminPage() {
         </div>
 
         {needsAttention.length > 0 && (
-          <div className="mt-8 rounded-lg border border-red-200 bg-red-50 p-5">
-            <h2 className="font-semibold text-red-900">
+          <div className="mt-8 rounded-2xl border border-[var(--coral)]/30 bg-[var(--coral)]/10 p-5">
+            <h2 className="font-semibold text-[#a8371c]">
               Needs your attention ({needsAttention.length})
             </h2>
-            <p className="mt-1 text-sm text-red-800">
+            <p className="mt-1 text-sm text-[#a8371c]/80">
               Participants who reported an incentive as not received.
               Investigate off-platform, then resolve once confirmed.
             </p>
@@ -124,21 +126,18 @@ export default async function AdminPage() {
                   className="flex flex-col gap-2 rounded-lg bg-white p-3 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="text-sm">
-                    <p className="font-medium text-zinc-900">
+                    <p className="font-medium text-[var(--ink)]">
                       {item.studyTitle} — NPR {item.amount}
                     </p>
-                    <p className="text-zinc-600">
+                    <p className="text-[var(--ink)]/60">
                       Participant: {item.participantName ?? "Unknown"} ·
                       Researcher: {item.researcherName ?? "Unknown"}
                     </p>
                   </div>
                   <form action={adminResolveIncentive.bind(null, item.application_id)}>
-                    <button
-                      type="submit"
-                      className="shrink-0 rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-                    >
+                    <Button type="submit" size="sm" className="shrink-0">
                       Mark resolved
-                    </button>
+                    </Button>
                   </form>
                 </li>
               ))}
@@ -147,11 +146,11 @@ export default async function AdminPage() {
         )}
 
         {openReports.length > 0 && (
-          <div className="mt-8 rounded-lg border border-amber-200 bg-amber-50 p-5">
-            <h2 className="font-semibold text-amber-900">
+          <div className="mt-8 rounded-2xl border border-[var(--gold)]/40 bg-[var(--gold)]/10 p-5">
+            <h2 className="font-semibold text-[#8a5a00]">
               Open reports ({openReports.length})
             </h2>
-            <p className="mt-1 text-sm text-amber-800">
+            <p className="mt-1 text-sm text-[#8a5a00]/80">
               Users flagged these for review — abusive behavior or a
               suspicious study.
             </p>
@@ -166,22 +165,19 @@ export default async function AdminPage() {
                     className="flex flex-col gap-2 rounded-lg bg-white p-3 sm:flex-row sm:items-start sm:justify-between"
                   >
                     <div className="text-sm">
-                      <p className="font-medium text-zinc-900">
+                      <p className="font-medium text-[var(--ink)]">
                         {nameById.get(report.reporter_id) ?? "Unknown"} reported{" "}
                         {report.reported_user_id
                           ? (nameById.get(report.reported_user_id) ?? "Unknown")
                           : "a study"}
                         {study ? ` — ${study.title}` : ""}
                       </p>
-                      <p className="mt-1 text-zinc-600">{report.reason}</p>
+                      <p className="mt-1 text-[var(--ink)]/60">{report.reason}</p>
                     </div>
                     <form action={adminResolveReport.bind(null, report.id)}>
-                      <button
-                        type="submit"
-                        className="shrink-0 rounded-full bg-zinc-900 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
-                      >
+                      <Button type="submit" size="sm" className="shrink-0">
                         Mark resolved
-                      </button>
+                      </Button>
                     </form>
                   </li>
                 );
@@ -191,49 +187,49 @@ export default async function AdminPage() {
         )}
 
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg border border-zinc-200 bg-white p-5">
-            <h2 className="font-semibold text-zinc-900">Studies</h2>
+          <Card>
+            <h2 className="font-semibold text-[var(--ink)]">Studies</h2>
             <dl className="mt-3 space-y-1 text-sm">
               {studyStatuses.map((s) => (
                 <div key={s} className="flex justify-between">
-                  <dt className="text-zinc-600 capitalize">{s}</dt>
-                  <dd className="font-medium text-zinc-900">{studyCounts[s]}</dd>
+                  <dt className="capitalize text-[var(--ink)]/60">{s}</dt>
+                  <dd className="font-medium text-[var(--ink)]">{studyCounts[s]}</dd>
                 </div>
               ))}
             </dl>
-          </div>
+          </Card>
 
-          <div className="rounded-lg border border-zinc-200 bg-white p-5">
-            <h2 className="font-semibold text-zinc-900">Applications</h2>
+          <Card>
+            <h2 className="font-semibold text-[var(--ink)]">Applications</h2>
             <dl className="mt-3 space-y-1 text-sm">
               {applicationStatuses.map((s) => (
                 <div key={s} className="flex justify-between">
-                  <dt className="text-zinc-600 capitalize">
+                  <dt className="capitalize text-[var(--ink)]/60">
                     {s.replace("_", " ")}
                   </dt>
-                  <dd className="font-medium text-zinc-900">
+                  <dd className="font-medium text-[var(--ink)]">
                     {applicationCounts[s]}
                   </dd>
                 </div>
               ))}
             </dl>
-          </div>
+          </Card>
 
-          <div className="rounded-lg border border-zinc-200 bg-white p-5">
-            <h2 className="font-semibold text-zinc-900">Incentives</h2>
+          <Card>
+            <h2 className="font-semibold text-[var(--ink)]">Incentives</h2>
             <dl className="mt-3 space-y-1 text-sm">
               {incentiveStatuses.map((s) => (
                 <div key={s} className="flex justify-between">
-                  <dt className="text-zinc-600 capitalize">
+                  <dt className="capitalize text-[var(--ink)]/60">
                     {s.replace("_", " ")}
                   </dt>
-                  <dd className="font-medium text-zinc-900">
+                  <dd className="font-medium text-[var(--ink)]">
                     {incentiveCounts[s]}
                   </dd>
                 </div>
               ))}
             </dl>
-          </div>
+          </Card>
         </div>
       </div>
     </div>

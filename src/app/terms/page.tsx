@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { mutedLinkClasses } from "@/components/ui/link";
 
 export const metadata = {
   title: "Terms of Service — Nepal User Research",
@@ -6,17 +7,17 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-6 py-16">
+    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-2xl">
-        <Link href="/" className="text-sm text-zinc-500 underline">
+        <Link href="/" className={`text-sm ${mutedLinkClasses}`}>
           Back home
         </Link>
-        <h1 className="mt-2 text-2xl font-semibold text-zinc-900">
+        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
           Terms of Service
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">Last updated 23 August 2026</p>
+        <p className="mt-1 text-sm text-[var(--ink)]/50">Last updated 23 August 2026</p>
 
-        <div className="mt-8 space-y-6 text-zinc-700">
+        <div className="mt-8 space-y-6 text-[var(--ink)]/80">
           <p>
             Nepal User Research (&ldquo;the platform&rdquo;, &ldquo;we&rdquo;) connects
             companies running user research studies (&ldquo;researchers&rdquo;) with
@@ -25,7 +26,7 @@ export default function TermsPage() {
           </p>
 
           <section>
-            <h2 className="font-semibold text-zinc-900">1. What the platform does</h2>
+            <h2 className="font-semibold text-[var(--ink)]">1. What the platform does</h2>
             <p className="mt-2">
               We provide the tools to post studies, screen and approve
               applicants, schedule sessions, and message between researcher and
@@ -36,7 +37,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-zinc-900">2. Incentive payments</h2>
+            <h2 className="font-semibold text-[var(--ink)]">2. Incentive payments</h2>
             <p className="mt-2">
               Incentive payments for taking part in a study happen directly
               between the researcher and the participant, outside the
@@ -46,12 +47,12 @@ export default function TermsPage() {
               reviewed by our team, but we cannot force a payment to be made.
               If you believe a payment dispute needs urgent attention, contact
               support at{" "}
-              <span className="font-medium text-zinc-900">+977-9715633635</span>.
+              <span className="font-medium text-[var(--ink)]">+977-9715633635</span>.
             </p>
           </section>
 
           <section>
-            <h2 className="font-semibold text-zinc-900">3. Accounts and conduct</h2>
+            <h2 className="font-semibold text-[var(--ink)]">3. Accounts and conduct</h2>
             <p className="mt-2">
               You&apos;re responsible for the accuracy of the information you
               provide and for keeping your account credentials secure. You
@@ -63,7 +64,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-zinc-900">4. Screener answers and study data</h2>
+            <h2 className="font-semibold text-[var(--ink)]">4. Screener answers and study data</h2>
             <p className="mt-2">
               Researchers see the screener answers and profile information a
               participant submits when applying to their study, and messages
@@ -74,7 +75,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-zinc-900">5. No guarantee of matches or outcomes</h2>
+            <h2 className="font-semibold text-[var(--ink)]">5. No guarantee of matches or outcomes</h2>
             <p className="mt-2">
               We don&apos;t guarantee a researcher will find qualified
               participants, or that a participant will be approved for or paid
@@ -85,7 +86,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-zinc-900">6. Changes</h2>
+            <h2 className="font-semibold text-[var(--ink)]">6. Changes</h2>
             <p className="mt-2">
               We&apos;re a young platform and these terms may change as the
               product evolves. We&apos;ll update the date at the top of this page
@@ -94,17 +95,17 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-zinc-900">7. Contact</h2>
+            <h2 className="font-semibold text-[var(--ink)]">7. Contact</h2>
             <p className="mt-2">
               Questions about these terms can be sent to{" "}
-              <span className="font-medium text-zinc-900">
+              <span className="font-medium text-[var(--ink)]">
                 +977-9715633635
               </span>
               .
             </p>
           </section>
 
-          <p className="border-t border-zinc-200 pt-6 text-sm text-zinc-500">
+          <p className="border-t border-[var(--mist)] pt-6 text-sm text-[var(--ink)]/50">
             This is a plain-language policy for an early-stage platform, not a
             substitute for independent legal advice.
           </p>

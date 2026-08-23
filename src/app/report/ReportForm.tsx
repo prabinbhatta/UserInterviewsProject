@@ -2,6 +2,8 @@
 
 import { useActionState } from "react";
 import { fileReport } from "@/app/report-actions";
+import { Button } from "@/components/ui/Button";
+import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 export function ReportForm({
   applicationId,
@@ -17,7 +19,7 @@ export function ReportForm({
 
   if (state.success) {
     return (
-      <div className="mt-8 rounded-lg border border-emerald-200 bg-emerald-50 p-5">
+      <div className="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
         <p className="font-medium text-emerald-900">Report received.</p>
         <p className="mt-1 text-sm text-emerald-800">
           Our team will review this and follow up if we need more
@@ -34,26 +36,22 @@ export function ReportForm({
       )}
       {studyId && <input type="hidden" name="study_id" value={studyId} />}
 
-      <label className="block text-sm font-medium text-zinc-700">
+      <label className={labelClasses}>
         What happened?
         <textarea
           name="reason"
           required
           rows={5}
           placeholder="Describe what happened — the more detail, the faster we can look into it."
-          className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-zinc-900 focus:border-zinc-500 focus:outline-none"
+          className={fieldClasses}
         />
       </label>
 
-      {state.error && <p className="text-sm text-red-600">{state.error}</p>}
+      {state.error && <p className="text-sm text-[#a8371c]">{state.error}</p>}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
-      >
+      <Button type="submit" disabled={pending}>
         {pending ? "Submitting..." : "Submit report"}
-      </button>
+      </Button>
     </form>
   );
 }
