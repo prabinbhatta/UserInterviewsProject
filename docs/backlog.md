@@ -123,11 +123,14 @@ columns on `profiles` (default true). See `0024_notification_preferences.sql`.
 
 ## P3 — Polish
 
-### Remaining bilingual coverage
-Landing page, signup, and the participant browse/study-detail/apply flow
-are translated. Researcher-side pages, the rest of the participant
-dashboard (applications, messages, scheduling, incentives), and admin are
-still English-only.
+### ~~Remaining bilingual coverage~~ — shipped 2026-08-24
+Extended the existing EN/Nepali i18n system across every researcher-facing
+page (dashboard, studies list, study form, screener, time slots, invite +
+CSV import, applications, messages, analytics) and the rest of the
+participant dashboard (applications, messages, scheduling, profile).
+~190 new keys in `src/lib/i18n.ts`. Scope decision: `/admin` stays
+English-only — it's a single-operator internal tool, not participant/
+researcher-facing, so translating it wouldn't add real value.
 
 ### ~~VoiceWaveform hint text~~ — shipped 2026-08-24
 "Hover to hear a moment from a real session." now translates via
