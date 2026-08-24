@@ -174,6 +174,38 @@ in the app, and the one icon-only SVG (site logo) is correctly
 ### Final product name
 Deferred by founder; current working name is "Research Platform."
 
+### Auto-generated video meeting links
+Online studies currently rely on the researcher manually pasting a Zoom/
+Meet link into a text field. Scoped to Google Meet via the Google Calendar
+API (personal Gmail account, no company registration needed) — blocked on
+the founder creating a Google Cloud project and OAuth credentials before
+any code can be written.
+
+### Finish the interactive design pass
+First pass shipped 2026-08-24 (see below) covering loading states and
+empty-state illustrations for both dashboards and both studies/
+applications lists. Still plain text/no loading state: message threads,
+admin's open-reports/incentive queues, settings, and the legal pages.
+
+### ~~Participant referral program~~ — shipped 2026-08-24
+A participant's own user id doubles as their referral code — no separate
+code column. Signup accepts `?ref=<user-id>`, validated server-side in
+`handle_new_user()` (malformed/nonexistent referrer ids are silently
+dropped rather than blocking signup). Referral count read via a
+`SECURITY DEFINER` function since profiles RLS only allows viewing your
+own row. Surfaced on the participant dashboard with a copyable invite
+link and live count. Verified end-to-end: a real signup via a referral
+link incremented the referrer's count. See `0027_referrals.sql`.
+
+### ~~Loading states & empty-state illustrations (first pass)~~ — shipped 2026-08-24
+New `Skeleton`/`SkeletonList` primitives + `loading.tsx` for the six
+highest-traffic routes (both dashboards, both studies lists, both
+applications lists). New `EmptyState` component (on-brand inline SVG
+illustration, title, body, optional CTA) replacing plain-text empty
+states on browse studies, participant applications, researcher studies,
+researcher applicants, and open time slots. See "Finish the interactive
+design pass" above for remaining scope.
+
 ### ~~Basic signup rate limiting~~ — shipped 2026-08-24
 Per-IP rate limiting on signup (5/15min) and login (10/15min), enforced by
 a `SECURITY DEFINER` Postgres function with no direct table access from
