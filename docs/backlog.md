@@ -316,3 +316,14 @@ Requires `CRON_SECRET` to be set in Vercel's production environment
 variables (same value as `.env.local`) for the deployed cron job to
 authenticate — confirm this is set if reminders don't appear to be
 sending in production.
+
+### ~~Post-session ratings~~ — shipped 2026-08-24
+5-star rating form on the completed-status section of both the
+participant's applications page and the researcher's applicants page, so
+either side can rate the other after a session. `session_ratings` table +
+RLS shipped earlier with the session reminders migration; this adds the
+UI (`StarRatingInput`/`StarRatingDisplay`) and the two server actions.
+RLS enforces which `rater_role` each side may insert as, independent of
+what the client sends. Verified live: a 4-star participant rating and a
+5-star researcher rating on real completed applications both persisted
+correctly with no duplicate rows, confirmed directly via the table.
