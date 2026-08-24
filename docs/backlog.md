@@ -140,10 +140,14 @@ Dynamic Open Graph image (`src/app/opengraph-image.tsx`, via `next/og`)
 plus Open Graph/Twitter Card metadata in `layout.tsx`. Links shared in
 WhatsApp/Facebook now show a title, description, and preview image.
 
-### Basic privacy-friendly analytics
-No pageview/funnel tracking at all — founder has no visibility into
-signup → application → completion conversion without querying the database
-directly.
+### ~~Basic privacy-friendly analytics~~ — shipped 2026-08-24
+Self-hosted `analytics_events` table (event type, optional path, timestamp
+— no cookies, no IP, no user identifier). `PageviewTracker` logs one event
+per route change from the root layout; signup completion, application
+submission, and session completion are logged from their existing server
+actions. Surfaced on `/admin` as a 30-day pageview/path breakdown and a
+signup → application → completion funnel. See
+`0025_analytics_events.sql`, `src/lib/logEvent.ts`.
 
 ### ~~Accessibility pass~~ — shipped 2026-08-24
 Computed WCAG 2.1 contrast ratios for the app's muted-text convention and
