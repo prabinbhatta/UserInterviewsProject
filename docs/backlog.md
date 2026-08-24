@@ -175,15 +175,20 @@ in the app, and the one icon-only SVG (site logo) is correctly
 Deferred by founder; current working name is "Research Platform."
 
 ### ~~Auto-generated video meeting links~~ — shipped 2026-08-24
-Google Meet via the Calendar API, using the founder's own Google account
-(no company registration needed) — `src/lib/googleMeet.ts` talks to
-Google's token + Calendar endpoints directly via fetch, no new npm
-dependency. "Auto-generate a Google Meet link" checkbox only appears on
-the slot form for online-format studies; the server action re-verifies
-the study's actual format itself rather than trusting the client. Falls
-back to the manual location field if generation fails for any reason.
-Verified end-to-end: got back a real meet.google.com link for an online
-study; confirmed the option is entirely absent for in-person studies.
+Google Meet via the dedicated Meet API (not the Calendar API — the
+Calendar API's auto-generated conference data always defaults to
+knock-to-join/host-must-admit for a personal Google account, and that
+setting isn't exposed through it at all), using the founder's own Google
+account, no company registration needed. `src/lib/googleMeet.ts` creates
+a Meet "space" directly with `accessType: OPEN` so anyone with the link
+joins immediately — talks to Google's token + Meet endpoints directly via
+fetch, no new npm dependency. "Auto-generate a Google Meet link" checkbox
+only appears on the slot form for online-format studies; the server
+action re-verifies the study's actual format itself rather than trusting
+the client. Falls back to the manual location field if generation fails
+for any reason. Verified end-to-end: got back a real meet.google.com
+link for an online study with the OPEN-access payload confirmed;
+confirmed the option is entirely absent for in-person studies.
 
 ### ~~Interactive design pass~~ — shipped 2026-08-24
 First pass covered loading states and empty-state illustrations for both
