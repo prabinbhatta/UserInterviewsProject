@@ -1,49 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useActionState } from "react";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
-import { friendlyError } from "@/lib/friendlyError";
+import { login, type LoginFormState } from "./actions";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
 
+const initialState: LoginFormState = { error: null };
+
 export default function LoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-
-    const supabase = createClient();
-    const { data, error: signInError } =
-      await supabase.auth.signInWithPassword({ email, password });
-
-    if (signInError) {
-      setLoading(false);
-      setError(friendlyError(signInError, "Incorrect email or password."));
-      return;
-    }
-
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", data.user.id)
-      .single();
-
-    setLoading(false);
-    router.push(profile?.role === "participant" ? "/participant" : "/researcher");
-    router.refresh();
-  }
+  const [state, formAction, pending] = useActionState(login, initialState);
 
   return (
     <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm">
+      <form action={formAction} className="w-full max-w-sm">
         <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
           Log in
         </h1>
@@ -52,9 +22,8 @@ export default function LoginPage() {
           Email
           <input
             type="email"
+            name="email"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             className={fieldClasses}
           />
         </label>
@@ -63,9 +32,8 @@ export default function LoginPage() {
           Password
           <input
             type="password"
+            name="password"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             className={fieldClasses}
           />
         </label>
@@ -79,10 +47,10 @@ export default function LoginPage() {
           </Link>
         </p>
 
-        {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
+        {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
 
-        <Button type="submit" disabled={loading} className="mt-6 w-full">
-          {loading ? "Logging in..." : "Log in"}
+        <Button type="submit" disabled={pending} className="mt-6 w-full">
+          {pending ? "Logging in..." : "Log in"}
         </Button>
 
         <p className="mt-4 text-center text-sm text-[var(--ink)]/60">

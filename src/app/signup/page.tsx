@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useActionState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/app/LanguageProvider";
-import { friendlyError } from "@/lib/friendlyError";
-import { logEvent } from "@/lib/logEvent";
+import { signUp, type SignupFormState } from "./actions";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 type Role = "researcher" | "participant";
+
+const initialState: SignupFormState = { error: null, submitted: false };
 
 function SignupForm() {
   const { t } = useLanguage();
@@ -19,44 +19,10 @@ function SignupForm() {
   const [role, setRole] = useState<Role>(
     initialRole === "participant" ? "participant" : "researcher",
   );
-  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  const [state, formAction, pending] = useActionState(signUp, initialState);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return;
-    }
-
-    setLoading(true);
-    const supabase = createClient();
-    const { error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { role, full_name: fullName },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    setLoading(false);
-
-    if (signUpError) {
-      setError(friendlyError(signUpError));
-      return;
-    }
-
-    setSubmitted(true);
-    logEvent(`signup_completed_${role}`);
-  }
-
-  if (submitted) {
+  if (state.submitted) {
     return (
       <div className="w-full max-w-sm text-center">
         <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
@@ -76,10 +42,12 @@ function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-sm">
+    <form action={formAction} className="w-full max-w-sm">
       <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
         {t("signupTitle")}
       </h1>
+
+      <input type="hidden" name="role" value={role} />
 
       <div className="mt-6 flex rounded-full border border-[var(--mist)] p-1">
         <button
@@ -108,19 +76,14 @@ function SignupForm() {
 
       <label className={`mt-5 ${labelClasses}`}>
         {t("fullName")}
-        <input
-          type="text"
-          required
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          className={fieldClasses}
-        />
+        <input type="text" name="fullName" required className={fieldClasses} />
       </label>
 
       <label className={`mt-4 ${labelClasses}`}>
         {t("email")}
         <input
           type="email"
+          name="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -132,15 +95,14 @@ function SignupForm() {
         {t("password")}
         <input
           type="password"
+          name="password"
           required
           minLength={8}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           className={fieldClasses}
         />
       </label>
 
-      {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
+      {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
 
       <p className="mt-4 text-center text-xs text-[var(--ink)]/70">
         {t("agreeToTerms")}{" "}
@@ -154,8 +116,8 @@ function SignupForm() {
         .
       </p>
 
-      <Button type="submit" disabled={loading} className="mt-4 w-full">
-        {loading ? t("creatingAccount") : t("signUp")}
+      <Button type="submit" disabled={pending} className="mt-4 w-full">
+        {pending ? t("creatingAccount") : t("signUp")}
       </Button>
 
       <p className="mt-4 text-center text-sm text-[var(--ink)]/60">
