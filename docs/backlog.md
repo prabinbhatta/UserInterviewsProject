@@ -197,6 +197,18 @@ empty state since they're conditionally hidden entirely when empty. Pure
 client-side forms (login, signup, forgot/reset password) don't block on
 server data fetching, so they don't need a loading.tsx.
 
+Third pass covered the landing page, which the first two passes hadn't
+touched. New `PlatformFlow` component: a 3-node illustration (company
+posts a study → platform matches & screens → participant shares their
+voice) placed right after the hero, so a first-time visitor understands
+the marketplace mechanic before reading anything else — reuses the
+existing brand palette and the site logo's abstract-bars motif rather
+than a mismatched illustration style, and stacks vertically with
+connectors hidden on mobile. Also replaced the "trust" section's three
+empty circle placeholders with real icons (checkmark, calendar, payment
+shield) matching what each one describes. Both bilingual, verified at
+desktop and mobile widths in both languages.
+
 ### ~~Participant referral program~~ — shipped 2026-08-24
 A participant's own user id doubles as their referral code — no separate
 code column. Signup accepts `?ref=<user-id>`, validated server-side in
