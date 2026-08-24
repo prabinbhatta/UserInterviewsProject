@@ -283,3 +283,18 @@ metadata (title, description, Open Graph, Twitter Card); both pages end
 in a "sign up to apply" CTA rather than exposing the real screener, which
 stays behind login on `/participant/studies`. Verified logged out in the
 browser, including a 404 for a nonexistent/inactive study id.
+
+### ~~Timezone-aware scheduling~~ — shipped 2026-08-24
+Two bugs, one root cause: a `datetime-local` input carries no timezone,
+and Server Components render on the server, so any time shown or parsed
+there used the server's own timezone rather than the researcher's or
+participant's. Fixed the write path by converting the picked date/time
+to a full ISO string client-side before it reaches the server, and the
+read path with a new `LocalDateTime` client component. Found and fixed a
+second, more subtle bug while verifying: the first draft's
+`suppressHydrationWarning` span never actually got patched to the real
+client value, so every time rendered permanently blank — fixed with
+`useSyncExternalStore`, which correctly forces the client-only render.
+Verified live: a slot entered as 10:00 AM round-tripped back as exactly
+10:00 AM with no drift, matching on both the researcher and participant
+side. See `src/components/ui/LocalDateTime.tsx`.
