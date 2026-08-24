@@ -4,10 +4,18 @@ Running list of scoped-but-not-yet-built work, grouped by priority. Update as it
 
 ## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
-### Resend domain verification
-Blocks transactional email to anyone other than the account owner until a
-custom sending domain is verified. Single biggest blocker for real launch —
-confirmation emails, notifications, everything depend on it.
+### ~~Resend domain verification~~ — shipped 2026-08-24
+Verified `mail.research.prabinbhatta.com.np` in Resend (DKIM/SPF/DMARC
+records added via Vercel DNS). This fixed two separate things: (1)
+Supabase Auth's own confirmation/reset emails, which were failing
+outright in production (`Error sending confirmation email`, 500) because
+no custom SMTP was configured — now using Resend's SMTP relay; and (2)
+the app's own in-app notification emails (`src/lib/email.ts`), which
+previously only delivered to the account owner via Resend's sandbox
+address `onboarding@resend.dev` — now sent from the verified domain.
+Also fixed Supabase's Site URL (was still `localhost:3000`, so
+confirmation links pointed at the wrong host in production). Verified
+end-to-end with a real signup on a fresh email address.
 
 ### ~~Password reset / forgot password~~ — shipped 2026-08-23
 `/forgot-password` and `/reset-password` pages using Supabase Auth's
