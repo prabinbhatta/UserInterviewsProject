@@ -19,6 +19,7 @@ export async function signUp(
   const role = String(formData.get("role") ?? "researcher") as
     | "researcher"
     | "participant";
+  const referredBy = String(formData.get("referredBy") ?? "");
 
   if (password.length < 8) {
     return { error: "Password must be at least 8 characters.", submitted: false };
@@ -37,7 +38,7 @@ export async function signUp(
     email,
     password,
     options: {
-      data: { role, full_name: fullName },
+      data: { role, full_name: fullName, referred_by: referredBy },
       emailRedirectTo: `${SITE_URL}/auth/callback`,
     },
   });

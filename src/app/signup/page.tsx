@@ -16,6 +16,7 @@ function SignupForm() {
   const { t } = useLanguage();
   const searchParams = useSearchParams();
   const initialRole = searchParams.get("role");
+  const referredBy = searchParams.get("ref") ?? "";
   const [role, setRole] = useState<Role>(
     initialRole === "participant" ? "participant" : "researcher",
   );
@@ -48,6 +49,7 @@ function SignupForm() {
       </h1>
 
       <input type="hidden" name="role" value={role} />
+      <input type="hidden" name="referredBy" value={referredBy} />
 
       <div className="mt-6 flex rounded-full border border-[var(--mist)] p-1">
         <button

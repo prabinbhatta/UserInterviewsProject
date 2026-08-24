@@ -6,6 +6,7 @@ import { one } from "@/lib/one";
 import { getLang } from "@/lib/getLang";
 import { Card } from "@/components/ui/Card";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { ReferralLink } from "./ReferralLink";
 
 export default async function ParticipantDashboard() {
   const { t } = await getLang();
@@ -44,6 +45,8 @@ export default async function ParticipantDashboard() {
     .map((a) => one(a.incentive_records))
     .filter((i) => i?.status === "received")
     .reduce((sum, i) => sum + (i?.amount ?? 0), 0);
+
+  const { data: referralCount } = await supabase.rpc("count_my_referrals");
 
   const fieldsFilled = [
     participantProfile?.district,
@@ -112,6 +115,15 @@ export default async function ParticipantDashboard() {
           <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
             NPR {totalEarned}
           </p>
+        </Card>
+
+        <Card className="mt-4">
+          <p className="text-sm text-[var(--ink)]/70">Invite friends</p>
+          <p className="mt-1 text-[var(--ink)]">
+            {referralCount ?? 0} {referralCount === 1 ? "person" : "people"} joined
+            using your link.
+          </p>
+          <ReferralLink userId={user.id} />
         </Card>
 
         <div className="mt-6 flex gap-3">
