@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { friendlyError } from "@/lib/friendlyError";
+import { logEvent } from "@/lib/logEvent";
 
 export type ApplyFormState = { error: string | null };
 
@@ -112,6 +113,8 @@ export async function applyToStudy(
       return { error: friendlyError(answersError) };
     }
   }
+
+  await logEvent(anyRejected ? "application_rejected" : "application_submitted");
 
   redirect("/participant/applications");
 }

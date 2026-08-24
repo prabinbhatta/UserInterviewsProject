@@ -3,6 +3,7 @@ import { Fraunces, Manrope, IBM_Plex_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { LanguageProvider } from "./LanguageProvider";
+import { PageviewTracker } from "./PageviewTracker";
 import type { Lang } from "@/lib/i18n";
 
 const fraunces = Fraunces({
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${fraunces.variable} ${manrope.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <PageviewTracker />
         <LanguageProvider initialLang={initialLang}>{children}</LanguageProvider>
       </body>
     </html>

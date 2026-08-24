@@ -6,6 +6,7 @@ import { sendIncentiveSentEmail } from "@/lib/email";
 import { one } from "@/lib/one";
 import { reopenStudyIfUnderCapacity } from "@/lib/closeStudyIfFull";
 import { friendlyError } from "@/lib/friendlyError";
+import { logEvent } from "@/lib/logEvent";
 
 type StudyIncentive = { incentive_amount: number } | { incentive_amount: number }[] | null;
 
@@ -51,6 +52,8 @@ export async function markSessionCompleted(
       { onConflict: "application_id" },
     );
   if (incentiveError) throw new Error(friendlyError(incentiveError));
+
+  await logEvent("session_completed");
 
   revalidatePath(revalidateTargetPath);
 }

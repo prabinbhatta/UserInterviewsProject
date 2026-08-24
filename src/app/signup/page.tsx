@@ -6,6 +6,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useLanguage } from "@/app/LanguageProvider";
 import { friendlyError } from "@/lib/friendlyError";
+import { logEvent } from "@/lib/logEvent";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
 
@@ -52,6 +53,7 @@ function SignupForm() {
     }
 
     setSubmitted(true);
+    logEvent(`signup_completed_${role}`);
   }
 
   if (submitted) {

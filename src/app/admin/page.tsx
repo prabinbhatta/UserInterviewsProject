@@ -46,25 +46,39 @@ export default async function AdminPage() {
     redirect("/researcher");
   }
 
-  const [studiesRes, applicationsRes, incentivesRes, profilesRes, reportsRes] =
-    await Promise.all([
-      supabase.from("studies").select("id, title, status, researcher_id"),
-      supabase.from("applications").select("id, status, study_id, participant_id"),
-      supabase
-        .from("incentive_records")
-        .select("id, application_id, status, amount"),
-      supabase.from("profiles").select("id, full_name"),
-      supabase
-        .from("reports")
-        .select("id, reporter_id, reported_user_id, study_id, reason, created_at")
-        .eq("status", "open")
-        .order("created_at", { ascending: true }),
-    ]);
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  const [
+    studiesRes,
+    applicationsRes,
+    incentivesRes,
+    profilesRes,
+    reportsRes,
+    analyticsEventsRes,
+  ] = await Promise.all([
+    supabase.from("studies").select("id, title, status, researcher_id"),
+    supabase.from("applications").select("id, status, study_id, participant_id"),
+    supabase
+      .from("incentive_records")
+      .select("id, application_id, status, amount"),
+    supabase.from("profiles").select("id, full_name"),
+    supabase
+      .from("reports")
+      .select("id, reporter_id, reported_user_id, study_id, reason, created_at")
+      .eq("status", "open")
+      .order("created_at", { ascending: true }),
+    supabase
+      .from("analytics_events")
+      .select("event_type, path")
+      .gte("created_at", thirtyDaysAgo.toISOString()),
+  ]);
 
   const studies = studiesRes.data ?? [];
   const applications = applicationsRes.data ?? [];
   const incentives = incentivesRes.data ?? [];
   const openReports = reportsRes.data ?? [];
+  const analyticsEvents = analyticsEventsRes.data ?? [];
   const nameById = new Map((profilesRes.data ?? []).map((p) => [p.id, p.full_name]));
   const studyById = new Map(studies.map((s) => [s.id, s]));
   const applicationById = new Map(applications.map((a) => [a.id, a]));
@@ -72,6 +86,28 @@ export default async function AdminPage() {
   const studyCounts = countBy(studies, studyStatuses);
   const applicationCounts = countBy(applications, applicationStatuses);
   const incentiveCounts = countBy(incentives, incentiveStatuses);
+
+  const pageviews = analyticsEvents.filter((e) => e.event_type === "pageview");
+  const pathCounts = new Map<string, number>();
+  for (const view of pageviews) {
+    const path = view.path ?? "(unknown)";
+    pathCounts.set(path, (pathCounts.get(path) ?? 0) + 1);
+  }
+  const topPaths = [...pathCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  const funnelCounts = {
+    signups: analyticsEvents.filter((e) =>
+      e.event_type.startsWith("signup_completed"),
+    ).length,
+    applications: analyticsEvents.filter(
+      (e) => e.event_type === "application_submitted",
+    ).length,
+    completions: analyticsEvents.filter(
+      (e) => e.event_type === "session_completed",
+    ).length,
+  };
 
   const needsAttention = incentives
     .filter((i) => i.status === "not_received")
@@ -185,6 +221,59 @@ export default async function AdminPage() {
             </ul>
           </div>
         )}
+
+        <Card className="mt-8">
+          <h2 className="font-semibold text-[var(--ink)]">
+            Last 30 days
+          </h2>
+          <p className="mt-1 text-sm text-[var(--ink)]/60">
+            Self-hosted, no cookies or third-party trackers — pageviews are
+            counted by path only.
+          </p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="text-sm text-[var(--ink)]/60">Pageviews</p>
+              <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
+                {pageviews.length}
+              </p>
+              {topPaths.length > 0 && (
+                <dl className="mt-3 space-y-1 text-sm">
+                  {topPaths.map(([path, count]) => (
+                    <div key={path} className="flex justify-between gap-4">
+                      <dt className="truncate text-[var(--ink)]/60">{path}</dt>
+                      <dd className="shrink-0 font-medium text-[var(--ink)]">
+                        {count}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+            </div>
+            <div>
+              <p className="text-sm text-[var(--ink)]/60">Funnel</p>
+              <dl className="mt-3 space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <dt className="text-[var(--ink)]/60">Signups completed</dt>
+                  <dd className="font-medium text-[var(--ink)]">
+                    {funnelCounts.signups}
+                  </dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-[var(--ink)]/60">Applications submitted</dt>
+                  <dd className="font-medium text-[var(--ink)]">
+                    {funnelCounts.applications}
+                  </dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-[var(--ink)]/60">Sessions completed</dt>
+                  <dd className="font-medium text-[var(--ink)]">
+                    {funnelCounts.completions}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </Card>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           <Card>
