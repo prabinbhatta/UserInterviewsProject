@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { confirmIncentiveReceived, reportIncentiveNotReceived } from "@/app/incentive-actions";
-import { withdrawApplication } from "./actions";
+import { withdrawApplication, submitParticipantRating } from "./actions";
 import { getLang } from "@/lib/getLang";
 import type { TranslationKey } from "@/lib/i18n";
 import { Card } from "@/components/ui/Card";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { StarRatingInput, StarRatingDisplay } from "@/components/ui/StarRating";
 import { applicationStatusTones as statusTones } from "@/lib/applicationStatus";
 
 const statusLabelKeys: Record<string, TranslationKey> = {
@@ -32,6 +33,7 @@ type ApplicationRow = {
     status: "pending" | "sent" | "received" | "not_received";
     amount: number;
   } | null;
+  session_ratings: { rating: number; rater_role: string }[] | null;
 };
 
 export default async function MyApplicationsPage() {
@@ -46,7 +48,7 @@ export default async function MyApplicationsPage() {
   const { data: applications } = (await supabase
     .from("applications")
     .select(
-      "id, status, created_at, studies(id, title, incentive_amount), incentive_records(status, amount)",
+      "id, status, created_at, studies(id, title, incentive_amount), incentive_records(status, amount), session_ratings(rating, rater_role)",
     )
     .eq("participant_id", user.id)
     .order("created_at", { ascending: false })) as {
@@ -193,6 +195,46 @@ export default async function MyApplicationsPage() {
                       )}
                     </div>
                   )}
+
+                {application.status === "completed" && (
+                  <div className="mt-3 border-t border-[var(--mist)]/50 pt-3">
+                    {(() => {
+                      const myRating = application.session_ratings?.find(
+                        (r) => r.rater_role === "participant",
+                      );
+                      if (myRating) {
+                        return (
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-[var(--ink)]/70">
+                              {t("yourRatingLabel")}:
+                            </span>
+                            <StarRatingDisplay rating={myRating.rating} />
+                          </div>
+                        );
+                      }
+                      return (
+                        <form
+                          action={submitParticipantRating.bind(null, application.id)}
+                          className="flex flex-col gap-2"
+                        >
+                          <p className="text-sm text-[var(--ink)]/70">
+                            {t("rateSessionPrompt")}
+                          </p>
+                          <StarRatingInput name="rating" />
+                          <textarea
+                            name="comment"
+                            rows={2}
+                            placeholder={t("ratingCommentPlaceholder")}
+                            className="rounded-lg border border-[var(--mist)] bg-white px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/40 focus:border-[var(--indigo)] focus:outline-none"
+                          />
+                          <Button type="submit" size="sm" className="self-start">
+                            {t("submitRatingAction")}
+                          </Button>
+                        </form>
+                      );
+                    })()}
+                  </div>
+                )}
               </Card>
             ))}
           </ul>

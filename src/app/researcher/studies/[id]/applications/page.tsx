@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { approveApplication, rejectApplication } from "./actions";
+import { approveApplication, rejectApplication, submitResearcherRating } from "./actions";
 import { markSessionCompleted, markNoShow, sendIncentive } from "@/app/incentive-actions";
 import { getLang } from "@/lib/getLang";
 import type { TranslationKey } from "@/lib/i18n";
@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { StarRatingInput, StarRatingDisplay } from "@/components/ui/StarRating";
 import { applicationStatusTones, incentiveStatusTones } from "@/lib/applicationStatus";
 
 const statusLabelKeys: Record<string, TranslationKey> = {
@@ -35,6 +36,7 @@ type ApplicationRow = {
   created_at: string;
   profiles: { full_name: string | null } | null;
   incentive_records: { status: keyof typeof incentiveStatusTones; amount: number } | null;
+  session_ratings: { rating: number; rater_role: string }[] | null;
 };
 
 export default async function StudyApplicationsPage({
@@ -64,7 +66,7 @@ export default async function StudyApplicationsPage({
   const { data: applications } = (await supabase
     .from("applications")
     .select(
-      "id, status, created_at, profiles(full_name), incentive_records(status, amount)",
+      "id, status, created_at, profiles(full_name), incentive_records(status, amount), session_ratings(rating, rater_role)",
     )
     .eq("study_id", id)
     .order("created_at", { ascending: true })) as {
@@ -98,90 +100,132 @@ export default async function StudyApplicationsPage({
         ) : (
           <ul className="mt-8 space-y-3">
             {applications.map((application) => (
-              <Card
-                as="li"
-                key={application.id}
-                className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
-              >
-                <div className="min-w-0">
-                  <p className="font-medium text-[var(--ink)]">
-                    {application.profiles?.full_name ?? t("participantFallback")}
-                  </p>
-                  <div className="mt-1 flex flex-wrap gap-2">
-                    <Badge tone={applicationStatusTones[application.status]}>
-                      {t(statusLabelKeys[application.status])}
-                    </Badge>
+              <Card as="li" key={application.id} className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0">
+                    <p className="font-medium text-[var(--ink)]">
+                      {application.profiles?.full_name ?? t("participantFallback")}
+                    </p>
+                    <div className="mt-1 flex flex-wrap gap-2">
+                      <Badge tone={applicationStatusTones[application.status]}>
+                        {t(statusLabelKeys[application.status])}
+                      </Badge>
+                      {application.status === "completed" &&
+                        application.incentive_records && (
+                          <Badge tone={incentiveStatusTones[application.incentive_records.status]}>
+                            {t(incentiveLabelKeys[application.incentive_records.status])}
+                          </Badge>
+                        )}
+                    </div>
+                  </div>
+
+                  <div className="flex shrink-0 flex-wrap items-center gap-2">
+                    <Link
+                      href={`/researcher/studies/${id}/applications/${application.id}/messages`}
+                      className={`text-sm ${mutedLinkClasses}`}
+                    >
+                      {t("messageAction")}
+                    </Link>
+                    {application.status === "qualified" && (
+                      <>
+                        <form action={boundApprove.bind(null, application.id)}>
+                          <Button type="submit" size="sm">
+                            {t("approveAction")}
+                          </Button>
+                        </form>
+                        <form action={boundReject.bind(null, application.id)}>
+                          <Button type="submit" size="sm" variant="secondary">
+                            {t("notAFitAction")}
+                          </Button>
+                        </form>
+                      </>
+                    )}
+                    {application.status === "scheduled" && (
+                      <>
+                        <form
+                          action={markSessionCompleted.bind(
+                            null,
+                            application.id,
+                            revalidateTarget,
+                          )}
+                        >
+                          <Button type="submit" size="sm">
+                            {t("markSessionCompletedAction")}
+                          </Button>
+                        </form>
+                        <form
+                          action={markNoShow.bind(
+                            null,
+                            application.id,
+                            revalidateTarget,
+                          )}
+                        >
+                          <Button type="submit" size="sm" variant="secondary">
+                            {t("didntShowUpAction")}
+                          </Button>
+                        </form>
+                      </>
+                    )}
                     {application.status === "completed" &&
-                      application.incentive_records && (
-                        <Badge tone={incentiveStatusTones[application.incentive_records.status]}>
-                          {t(incentiveLabelKeys[application.incentive_records.status])}
-                        </Badge>
+                      application.incentive_records?.status === "pending" && (
+                        <form
+                          action={sendIncentive.bind(
+                            null,
+                            application.id,
+                            revalidateTarget,
+                          )}
+                        >
+                          <Button type="submit" size="sm">
+                            {t("sentIncentiveAction")}
+                          </Button>
+                        </form>
                       )}
                   </div>
                 </div>
 
-                <div className="flex shrink-0 flex-wrap items-center gap-2">
-                  <Link
-                    href={`/researcher/studies/${id}/applications/${application.id}/messages`}
-                    className={`text-sm ${mutedLinkClasses}`}
-                  >
-                    {t("messageAction")}
-                  </Link>
-                  {application.status === "qualified" && (
-                    <>
-                      <form action={boundApprove.bind(null, application.id)}>
-                        <Button type="submit" size="sm">
-                          {t("approveAction")}
-                        </Button>
-                      </form>
-                      <form action={boundReject.bind(null, application.id)}>
-                        <Button type="submit" size="sm" variant="secondary">
-                          {t("notAFitAction")}
-                        </Button>
-                      </form>
-                    </>
-                  )}
-                  {application.status === "scheduled" && (
-                    <>
-                      <form
-                        action={markSessionCompleted.bind(
-                          null,
-                          application.id,
-                          revalidateTarget,
-                        )}
-                      >
-                        <Button type="submit" size="sm">
-                          {t("markSessionCompletedAction")}
-                        </Button>
-                      </form>
-                      <form
-                        action={markNoShow.bind(
-                          null,
-                          application.id,
-                          revalidateTarget,
-                        )}
-                      >
-                        <Button type="submit" size="sm" variant="secondary">
-                          {t("didntShowUpAction")}
-                        </Button>
-                      </form>
-                    </>
-                  )}
-                  {application.status === "completed" &&
-                    application.incentive_records?.status === "pending" && (
-                      <form
-                        action={sendIncentive.bind(
-                          null,
-                          application.id,
-                          revalidateTarget,
-                        )}
-                      >
-                        <Button type="submit" size="sm">
-                          {t("sentIncentiveAction")}
-                        </Button>
-                      </form>
-                    )}
-                </div>
+                {application.status === "completed" && (
+                  <div className="border-t border-[var(--mist)]/50 pt-3">
+                    {(() => {
+                      const myRating = application.session_ratings?.find(
+                        (r) => r.rater_role === "researcher",
+                      );
+                      if (myRating) {
+                        return (
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-[var(--ink)]/70">
+                              {t("yourRatingLabel")}:
+                            </span>
+                            <StarRatingDisplay rating={myRating.rating} />
+                          </div>
+                        );
+                      }
+                      return (
+                        <form
+                          action={submitResearcherRating.bind(
+                            null,
+                            id,
+                            application.id,
+                          )}
+                          className="flex flex-col gap-2"
+                        >
+                          <p className="text-sm text-[var(--ink)]/70">
+                            {t("rateParticipantPrompt")}
+                          </p>
+                          <StarRatingInput name="rating" />
+                          <textarea
+                            name="comment"
+                            rows={2}
+                            placeholder={t("ratingCommentPlaceholder")}
+                            className="rounded-lg border border-[var(--mist)] bg-white px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/40 focus:border-[var(--indigo)] focus:outline-none"
+                          />
+                          <Button type="submit" size="sm" className="self-start">
+                            {t("submitRatingAction")}
+                          </Button>
+                        </form>
+                      );
+                    })()}
+                  </div>
+                )}
               </Card>
             ))}
           </ul>

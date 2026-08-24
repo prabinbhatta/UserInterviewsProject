@@ -40,3 +40,31 @@ export async function rejectApplication(studyId: string, applicationId: string) 
   if (error) throw new Error(friendlyError(error));
   revalidatePath(`/researcher/studies/${studyId}/applications`);
 }
+
+export async function submitResearcherRating(
+  studyId: string,
+  applicationId: string,
+  formData: FormData,
+) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("You must be logged in.");
+
+  const rating = Number(formData.get("rating"));
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+    throw new Error("Pick a rating from 1 to 5 stars.");
+  }
+  const comment = String(formData.get("comment") ?? "").trim() || null;
+
+  const { error } = await supabase.from("session_ratings").insert({
+    application_id: applicationId,
+    rater_role: "researcher",
+    rating,
+    comment,
+  });
+  if (error) throw new Error(friendlyError(error));
+
+  revalidatePath(`/researcher/studies/${studyId}/applications`);
+}

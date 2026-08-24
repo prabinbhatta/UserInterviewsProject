@@ -283,6 +283,13 @@ export const translations = {
     notReceivedReportedTitle: "You reported this incentive as not received.",
     notReceivedFollowup: "We've flagged it for follow-up. If it's not resolved soon, contact support at",
 
+    // Post-session ratings
+    rateSessionPrompt: "How was your session?",
+    rateParticipantPrompt: "How was this participant?",
+    ratingCommentPlaceholder: "Add a comment (optional)",
+    submitRatingAction: "Submit rating",
+    yourRatingLabel: "Your rating",
+
     // Participant: messages
     backToYourApplicationsLink: "Back to your applications",
 
@@ -614,6 +621,13 @@ export const translations = {
     receivedThanksMessage: "तपाईंले यो प्रोत्साहन प्राप्त भएको पुष्टि गर्नुभयो। धन्यवाद!",
     notReceivedReportedTitle: "तपाईंले यो प्रोत्साहन नपाएको रिपोर्ट गर्नुभयो।",
     notReceivedFollowup: "हामीले यसलाई पछ्याउनका लागि चिन्ह लगाएका छौं। छिट्टै समाधान नभए यो नम्बरमा सम्पर्क गर्नुहोस्",
+
+    // Post-session ratings
+    rateSessionPrompt: "तपाईंको सेसन कस्तो थियो?",
+    rateParticipantPrompt: "यो सहभागी कस्तो थियो?",
+    ratingCommentPlaceholder: "टिप्पणी थप्नुहोस् (वैकल्पिक)",
+    submitRatingAction: "मूल्याङ्कन पेश गर्नुहोस्",
+    yourRatingLabel: "तपाईंको मूल्याङ्कन",
 
     // Participant: messages
     backToYourApplicationsLink: "तपाईंका आवेदनहरूमा फर्कनुहोस्",
