@@ -4,6 +4,8 @@ import Link from "next/link";
 import { VoiceWaveform } from "./VoiceWaveform";
 import { Reveal } from "./Reveal";
 import { JourneyTimeline } from "./JourneyTimeline";
+import { PlatformFlow } from "./PlatformFlow";
+import { ScreenerIcon, CalendarIcon, PaymentCheckIcon } from "./TrustIcons";
 import { SiteHeader } from "./SiteHeader";
 import { useLanguage } from "./LanguageProvider";
 
@@ -65,6 +67,17 @@ export default function Home() {
             <VoiceWaveform />
           </div>
         </div>
+      </section>
+
+      {/* Platform flow — what this actually is, at a glance */}
+      <section className="mx-auto w-full max-w-6xl px-6 pb-20 sm:px-10">
+        <Reveal delay={160}>
+          <PlatformFlow
+            step1={t("flowStep1Label")}
+            step2={t("flowStep2Label")}
+            step3={t("flowStep3Label")}
+          />
+        </Reveal>
       </section>
 
       {/* Two paths */}
@@ -155,21 +168,27 @@ export default function Home() {
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             <Reveal delay={80} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--coral)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--coral)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                <ScreenerIcon />
+              </div>
               <h3 className="mt-4 font-semibold">{t("trust1Title")}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--ink)]/70">
                 {t("trust1Body")}
               </p>
             </Reveal>
             <Reveal delay={180} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--indigo)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--indigo)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                <CalendarIcon />
+              </div>
               <h3 className="mt-4 font-semibold">{t("trust2Title")}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--ink)]/70">
                 {t("trust2Body")}
               </p>
             </Reveal>
             <Reveal delay={280} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                <PaymentCheckIcon />
+              </div>
               <h3 className="mt-4 font-semibold">{t("trust3Title")}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--ink)]/70">
                 {t("trust3Body")}

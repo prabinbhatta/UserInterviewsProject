@@ -59,6 +59,11 @@ export const translations = {
 
     footerTagline: "Built in Nepal. Made to travel.",
 
+    // Landing page: platform flow diagram
+    flowStep1Label: "A company posts a study",
+    flowStep2Label: "The platform matches & screens",
+    flowStep3Label: "A participant shares their voice",
+
     // Signup page
     signupTitle: "Create an account",
     tabResearcher: "I need research done",
@@ -375,6 +380,11 @@ export const translations = {
       "प्रोत्साहन रकम तपाईं र सहभागीबीच सिधै चल्छ। हामी प्रत्येकलाई म्यानुअल रूपमा प्रमाणित गर्छौं, र तपाईं जहिले पनि सपोर्टमा सम्पर्क गर्न सक्नुहुन्छ।",
 
     footerTagline: "नेपालमा निर्मित। संसारभर जाने गरी बनाइएको।",
+
+    // Landing page: platform flow diagram
+    flowStep1Label: "कम्पनीले अध्ययन पोस्ट गर्छ",
+    flowStep2Label: "प्लेटफर्मले मिलान र स्क्रिन गर्छ",
+    flowStep3Label: "सहभागीले आफ्नो आवाज साझा गर्छ",
 
     // Signup page
     signupTitle: "खाता बनाउनुहोस्",
