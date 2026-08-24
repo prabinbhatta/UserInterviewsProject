@@ -235,3 +235,33 @@ the app roles. Required moving signup/login off direct client-side
 Supabase calls onto server actions, since only the server can see the
 request IP. See `0026_auth_rate_limiting.sql`, `src/lib/rateLimit.ts`,
 `src/app/login/actions.ts`, `src/app/signup/actions.ts`.
+
+### ~~Calendar export (.ics) for booked sessions~~ — shipped 2026-08-24
+`GET /calendar/[slotId]` returns a valid .ics file for a booked session,
+with an authorization check beyond RLS (only the booked participant or
+the study's researcher can fetch it). "Add to calendar" added to both the
+participant schedule page and the researcher slots page. No OAuth or
+external API — works with any calendar app. See
+`src/app/calendar/[slotId]/route.ts`.
+
+### ~~Participant search for researchers~~ — shipped 2026-08-24
+New `/researcher/participants` page: filter the participant pool by
+district, age range, device, and language, then invite matches directly.
+Reuses the existing invite/accept plumbing (no new email code needed).
+The search function returns only what's needed to decide who to invite —
+never email, which stays server-side behind a separate function gated to
+callers who are themselves a researcher. See
+`0028_calendar_search_waitlist.sql`, `src/app/researcher/participants/`.
+
+### ~~Waitlist for full studies~~ — shipped 2026-08-24
+Participants can join a waitlist on a full study. When a spot frees up
+(withdrawal, no-show, cancellation), the study auto-reopens and
+waitlisted participants get a best-effort "a spot opened up" email — the
+underlying Postgres function only returns waitlist data on a genuine
+closed→active transition it just performed, so it can't be used to
+harvest waitlisted emails on demand. See `src/lib/closeStudyIfFull.ts`.
+
+Also fixed a real regression while building this batch: migration 0027's
+`handle_new_user()` rewrite had accidentally dropped the `email` column
+insert that 0013 added, so every signup since then had a NULL
+`profiles.email`. Restored and backfilled in `0028_calendar_search_waitlist.sql`.
