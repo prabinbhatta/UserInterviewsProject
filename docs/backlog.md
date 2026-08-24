@@ -274,3 +274,12 @@ Also fixed a real regression while building this batch: migration 0027's
 `handle_new_user()` rewrite had accidentally dropped the `email` column
 insert that 0013 added, so every signup since then had a NULL
 `profiles.email`. Restored and backfilled in `0028_calendar_search_waitlist.sql`.
+
+### ~~Public study browse page~~ — shipped 2026-08-24
+`/browse` and `/browse/[id]` list active studies with no login required —
+the existing RLS policy on `studies` already allowed anonymous reads, so
+this only adds pages, not new data access. Each study gets its own SEO
+metadata (title, description, Open Graph, Twitter Card); both pages end
+in a "sign up to apply" CTA rather than exposing the real screener, which
+stays behind login on `/participant/studies`. Verified logged out in the
+browser, including a 404 for a nonexistent/inactive study id.
