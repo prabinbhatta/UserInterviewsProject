@@ -90,14 +90,22 @@ export default async function StudySlotsPage({
                   )}
                 </div>
                 {slot.application_id ? (
-                  <form action={boundCancel.bind(null, slot.application_id)}>
-                    <button
-                      type="submit"
-                      className={`shrink-0 text-sm ${mutedLinkClasses}`}
+                  <div className="flex shrink-0 items-center gap-3">
+                    <a
+                      href={`/calendar/${slot.id}`}
+                      className={`text-sm ${mutedLinkClasses}`}
                     >
-                      {t("cancelBookingAction")}
-                    </button>
-                  </form>
+                      {t("addToCalendarAction")}
+                    </a>
+                    <form action={boundCancel.bind(null, slot.application_id)}>
+                      <button
+                        type="submit"
+                        className={`text-sm ${mutedLinkClasses}`}
+                      >
+                        {t("cancelBookingAction")}
+                      </button>
+                    </form>
+                  </div>
                 ) : (
                   <form action={boundDelete.bind(null, slot.id)}>
                     <button

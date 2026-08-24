@@ -58,9 +58,17 @@ export default async function StudiesPage() {
               {t("yourStudies")}
             </h1>
           </div>
-          <LinkButton href="/researcher/studies/new" size="sm">
-            {t("newStudy")}
-          </LinkButton>
+          <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href="/researcher/participants"
+              className={`text-sm ${mutedLinkClasses}`}
+            >
+              Search participants
+            </Link>
+            <LinkButton href="/researcher/studies/new" size="sm">
+              {t("newStudy")}
+            </LinkButton>
+          </div>
         </div>
 
         {!studies || studies.length === 0 ? (

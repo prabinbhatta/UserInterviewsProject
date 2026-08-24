@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { sendWaitlistSpotOpenEmail } from "@/lib/email";
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -20,7 +21,22 @@ export async function reopenStudyIfUnderCapacity(
   supabase: SupabaseServerClient,
   studyId: string,
 ) {
-  await supabase.rpc("reopen_study_if_under_capacity", {
-    target_study_id: studyId,
-  });
+  const { data: waitlisted } = await supabase.rpc(
+    "reopen_study_if_under_capacity",
+    { target_study_id: studyId },
+  );
+
+  if (!waitlisted || waitlisted.length === 0) return;
+
+  const { data: study } = await supabase
+    .from("studies")
+    .select("title")
+    .eq("id", studyId)
+    .single();
+
+  for (const entry of waitlisted) {
+    if (entry.email) {
+      await sendWaitlistSpotOpenEmail(entry.email, study?.title ?? "a study", studyId);
+    }
+  }
 }

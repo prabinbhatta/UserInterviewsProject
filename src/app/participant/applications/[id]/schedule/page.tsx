@@ -75,14 +75,22 @@ export default async function ScheduleApplicationPage({
                 {myBookedSlot.location}
               </p>
             )}
-            <form action={boundCancel} className="mt-4">
-              <button
-                type="submit"
+            <div className="mt-4 flex items-center gap-4">
+              <a
+                href={`/calendar/${myBookedSlot.id}`}
                 className={`text-sm ${mutedLinkClasses}`}
               >
-                {t("cancelBookingAction")}
-              </button>
-            </form>
+                {t("addToCalendarAction")}
+              </a>
+              <form action={boundCancel}>
+                <button
+                  type="submit"
+                  className={`text-sm ${mutedLinkClasses}`}
+                >
+                  {t("cancelBookingAction")}
+                </button>
+              </form>
+            </div>
           </Card>
         ) : openSlots.length === 0 ? (
           <EmptyState title={t("emptySlotsTitle")} body={t("noOpenSlotsParticipant")} />

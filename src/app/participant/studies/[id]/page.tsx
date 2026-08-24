@@ -4,8 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 import { getLang } from "@/lib/getLang";
 import { LangToggle } from "@/app/LangToggle";
 import { ApplyForm } from "./ApplyForm";
+import { joinWaitlist, leaveWaitlist } from "./waitlist-actions";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
 
 export default async function StudyDetailPage({
@@ -39,7 +41,7 @@ export default async function StudyDetailPage({
   const { data: study } = await supabase
     .from("studies")
     .select(
-      "id, title, description, format, session_length_minutes, incentive_amount, district",
+      "id, title, description, format, session_length_minutes, incentive_amount, district, status",
     )
     .eq("id", id)
     .single();
@@ -54,6 +56,16 @@ export default async function StudyDetailPage({
     .eq("study_id", id)
     .eq("participant_id", user.id)
     .maybeSingle();
+
+  const { data: waitlistEntry } = await supabase
+    .from("study_waitlist")
+    .select("id")
+    .eq("study_id", id)
+    .eq("participant_id", user.id)
+    .maybeSingle();
+
+  const boundJoinWaitlist = joinWaitlist.bind(null, id);
+  const boundLeaveWaitlist = leaveWaitlist.bind(null, id);
 
   const { data: questions } = await supabase
     .from("screener_questions")
@@ -107,6 +119,30 @@ export default async function StudyDetailPage({
             >
               {t("viewApplications")}
             </Link>
+          </Card>
+        ) : study.status === "closed" ? (
+          <Card className="mt-8">
+            {waitlistEntry ? (
+              <>
+                <p className="font-medium text-[var(--ink)]">{t("onWaitlistTitle")}</p>
+                <p className="mt-1 text-sm text-[var(--ink)]/60">{t("onWaitlistBody")}</p>
+                <form action={boundLeaveWaitlist} className="mt-3">
+                  <button type="submit" className={`text-sm ${mutedLinkClasses}`}>
+                    {t("leaveWaitlistAction")}
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <p className="font-medium text-[var(--ink)]">{t("studyFullTitle")}</p>
+                <p className="mt-1 text-sm text-[var(--ink)]/60">{t("studyFullBody")}</p>
+                <form action={boundJoinWaitlist} className="mt-3">
+                  <Button type="submit" size="sm">
+                    {t("joinWaitlistAction")}
+                  </Button>
+                </form>
+              </>
+            )}
           </Card>
         ) : (
           <ApplyForm studyId={study.id} questions={orderedQuestions} />

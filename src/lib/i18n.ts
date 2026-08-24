@@ -201,6 +201,7 @@ export const translations = {
     aParticipantFallback: "a participant",
     openLabel: "Open",
     cancelBookingAction: "Cancel booking",
+    addToCalendarAction: "Add to calendar",
     addTimeSlotFieldLabel: "Add a time slot",
     locationFieldFallback: "Location",
     meetingLinkFieldLabel: "Meeting link",
@@ -315,6 +316,14 @@ export const translations = {
     deviceComputerWebcam: "Computer with webcam",
     deviceTablet: "Tablet",
     deviceSmartphone: "Smartphone",
+
+    // Waitlist
+    studyFullTitle: "This study is full",
+    studyFullBody: "This study isn't accepting new applicants right now. Join the waitlist and we'll email you if a spot opens up.",
+    joinWaitlistAction: "Join waitlist",
+    onWaitlistTitle: "You're on the waitlist",
+    onWaitlistBody: "We'll email you if a spot opens up.",
+    leaveWaitlistAction: "Leave waitlist",
 
     // Empty-state titles
     emptyStudiesTitle: "No open studies",
@@ -523,6 +532,7 @@ export const translations = {
     aParticipantFallback: "एक सहभागी",
     openLabel: "खुला",
     cancelBookingAction: "बुकिङ रद्द गर्नुहोस्",
+    addToCalendarAction: "क्यालेन्डरमा थप्नुहोस्",
     addTimeSlotFieldLabel: "समय स्लट थप्नुहोस्",
     locationFieldFallback: "स्थान",
     meetingLinkFieldLabel: "मिटिङ लिंक",
@@ -637,6 +647,14 @@ export const translations = {
     deviceComputerWebcam: "वेबक्यामसहितको कम्प्युटर",
     deviceTablet: "ट्याब्लेट",
     deviceSmartphone: "स्मार्टफोन",
+
+    // Waitlist
+    studyFullTitle: "यो अध्ययन भरिएको छ",
+    studyFullBody: "यो अध्ययनले अहिले नयाँ आवेदकहरू लिइरहेको छैन। वेटलिस्टमा जोडिनुहोस्, ठाउँ खाली भएमा हामी इमेल गर्नेछौं।",
+    joinWaitlistAction: "वेटलिस्टमा जोडिनुहोस्",
+    onWaitlistTitle: "तपाईं वेटलिस्टमा हुनुहुन्छ",
+    onWaitlistBody: "ठाउँ खाली भएमा हामी तपाईंलाई इमेल गर्नेछौं।",
+    leaveWaitlistAction: "वेटलिस्ट छोड्नुहोस्",
 
     // Empty-state titles
     emptyStudiesTitle: "कुनै खुला अध्ययन छैन",

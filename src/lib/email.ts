@@ -94,6 +94,18 @@ export async function sendBookingCancelledEmail(
   });
 }
 
+export async function sendWaitlistSpotOpenEmail(to: string, studyTitle: string, studyId: string) {
+  await sendNotificationEmail({
+    to,
+    subject: `A spot opened up for "${studyTitle}"`,
+    html: wrap(
+      `<p>You were on the waitlist for <strong>${studyTitle}</strong> — a spot just opened up.</p><p>Apply soon, since it's first come, first served.</p>`,
+      `${SITE_URL}/participant/studies/${studyId}`,
+      "Apply now",
+    ),
+  });
+}
+
 export async function sendIncentiveSentEmail(to: string, studyTitle: string, amount: number) {
   await sendNotificationEmail({
     to,
