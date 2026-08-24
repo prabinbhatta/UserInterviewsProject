@@ -1,4 +1,4 @@
 #!/bin/bash
 export PATH="/opt/homebrew/bin:$PATH"
-cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$(dirname "$(dirname "${BASH_SOURCE[0]}")")"
 exec npm run dev
