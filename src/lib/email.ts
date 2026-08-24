@@ -94,6 +94,22 @@ export async function sendBookingCancelledEmail(
   });
 }
 
+export async function sendSessionReminderEmail(
+  to: string,
+  studyTitle: string,
+  slotTime: string,
+) {
+  await sendNotificationEmail({
+    to,
+    subject: `Reminder: your session for "${studyTitle}" starts soon`,
+    html: wrap(
+      `<p>Your session for <strong>${studyTitle}</strong> starts soon.</p><p>Time: ${slotTime}</p>`,
+      `${SITE_URL}/participant/applications`,
+      "View details",
+    ),
+  });
+}
+
 export async function sendWaitlistSpotOpenEmail(to: string, studyTitle: string, studyId: string) {
   await sendNotificationEmail({
     to,
