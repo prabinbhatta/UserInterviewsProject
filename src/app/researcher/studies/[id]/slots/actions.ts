@@ -35,16 +35,12 @@ export async function addSlot(
   if (autoMeet) {
     const { data: study } = await supabase
       .from("studies")
-      .select("title, format, session_length_minutes")
+      .select("format")
       .eq("id", studyId)
       .single();
 
     if (study?.format === "online") {
-      const meetLink = await createGoogleMeetLink({
-        summary: study.title,
-        startIso: date.toISOString(),
-        durationMinutes: study.session_length_minutes,
-      });
+      const meetLink = await createGoogleMeetLink();
       if (meetLink) location = meetLink;
     }
   }
