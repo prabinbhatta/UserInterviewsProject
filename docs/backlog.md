@@ -174,6 +174,10 @@ in the app, and the one icon-only SVG (site logo) is correctly
 ### Final product name
 Deferred by founder; current working name is "Research Platform."
 
-### Basic signup rate limiting
-No rate limiting on signup/login attempts — low risk at current scale but
-worth adding before wider launch to blunt basic abuse/enumeration attempts.
+### ~~Basic signup rate limiting~~ — shipped 2026-08-24
+Per-IP rate limiting on signup (5/15min) and login (10/15min), enforced by
+a `SECURITY DEFINER` Postgres function with no direct table access from
+the app roles. Required moving signup/login off direct client-side
+Supabase calls onto server actions, since only the server can see the
+request IP. See `0026_auth_rate_limiting.sql`, `src/lib/rateLimit.ts`,
+`src/app/login/actions.ts`, `src/app/signup/actions.ts`.
