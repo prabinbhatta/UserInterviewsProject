@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { releaseBookedSlot } from "@/lib/cancelBooking";
 import { sendBookingCancelledEmail } from "@/lib/email";
+import { createGoogleMeetLink } from "@/lib/googleMeet";
 import { one } from "@/lib/one";
 import { friendlyError } from "@/lib/friendlyError";
 
@@ -23,9 +24,31 @@ export async function addSlot(
     return { error: "Pick a time in the future." };
   }
 
-  const location = String(formData.get("location") ?? "").trim() || null;
+  let location = String(formData.get("location") ?? "").trim() || null;
+  const autoMeet = formData.get("auto_meet") === "on";
 
   const supabase = await createClient();
+
+  // Re-check the study's own format server-side rather than trusting
+  // whatever the client sent — auto-generating a Meet link only makes
+  // sense for an online study, regardless of what the form claimed.
+  if (autoMeet) {
+    const { data: study } = await supabase
+      .from("studies")
+      .select("title, format, session_length_minutes")
+      .eq("id", studyId)
+      .single();
+
+    if (study?.format === "online") {
+      const meetLink = await createGoogleMeetLink({
+        summary: study.title,
+        startIso: date.toISOString(),
+        durationMinutes: study.session_length_minutes,
+      });
+      if (meetLink) location = meetLink;
+    }
+  }
+
   const { error } = await supabase
     .from("study_slots")
     .insert({ study_id: studyId, starts_at: date.toISOString(), location });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { addSlot } from "./actions";
 import { useLanguage } from "@/app/LanguageProvider";
 import type { TranslationKey } from "@/lib/i18n";
@@ -32,6 +32,7 @@ export function SlotForm({
   const [state, formAction, pending] = useActionState(boundAddSlot, {
     error: null,
   });
+  const [autoMeet, setAutoMeet] = useState(true);
 
   return (
     <Card as="form" action={formAction}>
@@ -45,16 +46,31 @@ export function SlotForm({
         />
       </label>
 
-      <label className={`mt-3 ${labelClasses}`}>
-        {t(locationLabelKeys[format] ?? "locationFieldFallback")}{" "}
-        <span className="text-xs font-normal text-[var(--ink)]/60">{t("optionalTag")}</span>
-        <input
-          type="text"
-          name="location"
-          placeholder={locationPlaceholders[format]}
-          className={fieldClasses}
-        />
-      </label>
+      {format === "online" && (
+        <label className="mt-3 flex items-center gap-2 text-sm font-medium text-[var(--ink)]/80">
+          <input
+            type="checkbox"
+            name="auto_meet"
+            checked={autoMeet}
+            onChange={(e) => setAutoMeet(e.target.checked)}
+            className="h-4 w-4 accent-[var(--indigo)]"
+          />
+          {t("autoMeetLinkLabel")}
+        </label>
+      )}
+
+      {(format !== "online" || !autoMeet) && (
+        <label className={`mt-3 ${labelClasses}`}>
+          {t(locationLabelKeys[format] ?? "locationFieldFallback")}{" "}
+          <span className="text-xs font-normal text-[var(--ink)]/60">{t("optionalTag")}</span>
+          <input
+            type="text"
+            name="location"
+            placeholder={locationPlaceholders[format]}
+            className={fieldClasses}
+          />
+        </label>
+      )}
 
       {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
 

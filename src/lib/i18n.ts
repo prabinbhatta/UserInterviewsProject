@@ -208,6 +208,7 @@ export const translations = {
     addressFieldLabel: "Address",
     phoneDetailsFieldLabel: "Phone number or call details",
     addSlotAction: "Add slot",
+    autoMeetLinkLabel: "Auto-generate a Google Meet link",
 
     // Researcher: invite
     inviteParticipantsTitlePrefix: "Invite participants —",
@@ -539,6 +540,7 @@ export const translations = {
     addressFieldLabel: "ठेगाना",
     phoneDetailsFieldLabel: "फोन नम्बर वा कल विवरण",
     addSlotAction: "स्लट थप्नुहोस्",
+    autoMeetLinkLabel: "स्वतः Google Meet लिंक बनाउनुहोस्",
 
     // Researcher: invite
     inviteParticipantsTitlePrefix: "सहभागीहरू आमन्त्रण गर्नुहोस् —",
