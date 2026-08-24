@@ -9,6 +9,8 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { applicationStatusTones as statusTones } from "@/lib/applicationStatus";
 
 const statusLabelKeys: Record<string, TranslationKey> = {
@@ -64,13 +66,15 @@ export default async function MyApplicationsPage() {
         </h1>
 
         {!applications || applications.length === 0 ? (
-          <p className="mt-8 text-[var(--ink)]/70">
-            {t("notAppliedYetPrefix")}{" "}
-            <Link href="/participant/studies" className={mutedLinkClasses}>
-              {t("browseStudies")}
-            </Link>
-            .
-          </p>
+          <EmptyState
+            title={t("emptyApplicationsTitle")}
+            body={t("notAppliedYetPrefix")}
+            action={
+              <LinkButton href="/participant/studies" variant="primary" size="sm">
+                {t("browseStudies")}
+              </LinkButton>
+            }
+          />
         ) : (
           <ul className="mt-8 space-y-3">
             {applications.map((application) => (

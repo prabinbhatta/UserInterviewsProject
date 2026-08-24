@@ -6,6 +6,7 @@ import { getLang } from "@/lib/getLang";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 export default async function ScheduleApplicationPage({
   params,
@@ -84,9 +85,7 @@ export default async function ScheduleApplicationPage({
             </form>
           </Card>
         ) : openSlots.length === 0 ? (
-          <p className="mt-8 text-[var(--ink)]/70">
-            {t("noOpenSlotsParticipant")}
-          </p>
+          <EmptyState title={t("emptySlotsTitle")} body={t("noOpenSlotsParticipant")} />
         ) : (
           <ul className="mt-8 space-y-2">
             {openSlots.map((slot) => (

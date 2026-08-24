@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses } from "@/components/ui/field";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { mutedLinkClasses } from "@/components/ui/link";
 
 type SearchParams = {
@@ -175,9 +176,10 @@ export default async function BrowseStudiesPage({
         </Card>
 
         {!studies || studies.length === 0 ? (
-          <p className="mt-8 text-[var(--ink)]/70">
-            {hasActiveFilters ? t("noStudiesMatchFilters") : t("noOpenStudies")}
-          </p>
+          <EmptyState
+            title={t("emptyStudiesTitle")}
+            body={hasActiveFilters ? t("noStudiesMatchFilters") : t("noOpenStudies")}
+          />
         ) : (
           <ul className="mt-8 space-y-4">
             {studies.map((study) => (

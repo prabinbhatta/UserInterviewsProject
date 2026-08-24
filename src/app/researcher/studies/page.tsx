@@ -9,6 +9,7 @@ import { Badge, type BadgeTone } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 const statusTones: Record<string, BadgeTone> = {
   draft: "neutral",
@@ -63,9 +64,15 @@ export default async function StudiesPage() {
         </div>
 
         {!studies || studies.length === 0 ? (
-          <p className="mt-8 text-[var(--ink)]/70">
-            {t("noStudiesYet")}
-          </p>
+          <EmptyState
+            title={t("emptyResearcherStudiesTitle")}
+            body={t("noStudiesYet")}
+            action={
+              <LinkButton href="/researcher/studies/new" variant="primary" size="sm">
+                {t("newStudy")}
+              </LinkButton>
+            }
+          />
         ) : (
           <ul className="mt-8 space-y-4">
             {studies.map((study) => (

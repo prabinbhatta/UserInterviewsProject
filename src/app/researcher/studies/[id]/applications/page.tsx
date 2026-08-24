@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { applicationStatusTones, incentiveStatusTones } from "@/lib/applicationStatus";
 
 const statusLabelKeys: Record<string, TranslationKey> = {
@@ -93,9 +94,7 @@ export default async function StudyApplicationsPage({
         </h1>
 
         {!applications || applications.length === 0 ? (
-          <p className="mt-8 text-[var(--ink)]/70">
-            {t("noApplicantsYet")}
-          </p>
+          <EmptyState title={t("emptyApplicantsTitle")} body={t("noApplicantsYet")} />
         ) : (
           <ul className="mt-8 space-y-3">
             {applications.map((application) => (

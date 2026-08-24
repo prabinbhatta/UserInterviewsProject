@@ -310,6 +310,13 @@ export const translations = {
     deviceComputerWebcam: "Computer with webcam",
     deviceTablet: "Tablet",
     deviceSmartphone: "Smartphone",
+
+    // Empty-state titles
+    emptyStudiesTitle: "No open studies",
+    emptyApplicationsTitle: "No applications yet",
+    emptyResearcherStudiesTitle: "No studies yet",
+    emptyApplicantsTitle: "No applicants yet",
+    emptySlotsTitle: "No open time slots",
   },
   ne: {
     brand: "अनुसन्धान प्लेटफर्म",
@@ -620,6 +627,13 @@ export const translations = {
     deviceComputerWebcam: "वेबक्यामसहितको कम्प्युटर",
     deviceTablet: "ट्याब्लेट",
     deviceSmartphone: "स्मार्टफोन",
+
+    // Empty-state titles
+    emptyStudiesTitle: "कुनै खुला अध्ययन छैन",
+    emptyApplicationsTitle: "अझै कुनै आवेदन छैन",
+    emptyResearcherStudiesTitle: "अझै कुनै अध्ययन छैन",
+    emptyApplicantsTitle: "अझै कुनै आवेदक छैन",
+    emptySlotsTitle: "कुनै खुला समय स्लट छैन",
   },
 } as const;
 
