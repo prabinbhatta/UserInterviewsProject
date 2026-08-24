@@ -298,3 +298,21 @@ client value, so every time rendered permanently blank — fixed with
 Verified live: a slot entered as 10:00 AM round-tripped back as exactly
 10:00 AM with no drift, matching on both the researcher and participant
 side. See `src/components/ui/LocalDateTime.tsx`.
+
+### ~~Session reminder emails~~ — shipped 2026-08-24
+`GET /api/cron/session-reminders` runs every 15 minutes via Vercel Cron
+(`vercel.json`), gated by a `CRON_SECRET` bearer token. Calls a new
+`SECURITY DEFINER` function, `pop_due_session_reminders(window_minutes)`,
+which only returns a due slot's data as a side effect of atomically
+flipping its own new `reminder_sent` flag in the same query — so it
+can't be called directly via the anon key to harvest participant emails,
+and can't double-send. Verified live: booked a real slot 20 minutes out,
+confirmed the RPC returns exactly that slot and is idempotent on a
+second call, and confirmed the cron route's auth gate (401/200) and
+response shape. See `0029_session_reminders_and_ratings.sql`,
+`src/app/api/cron/session-reminders/route.ts`.
+
+Requires `CRON_SECRET` to be set in Vercel's production environment
+variables (same value as `.env.local`) for the deployed cron job to
+authenticate — confirm this is set if reminders don't appear to be
+sending in production.
