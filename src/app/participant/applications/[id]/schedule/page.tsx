@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { LocalDateTime } from "@/components/ui/LocalDateTime";
 
 export default async function ScheduleApplicationPage({
   params,
@@ -65,10 +66,7 @@ export default async function ScheduleApplicationPage({
           <Card className="mt-8">
             <p className="font-medium text-[var(--ink)]">{t("confirmedForLabel")}</p>
             <p className="mt-1 text-[var(--ink)]/80">
-              {new Date(myBookedSlot.starts_at).toLocaleString(undefined, {
-                dateStyle: "medium",
-                timeStyle: "short",
-              })}
+              <LocalDateTime iso={myBookedSlot.starts_at} />
             </p>
             {myBookedSlot.location && (
               <p className="mt-1 text-sm text-[var(--ink)]/60">
@@ -104,10 +102,7 @@ export default async function ScheduleApplicationPage({
               >
                 <div>
                   <p className="font-medium text-[var(--ink)]">
-                    {new Date(slot.starts_at).toLocaleString(undefined, {
-                      dateStyle: "medium",
-                      timeStyle: "short",
-                    })}
+                    <LocalDateTime iso={slot.starts_at} />
                   </p>
                   {slot.location && (
                     <p className="mt-0.5 text-sm text-[var(--ink)]/70">

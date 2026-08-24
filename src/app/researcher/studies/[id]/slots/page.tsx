@@ -6,6 +6,7 @@ import { deleteSlot, cancelBooking } from "./actions";
 import { getLang } from "@/lib/getLang";
 import { Card } from "@/components/ui/Card";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { LocalDateTime } from "@/components/ui/LocalDateTime";
 
 type SlotRow = {
   id: string;
@@ -73,10 +74,7 @@ export default async function StudySlotsPage({
               >
                 <div>
                   <p className="font-medium text-[var(--ink)]">
-                    {new Date(slot.starts_at).toLocaleString(undefined, {
-                      dateStyle: "medium",
-                      timeStyle: "short",
-                    })}
+                    <LocalDateTime iso={slot.starts_at} />
                   </p>
                   <p className="mt-0.5 text-sm text-[var(--ink)]/70">
                     {slot.application_id

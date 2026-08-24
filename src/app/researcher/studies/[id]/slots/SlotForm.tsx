@@ -33,6 +33,7 @@ export function SlotForm({
     error: null,
   });
   const [autoMeet, setAutoMeet] = useState(true);
+  const [startsAtIso, setStartsAtIso] = useState("");
 
   return (
     <Card as="form" action={formAction}>
@@ -40,11 +41,20 @@ export function SlotForm({
         {t("addTimeSlotFieldLabel")}
         <input
           type="datetime-local"
-          name="starts_at"
           required
           className={fieldClasses}
+          onChange={(e) => {
+            const value = e.target.value;
+            // datetime-local carries no timezone — the browser parses it
+            // as the viewer's own local time, which is exactly what we
+            // want to capture before it crosses to the server (where
+            // "new Date(rawValue)" would instead be parsed in the
+            // server's own timezone, silently shifting the time).
+            setStartsAtIso(value ? new Date(value).toISOString() : "");
+          }}
         />
       </label>
+      <input type="hidden" name="starts_at" value={startsAtIso} />
 
       {format === "online" && (
         <label className="mt-3 flex items-center gap-2 text-sm font-medium text-[var(--ink)]/80">
