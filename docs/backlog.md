@@ -181,11 +181,21 @@ API (personal Gmail account, no company registration needed) — blocked on
 the founder creating a Google Cloud project and OAuth credentials before
 any code can be written.
 
-### Finish the interactive design pass
-First pass shipped 2026-08-24 (see below) covering loading states and
-empty-state illustrations for both dashboards and both studies/
-applications lists. Still plain text/no loading state: message threads,
-admin's open-reports/incentive queues, settings, and the legal pages.
+### ~~Interactive design pass~~ — shipped 2026-08-24
+First pass covered loading states and empty-state illustrations for both
+dashboards and both studies/applications lists. Second pass extended
+`loading.tsx` to every remaining route that does server-side data
+fetching: 3 routes with no ancestor Suspense boundary at all (settings,
+report, invite/[token]), plus page-specific skeletons for 6 nested
+dynamic routes (study detail, schedule, both message threads, applicants
+list, analytics) that were previously inheriting a mismatched skeleton
+from their parent list page. Left `MessageThread`'s inline "no messages
+yet" text as plain text (scope decision) — it sits directly above an
+active chat input, where a large empty-state illustration would feel out
+of place rather than helpful. Admin's report/incentive queues need no
+empty state since they're conditionally hidden entirely when empty. Pure
+client-side forms (login, signup, forgot/reset password) don't block on
+server data fetching, so they don't need a loading.tsx.
 
 ### ~~Participant referral program~~ — shipped 2026-08-24
 A participant's own user id doubles as their referral code — no separate
