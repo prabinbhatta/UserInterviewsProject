@@ -2,7 +2,7 @@ import { Resend } from "resend";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-const FROM = "Nepal User Research <onboarding@resend.dev>";
+const FROM = "Nepal User Research <no-reply@mail.research.prabinbhatta.com.np>";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 function wrap(bodyHtml: string, ctaHref?: string, ctaLabel?: string) {
