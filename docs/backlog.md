@@ -174,12 +174,16 @@ in the app, and the one icon-only SVG (site logo) is correctly
 ### Final product name
 Deferred by founder; current working name is "Research Platform."
 
-### Auto-generated video meeting links
-Online studies currently rely on the researcher manually pasting a Zoom/
-Meet link into a text field. Scoped to Google Meet via the Google Calendar
-API (personal Gmail account, no company registration needed) — blocked on
-the founder creating a Google Cloud project and OAuth credentials before
-any code can be written.
+### ~~Auto-generated video meeting links~~ — shipped 2026-08-24
+Google Meet via the Calendar API, using the founder's own Google account
+(no company registration needed) — `src/lib/googleMeet.ts` talks to
+Google's token + Calendar endpoints directly via fetch, no new npm
+dependency. "Auto-generate a Google Meet link" checkbox only appears on
+the slot form for online-format studies; the server action re-verifies
+the study's actual format itself rather than trusting the client. Falls
+back to the manual location field if generation fails for any reason.
+Verified end-to-end: got back a real meet.google.com link for an online
+study; confirmed the option is entirely absent for in-person studies.
 
 ### ~~Interactive design pass~~ — shipped 2026-08-24
 First pass covered loading states and empty-state illustrations for both
