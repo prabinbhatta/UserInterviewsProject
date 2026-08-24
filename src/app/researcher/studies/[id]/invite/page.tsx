@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { InviteForm } from "./InviteForm";
 import { CsvInviteForm } from "./CsvInviteForm";
 import { InviteLink } from "./InviteLink";
+import { getLang } from "@/lib/getLang";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { mutedLinkClasses } from "@/components/ui/link";
@@ -14,6 +15,7 @@ export default async function StudyInvitePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -41,14 +43,13 @@ export default async function StudyInvitePage({
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
-          Back to studies
+          {t("backToStudies")}
         </Link>
         <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
-          Invite participants — {study.title}
+          {t("inviteParticipantsTitlePrefix")} {study.title}
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/60">
-          Bring your own users straight into this study, without waiting
-          for them to find it in the public list.
+          {t("inviteHint")}
         </p>
 
         <div className="mt-6">
@@ -73,7 +74,7 @@ export default async function StudyInvitePage({
                     tone={invite.status === "accepted" ? "success" : "neutral"}
                     className="mt-0.5"
                   >
-                    {invite.status === "accepted" ? "Joined" : "Invited"}
+                    {invite.status === "accepted" ? t("joinedBadgeLabel") : t("invitedBadgeLabel")}
                   </Badge>
                 </div>
                 {invite.status !== "accepted" && (

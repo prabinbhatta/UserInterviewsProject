@@ -3,27 +3,29 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { approveApplication, rejectApplication } from "./actions";
 import { markSessionCompleted, markNoShow, sendIncentive } from "@/app/incentive-actions";
+import { getLang } from "@/lib/getLang";
+import type { TranslationKey } from "@/lib/i18n";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
 import { applicationStatusTones, incentiveStatusTones } from "@/lib/applicationStatus";
 
-const statusLabels: Record<string, string> = {
-  qualified: "Qualified — pending review",
-  rejected: "Not a match",
-  approved: "Approved",
-  scheduled: "Scheduled",
-  completed: "Session completed",
-  no_show: "No-show",
-  withdrawn: "Withdrawn by participant",
+const statusLabelKeys: Record<string, TranslationKey> = {
+  qualified: "statusQualified",
+  rejected: "statusRejected",
+  approved: "statusApproved",
+  scheduled: "statusScheduled",
+  completed: "statusSessionCompleted",
+  no_show: "statusNoShowResearcher",
+  withdrawn: "statusWithdrawnByParticipant",
 };
 
-const incentiveLabels: Record<string, string> = {
-  pending: "Incentive not sent yet",
-  sent: "Incentive sent — awaiting confirmation",
-  received: "Incentive confirmed received",
-  not_received: "Participant reports incentive not received",
+const incentiveLabelKeys: Record<string, TranslationKey> = {
+  pending: "incentivePendingNotSent",
+  sent: "incentiveSentAwaiting",
+  received: "incentiveReceivedConfirmed",
+  not_received: "incentiveNotReceivedReported",
 };
 
 type ApplicationRow = {
@@ -40,6 +42,7 @@ export default async function StudyApplicationsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -76,23 +79,22 @@ export default async function StudyApplicationsPage({
       <div className="w-full max-w-xl">
         <div className="flex items-center justify-between gap-4">
           <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
-            Back to studies
+            {t("backToStudies")}
           </Link>
           <a
             href={`/researcher/studies/${id}/applications/export`}
             className={`text-sm ${mutedLinkClasses}`}
           >
-            Export CSV
+            {t("exportCsvAction")}
           </a>
         </div>
         <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
-          Applicants — {study.title}
+          {t("applicantsTitlePrefix")} {study.title}
         </h1>
 
         {!applications || applications.length === 0 ? (
           <p className="mt-8 text-[var(--ink)]/70">
-            No one has applied yet — check back once the study is published
-            and shared.
+            {t("noApplicantsYet")}
           </p>
         ) : (
           <ul className="mt-8 space-y-3">
@@ -104,16 +106,16 @@ export default async function StudyApplicationsPage({
               >
                 <div className="min-w-0">
                   <p className="font-medium text-[var(--ink)]">
-                    {application.profiles?.full_name ?? "Participant"}
+                    {application.profiles?.full_name ?? t("participantFallback")}
                   </p>
                   <div className="mt-1 flex flex-wrap gap-2">
                     <Badge tone={applicationStatusTones[application.status]}>
-                      {statusLabels[application.status]}
+                      {t(statusLabelKeys[application.status])}
                     </Badge>
                     {application.status === "completed" &&
                       application.incentive_records && (
                         <Badge tone={incentiveStatusTones[application.incentive_records.status]}>
-                          {incentiveLabels[application.incentive_records.status]}
+                          {t(incentiveLabelKeys[application.incentive_records.status])}
                         </Badge>
                       )}
                   </div>
@@ -124,18 +126,18 @@ export default async function StudyApplicationsPage({
                     href={`/researcher/studies/${id}/applications/${application.id}/messages`}
                     className={`text-sm ${mutedLinkClasses}`}
                   >
-                    Message
+                    {t("messageAction")}
                   </Link>
                   {application.status === "qualified" && (
                     <>
                       <form action={boundApprove.bind(null, application.id)}>
                         <Button type="submit" size="sm">
-                          Approve
+                          {t("approveAction")}
                         </Button>
                       </form>
                       <form action={boundReject.bind(null, application.id)}>
                         <Button type="submit" size="sm" variant="secondary">
-                          Not a fit
+                          {t("notAFitAction")}
                         </Button>
                       </form>
                     </>
@@ -150,7 +152,7 @@ export default async function StudyApplicationsPage({
                         )}
                       >
                         <Button type="submit" size="sm">
-                          Mark session completed
+                          {t("markSessionCompletedAction")}
                         </Button>
                       </form>
                       <form
@@ -161,7 +163,7 @@ export default async function StudyApplicationsPage({
                         )}
                       >
                         <Button type="submit" size="sm" variant="secondary">
-                          Didn&apos;t show up
+                          {t("didntShowUpAction")}
                         </Button>
                       </form>
                     </>
@@ -176,7 +178,7 @@ export default async function StudyApplicationsPage({
                         )}
                       >
                         <Button type="submit" size="sm">
-                          I&apos;ve sent the incentive
+                          {t("sentIncentiveAction")}
                         </Button>
                       </form>
                     )}

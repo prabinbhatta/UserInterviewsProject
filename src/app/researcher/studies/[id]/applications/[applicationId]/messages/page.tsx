@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { MessageThread } from "@/app/MessageThread";
+import { getLang } from "@/lib/getLang";
 import { mutedLinkClasses } from "@/components/ui/link";
 
 type ApplicationDetail = {
@@ -17,6 +18,7 @@ export default async function ResearcherMessagesPage({
   params: Promise<{ id: string; applicationId: string }>;
 }) {
   const { id, applicationId } = await params;
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -53,18 +55,18 @@ export default async function ResearcherMessagesPage({
           href={`/researcher/studies/${id}/applications`}
           className={`text-sm ${mutedLinkClasses}`}
         >
-          Back to applicants
+          {t("backToApplicantsLink")}
         </Link>
         <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
           {application.studies?.title}
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/60">
-          Conversation with {participantName}{" "}
+          {t("conversationWithPrefix")} {participantName}{" "}
           <Link
             href={`/report?applicationId=${applicationId}`}
             className="text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[#a8371c]"
           >
-            Report
+            {t("reportAction")}
           </Link>
         </p>
 

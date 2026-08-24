@@ -3,10 +3,12 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
 import { one } from "@/lib/one";
+import { getLang } from "@/lib/getLang";
 import { Card } from "@/components/ui/Card";
 import { LinkButton } from "@/components/ui/LinkButton";
 
 export default async function ParticipantDashboard() {
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -58,27 +60,27 @@ export default async function ParticipantDashboard() {
       <div className="w-full max-w-2xl">
         <div className="flex items-start justify-between gap-4">
           <h1 className="min-w-0 font-serif-display text-3xl font-medium text-[var(--ink)]">
-            Welcome, {profile?.full_name ?? user.email}
+            {t("welcomeComma")} {profile?.full_name ?? user.email}
           </h1>
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/settings"
               className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
             >
-              Settings
+              {t("settingsLink")}
             </Link>
             <form action={signOut}>
               <button
                 type="submit"
                 className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
               >
-                Log out
+                {t("logOut")}
               </button>
             </form>
           </div>
         </div>
         <p className="mt-4 text-[var(--ink)]/70">
-          Find studies that fit and apply for the ones you want to join.
+          {t("participantDashboardBody")}
         </p>
 
         <Link href="/participant/profile" className="mt-6 block">
@@ -86,8 +88,8 @@ export default async function ParticipantDashboard() {
             <div className="flex items-center justify-between text-sm">
               <span className="font-medium text-[var(--ink)]">
                 {strengthPercent === 100
-                  ? "Your profile is complete"
-                  : "Complete your profile"}
+                  ? t("profileCompleteLabel")
+                  : t("completeYourProfileLabel")}
               </span>
               <span className="text-[var(--ink)]/70">{strengthPercent}%</span>
             </div>
@@ -99,15 +101,14 @@ export default async function ParticipantDashboard() {
             </div>
             {strengthPercent < 100 && (
               <p className="mt-2 text-xs text-[var(--ink)]/70">
-                A complete profile helps researchers see you&apos;re a good
-                match for their study.
+                {t("profileHint")}
               </p>
             )}
           </Card>
         </Link>
 
         <Card className="mt-4">
-          <p className="text-sm text-[var(--ink)]/70">Total earned so far</p>
+          <p className="text-sm text-[var(--ink)]/70">{t("totalEarnedLabel")}</p>
           <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
             NPR {totalEarned}
           </p>
@@ -115,10 +116,10 @@ export default async function ParticipantDashboard() {
 
         <div className="mt-6 flex gap-3">
           <LinkButton href="/participant/studies" variant="primary">
-            Browse studies
+            {t("browseStudies")}
           </LinkButton>
           <LinkButton href="/participant/applications" variant="secondary">
-            Your applications
+            {t("yourApplicationsTitle")}
           </LinkButton>
         </div>
       </div>

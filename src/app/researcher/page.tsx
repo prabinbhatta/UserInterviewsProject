@@ -2,9 +2,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/actions";
+import { getLang } from "@/lib/getLang";
 import { LinkButton } from "@/components/ui/LinkButton";
 
 export default async function ResearcherDashboard() {
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -30,30 +32,30 @@ export default async function ResearcherDashboard() {
       <div className="w-full max-w-2xl">
         <div className="flex items-start justify-between gap-4">
           <h1 className="min-w-0 font-serif-display text-3xl font-medium text-[var(--ink)]">
-            Welcome, {profile?.full_name ?? user.email}
+            {t("welcomeComma")} {profile?.full_name ?? user.email}
           </h1>
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/settings"
               className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
             >
-              Settings
+              {t("settingsLink")}
             </Link>
             <form action={signOut}>
               <button
                 type="submit"
                 className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
               >
-                Log out
+                {t("logOut")}
               </button>
             </form>
           </div>
         </div>
         <p className="mt-4 text-[var(--ink)]/70">
-          Manage the studies you&apos;re running and recruit participants.
+          {t("researcherDashboardBody")}
         </p>
         <LinkButton href="/researcher/studies" variant="primary" className="mt-6">
-          View your studies
+          {t("viewYourStudies")}
         </LinkButton>
       </div>
     </div>

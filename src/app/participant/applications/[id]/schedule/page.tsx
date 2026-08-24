@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { bookSlot, cancelMyBooking } from "./actions";
+import { getLang } from "@/lib/getLang";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
@@ -12,6 +13,7 @@ export default async function ScheduleApplicationPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -52,15 +54,15 @@ export default async function ScheduleApplicationPage({
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <Link href="/participant/applications" className={`text-sm ${mutedLinkClasses}`}>
-          Back to your applications
+          {t("backToYourApplicationsLink")}
         </Link>
         <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
-          Schedule — {title}
+          {t("scheduleTitlePrefix")} {title}
         </h1>
 
         {myBookedSlot ? (
           <Card className="mt-8">
-            <p className="font-medium text-[var(--ink)]">You&apos;re confirmed for:</p>
+            <p className="font-medium text-[var(--ink)]">{t("confirmedForLabel")}</p>
             <p className="mt-1 text-[var(--ink)]/80">
               {new Date(myBookedSlot.starts_at).toLocaleString(undefined, {
                 dateStyle: "medium",
@@ -77,14 +79,13 @@ export default async function ScheduleApplicationPage({
                 type="submit"
                 className={`text-sm ${mutedLinkClasses}`}
               >
-                Cancel booking
+                {t("cancelBookingAction")}
               </button>
             </form>
           </Card>
         ) : openSlots.length === 0 ? (
           <p className="mt-8 text-[var(--ink)]/70">
-            No open time slots right now — check back soon, the researcher
-            may add more.
+            {t("noOpenSlotsParticipant")}
           </p>
         ) : (
           <ul className="mt-8 space-y-2">
@@ -109,7 +110,7 @@ export default async function ScheduleApplicationPage({
                 </div>
                 <form action={boundBook.bind(null, slot.id)}>
                   <Button type="submit" size="sm" className="shrink-0">
-                    Book
+                    {t("bookAction")}
                   </Button>
                 </form>
               </Card>

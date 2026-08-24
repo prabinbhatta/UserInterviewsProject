@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import type { StudyFormState } from "./actions";
 import { DISTRICTS } from "@/lib/districts";
+import { useLanguage } from "@/app/LanguageProvider";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
 
@@ -25,13 +26,14 @@ export function StudyForm({
   defaultValues?: StudyFormValues;
   submitLabel: string;
 }) {
+  const { t } = useLanguage();
   const [state, formAction, pending] = useActionState(action, { error: null });
   const [format, setFormat] = useState(defaultValues?.format ?? "online");
 
   return (
     <form action={formAction} className="w-full max-w-xl">
       <label className={labelClasses}>
-        Study title
+        {t("studyTitleFieldLabel")}
         <input
           type="text"
           name="title"
@@ -42,7 +44,7 @@ export function StudyForm({
       </label>
 
       <label className={`mt-4 ${labelClasses}`}>
-        Description
+        {t("descriptionFieldLabel")}
         <textarea
           name="description"
           required
@@ -54,7 +56,7 @@ export function StudyForm({
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         <label className={labelClasses}>
-          Format
+          {t("filterFormat")}
           <select
             name="format"
             value={format}
@@ -63,14 +65,14 @@ export function StudyForm({
             }
             className={fieldClasses}
           >
-            <option value="online">Online</option>
-            <option value="in_person">In person</option>
-            <option value="phone">Phone</option>
+            <option value="online">{t("formatOnline")}</option>
+            <option value="in_person">{t("formatInPerson")}</option>
+            <option value="phone">{t("formatPhone")}</option>
           </select>
         </label>
 
         <label className={labelClasses}>
-          Session length (minutes)
+          {t("sessionLengthFieldLabel")}
           <input
             type="number"
             name="session_length_minutes"
@@ -84,13 +86,13 @@ export function StudyForm({
 
       {format === "in_person" && (
         <label className={`mt-4 ${labelClasses}`}>
-          District
+          {t("filterDistrict")}
           <select
             name="district"
             defaultValue={defaultValues?.district ?? ""}
             className={fieldClasses}
           >
-            <option value="">Select a district</option>
+            <option value="">{t("selectADistrict")}</option>
             {DISTRICTS.map((d) => (
               <option key={d} value={d}>
                 {d}
@@ -102,7 +104,7 @@ export function StudyForm({
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         <label className={labelClasses}>
-          Participants needed
+          {t("participantsNeededFieldLabel")}
           <input
             type="number"
             name="participants_needed"
@@ -114,7 +116,7 @@ export function StudyForm({
         </label>
 
         <label className={labelClasses}>
-          Incentive (NPR)
+          {t("incentiveFieldLabel")}
           <input
             type="number"
             name="incentive_amount"
@@ -130,7 +132,7 @@ export function StudyForm({
       {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
 
       <Button type="submit" disabled={pending} className="mt-6 w-full">
-        {pending ? "Saving..." : submitLabel}
+        {pending ? t("savingGeneric") : submitLabel}
       </Button>
     </form>
   );

@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { addQuestion, type ScreenerFormState } from "./actions";
+import { useLanguage } from "@/app/LanguageProvider";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
@@ -49,6 +50,7 @@ function QuestionFields({
   pending: boolean;
   error: ScreenerFormState["error"];
 }) {
+  const { t } = useLanguage();
   const [type, setType] = useState<QuestionType>("pick_one");
   const [options, setOptions] = useState<OptionRow[]>(emptyOptions());
   const isChoiceType = type === "pick_one" || type === "pick_any";
@@ -56,29 +58,29 @@ function QuestionFields({
   return (
     <Card as="form" action={formAction}>
       <label className={labelClasses}>
-        Question
+        {t("questionFieldLabel")}
         <input
           type="text"
           name="question_text"
           required
-          placeholder="Do you have a laptop with a webcam?"
+          placeholder={t("questionPlaceholderExample")}
           className={fieldClasses}
         />
       </label>
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         <label className={labelClasses}>
-          Answer type
+          {t("answerTypeFieldLabel")}
           <select
             name="type"
             value={type}
             onChange={(e) => setType(e.target.value as QuestionType)}
             className={fieldClasses}
           >
-            <option value="pick_one">Pick one</option>
-            <option value="pick_any">Pick any</option>
-            <option value="short_answer">Short answer</option>
-            <option value="long_answer">Long answer</option>
+            <option value="pick_one">{t("typePickOne")}</option>
+            <option value="pick_any">{t("typePickAny")}</option>
+            <option value="short_answer">{t("typeShortAnswer")}</option>
+            <option value="long_answer">{t("typeLongAnswer")}</option>
           </select>
         </label>
 
@@ -89,14 +91,14 @@ function QuestionFields({
             defaultChecked
             className="h-4 w-4 accent-[var(--indigo)]"
           />
-          Required
+          {t("requiredBadge")}
         </label>
       </div>
 
       {isChoiceType && (
         <div className="mt-4">
           <p className={labelClasses}>
-            Answer options — mark each one Accept or Reject
+            {t("answerOptionsHint")}
           </p>
           <div className="mt-2 space-y-2">
             {options.map((option, i) => (
@@ -106,7 +108,7 @@ function QuestionFields({
                   name="option_label"
                   required
                   value={option.label}
-                  placeholder={`Option ${i + 1}`}
+                  placeholder={`${t("optionPlaceholderPrefix")} ${i + 1}`}
                   onChange={(e) => {
                     const next = [...options];
                     next[i] = { ...next[i], label: e.target.value };
@@ -128,17 +130,17 @@ function QuestionFields({
                     }}
                     className={`${fieldClasses} mt-0 flex-1 sm:flex-none`}
                   >
-                    <option value="accept">Accept</option>
-                    <option value="reject">Reject</option>
+                    <option value="accept">{t("acceptLabel")}</option>
+                    <option value="reject">{t("rejectLabel")}</option>
                   </select>
                   {options.length > 2 && (
                     <button
                       type="button"
                       onClick={() => setOptions(options.filter((_, j) => j !== i))}
                       className="shrink-0 text-sm text-[var(--ink)]/60 hover:text-[#a8371c]"
-                      aria-label="Remove option"
+                      aria-label={t("removeAction")}
                     >
-                      Remove
+                      {t("removeAction")}
                     </button>
                   )}
                 </div>
@@ -150,7 +152,7 @@ function QuestionFields({
             onClick={() => setOptions([...options, { label: "", decision: "accept" }])}
             className="mt-2 text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]"
           >
-            Add option
+            {t("addOptionAction")}
           </button>
         </div>
       )}
@@ -158,7 +160,7 @@ function QuestionFields({
       {error && <p className="mt-3 text-sm text-[#a8371c]">{error}</p>}
 
       <Button type="submit" disabled={pending} className="mt-4">
-        {pending ? "Adding..." : "Add question"}
+        {pending ? t("addingGeneric") : t("addQuestionAction")}
       </Button>
     </Card>
   );

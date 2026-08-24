@@ -2,6 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { publishStudy, closeStudy, duplicateStudy } from "./actions";
+import { getLang } from "@/lib/getLang";
+import type { TranslationKey } from "@/lib/i18n";
 import { Card } from "@/components/ui/Card";
 import { Badge, type BadgeTone } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -14,19 +16,20 @@ const statusTones: Record<string, BadgeTone> = {
   closed: "strong",
 };
 
-const statusLabels: Record<string, string> = {
-  draft: "Draft",
-  active: "Active",
-  closed: "Closed",
+const statusLabelKeys: Record<string, TranslationKey> = {
+  draft: "studyStatusDraft",
+  active: "studyStatusActive",
+  closed: "studyStatusClosed",
 };
 
-const formatLabels: Record<string, string> = {
-  online: "Online",
-  in_person: "In person",
-  phone: "Phone",
+const formatLabelKeys: Record<string, TranslationKey> = {
+  online: "formatOnline",
+  in_person: "formatInPerson",
+  phone: "formatPhone",
 };
 
 export default async function StudiesPage() {
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -48,20 +51,20 @@ export default async function StudiesPage() {
         <div className="flex items-center justify-between">
           <div>
             <Link href="/researcher" className={`text-sm ${mutedLinkClasses}`}>
-              Back to dashboard
+              {t("backToDashboard")}
             </Link>
             <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
-              Your studies
+              {t("yourStudies")}
             </h1>
           </div>
           <LinkButton href="/researcher/studies/new" size="sm">
-            New study
+            {t("newStudy")}
           </LinkButton>
         </div>
 
         {!studies || studies.length === 0 ? (
           <p className="mt-8 text-[var(--ink)]/70">
-            You haven&apos;t created a study yet.
+            {t("noStudiesYet")}
           </p>
         ) : (
           <ul className="mt-8 space-y-4">
@@ -74,12 +77,12 @@ export default async function StudiesPage() {
                         {study.title}
                       </h2>
                       <Badge tone={statusTones[study.status]}>
-                        {statusLabels[study.status]}
+                        {t(statusLabelKeys[study.status])}
                       </Badge>
                     </div>
                     <p className="mt-1 text-sm text-[var(--ink)]/60">
-                      {formatLabels[study.format]} · {study.session_length_minutes} min ·{" "}
-                      {study.participants_needed} participants · NPR{" "}
+                      {t(formatLabelKeys[study.format])} · {study.session_length_minutes} {t("minutesSuffix")} ·{" "}
+                      {study.participants_needed} {t("participantsSuffix")} · NPR{" "}
                       {study.incentive_amount}
                     </p>
                   </div>
@@ -89,31 +92,31 @@ export default async function StudiesPage() {
                       href={`/researcher/studies/${study.id}/applications`}
                       className={`text-sm ${mutedLinkClasses}`}
                     >
-                      Applicants
+                      {t("applicantsNav")}
                     </Link>
                     <Link
                       href={`/researcher/studies/${study.id}/invite`}
                       className={`text-sm ${mutedLinkClasses}`}
                     >
-                      Invite
+                      {t("inviteNav")}
                     </Link>
                     <Link
                       href={`/researcher/studies/${study.id}/slots`}
                       className={`text-sm ${mutedLinkClasses}`}
                     >
-                      Time slots
+                      {t("timeSlotsNav")}
                     </Link>
                     <Link
                       href={`/researcher/studies/${study.id}/screener`}
                       className={`text-sm ${mutedLinkClasses}`}
                     >
-                      Screener
+                      {t("screenerNav")}
                     </Link>
                     <Link
                       href={`/researcher/studies/${study.id}/analytics`}
                       className={`text-sm ${mutedLinkClasses}`}
                     >
-                      Analytics
+                      {t("analyticsNav")}
                     </Link>
                     {study.status === "draft" && (
                       <>
@@ -121,11 +124,11 @@ export default async function StudiesPage() {
                           href={`/researcher/studies/${study.id}/edit`}
                           className={`text-sm ${mutedLinkClasses}`}
                         >
-                          Edit
+                          {t("editNav")}
                         </Link>
                         <form action={publishStudy.bind(null, study.id)}>
                           <Button type="submit" size="sm">
-                            Publish
+                            {t("publishAction")}
                           </Button>
                         </form>
                       </>
@@ -133,13 +136,13 @@ export default async function StudiesPage() {
                     {study.status === "active" && (
                       <form action={closeStudy.bind(null, study.id)}>
                         <Button type="submit" size="sm" variant="secondary">
-                          Close
+                          {t("closeAction")}
                         </Button>
                       </form>
                     )}
                     <form action={duplicateStudy.bind(null, study.id)}>
                       <button type="submit" className={`text-sm ${mutedLinkClasses}`}>
-                        Duplicate
+                        {t("duplicateAction")}
                       </button>
                     </form>
                   </div>

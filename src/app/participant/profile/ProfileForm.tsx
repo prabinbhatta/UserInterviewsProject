@@ -3,20 +3,30 @@
 import { useActionState, useState } from "react";
 import { updateParticipantProfile } from "./actions";
 import { DISTRICTS } from "@/lib/districts";
+import { useLanguage } from "@/app/LanguageProvider";
+import type { TranslationKey } from "@/lib/i18n";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
 
-const INCOME_BANDS = [
-  "Below NPR 20,000",
-  "NPR 20,000–40,000",
-  "NPR 40,000–60,000",
-  "NPR 60,000–100,000",
-  "Above NPR 100,000",
-  "Prefer not to say",
+const INCOME_BANDS: { value: string; labelKey: TranslationKey }[] = [
+  { value: "Below NPR 20,000", labelKey: "incomeBand1" },
+  { value: "NPR 20,000–40,000", labelKey: "incomeBand2" },
+  { value: "NPR 40,000–60,000", labelKey: "incomeBand3" },
+  { value: "NPR 60,000–100,000", labelKey: "incomeBand4" },
+  { value: "Above NPR 100,000", labelKey: "incomeBand5" },
+  { value: "Prefer not to say", labelKey: "incomeBand6" },
 ];
 
-const LANGUAGES = ["Nepali", "English", "Other"];
-const DEVICES = ["Computer with webcam", "Tablet", "Smartphone"];
+const LANGUAGES: { value: string; labelKey: TranslationKey }[] = [
+  { value: "Nepali", labelKey: "languageNepali" },
+  { value: "English", labelKey: "languageEnglish" },
+  { value: "Other", labelKey: "languageOther" },
+];
+const DEVICES: { value: string; labelKey: TranslationKey }[] = [
+  { value: "Computer with webcam", labelKey: "deviceComputerWebcam" },
+  { value: "Tablet", labelKey: "deviceTablet" },
+  { value: "Smartphone", labelKey: "deviceSmartphone" },
+];
 
 type DefaultValues = {
   district: string | null;
@@ -28,6 +38,7 @@ type DefaultValues = {
 };
 
 export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues }) {
+  const { t } = useLanguage();
   const [state, formAction, pending] = useActionState(updateParticipantProfile, {
     error: null,
   });
@@ -41,14 +52,14 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
   return (
     <form action={formAction} className="w-full max-w-xl">
       <label className={labelClasses}>
-        District
+        {t("filterDistrict")}
         <select
           name="district"
           value={district}
           onChange={(e) => setDistrict(e.target.value)}
           className={fieldClasses}
         >
-          <option value="">Select a district</option>
+          <option value="">{t("selectADistrict")}</option>
           {DISTRICTS.map((d) => (
             <option key={d} value={d}>
               {d}
@@ -59,7 +70,7 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
 
       {district === "Other" && (
         <label className={`mt-4 ${labelClasses}`}>
-          Enter your district or municipality
+          {t("enterDistrictOtherLabel")}
           <input
             type="text"
             name="district_other"
@@ -71,7 +82,7 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         <label className={labelClasses}>
-          Age
+          {t("ageFieldLabel")}
           <input
             type="number"
             name="age"
@@ -83,7 +94,7 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
         </label>
 
         <label className={labelClasses}>
-          Occupation
+          {t("occupationFieldLabel")}
           <input
             type="text"
             name="occupation"
@@ -94,58 +105,58 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
       </div>
 
       <label className={`mt-4 ${labelClasses}`}>
-        Monthly household income
+        {t("monthlyIncomeFieldLabel")}
         <select
           name="income_band"
           defaultValue={defaultValues.income_band ?? ""}
           className={fieldClasses}
         >
-          <option value="">Prefer not to answer</option>
+          <option value="">{t("preferNotToAnswer")}</option>
           {INCOME_BANDS.map((band) => (
-            <option key={band} value={band}>
-              {band}
+            <option key={band.value} value={band.value}>
+              {t(band.labelKey)}
             </option>
           ))}
         </select>
       </label>
 
       <div className="mt-4">
-        <p className={labelClasses}>Languages you speak</p>
+        <p className={labelClasses}>{t("languagesSpokenLabel")}</p>
         <div className="mt-2 flex flex-wrap gap-3">
           {LANGUAGES.map((lang) => (
             <label
-              key={lang}
+              key={lang.value}
               className="flex items-center gap-2 rounded-lg border border-[var(--mist)] px-3 py-2 text-sm text-[var(--ink)]/80"
             >
               <input
                 type="checkbox"
                 name="languages"
-                value={lang}
-                defaultChecked={defaultValues.languages.includes(lang)}
+                value={lang.value}
+                defaultChecked={defaultValues.languages.includes(lang.value)}
                 className="h-4 w-4 accent-[var(--indigo)]"
               />
-              {lang}
+              {t(lang.labelKey)}
             </label>
           ))}
         </div>
       </div>
 
       <div className="mt-4">
-        <p className={labelClasses}>Devices available to you</p>
+        <p className={labelClasses}>{t("devicesAvailableLabel")}</p>
         <div className="mt-2 flex flex-wrap gap-3">
           {DEVICES.map((device) => (
             <label
-              key={device}
+              key={device.value}
               className="flex items-center gap-2 rounded-lg border border-[var(--mist)] px-3 py-2 text-sm text-[var(--ink)]/80"
             >
               <input
                 type="checkbox"
                 name="devices"
-                value={device}
-                defaultChecked={defaultValues.devices.includes(device)}
+                value={device.value}
+                defaultChecked={defaultValues.devices.includes(device.value)}
                 className="h-4 w-4 accent-[var(--indigo)]"
               />
-              {device}
+              {t(device.labelKey)}
             </label>
           ))}
         </div>
@@ -153,11 +164,11 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
 
       {state.error && <p className="mt-4 text-sm text-[#a8371c]">{state.error}</p>}
       {state.saved && !state.error && (
-        <p className="mt-4 text-sm text-emerald-700">Profile saved.</p>
+        <p className="mt-4 text-sm text-emerald-700">{t("profileSavedMessage")}</p>
       )}
 
       <Button type="submit" disabled={pending} className="mt-6 w-full">
-        {pending ? "Saving..." : "Save profile"}
+        {pending ? t("savingGeneric") : t("saveProfileAction")}
       </Button>
     </form>
   );

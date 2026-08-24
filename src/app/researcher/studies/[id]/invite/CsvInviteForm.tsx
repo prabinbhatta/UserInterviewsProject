@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { importInvitesFromCsv } from "./actions";
 import { parseCsv } from "@/lib/csv";
+import { useLanguage } from "@/app/LanguageProvider";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
@@ -12,6 +13,7 @@ type ParsedRow = { email: string; full_name: string; valid: boolean };
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function CsvInviteForm({ studyId }: { studyId: string }) {
+  const { t } = useLanguage();
   const boundImport = importInvitesFromCsv.bind(null, studyId);
   const [state, formAction, pending] = useActionState(boundImport, {
     error: null,
@@ -32,7 +34,7 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
 
     if (parsed.length === 0) {
       setRows([]);
-      setParseError("That file looks empty.");
+      setParseError(t("csvEmptyFileError"));
       return;
     }
 
@@ -42,7 +44,7 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
 
     if (emailIdx === -1) {
       setRows([]);
-      setParseError('The file needs an "email" column header.');
+      setParseError(t("csvMissingEmailColumnError"));
       return;
     }
 
@@ -68,14 +70,14 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
     <Card className="mt-4">
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm font-medium text-[var(--ink)]/80">
-          Or import from a CSV file
+          {t("orImportCsvLabel")}
         </p>
         <a
           href="/invite-template.csv"
           download
           className={`text-sm ${mutedLinkClasses}`}
         >
-          Download sample template
+          {t("downloadSampleTemplateLink")}
         </a>
       </div>
 
@@ -91,8 +93,7 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
       {fileName && rows.length > 0 && (
         <div className="mt-4">
           <p className="text-sm text-[var(--ink)]/60">
-            {validRows.length} of {rows.length} row
-            {rows.length === 1 ? "" : "s"} look valid.
+            {t("csvValidRowsLabel")}: {validRows.length}/{rows.length}
           </p>
           <ul className="mt-2 max-h-48 space-y-1 overflow-y-auto text-sm">
             {rows.map((row, i) => (
@@ -103,11 +104,11 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
                 }`}
               >
                 <span className="truncate">
-                  {row.email || "(no email)"}
+                  {row.email || t("noEmailPlaceholder")}
                   {row.full_name ? ` — ${row.full_name}` : ""}
                 </span>
                 {!row.valid && (
-                  <span className="shrink-0 text-xs">skipped</span>
+                  <span className="shrink-0 text-xs">{t("skippedLabel")}</span>
                 )}
               </li>
             ))}
@@ -123,8 +124,8 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
             />
             <Button type="submit" disabled={pending || validRows.length === 0} size="sm">
               {pending
-                ? "Importing..."
-                : `Import ${validRows.length} invite${validRows.length === 1 ? "" : "s"}`}
+                ? t("importingGeneric")
+                : `${t("importInvitesAction")} (${validRows.length})`}
             </Button>
           </form>
         </div>
@@ -133,7 +134,7 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
       {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
       {state.imported !== null && (
         <p className="mt-3 text-sm text-emerald-700">
-          Imported {state.imported} invite{state.imported === 1 ? "" : "s"}.
+          {t("importedLabel")}: {state.imported}
         </p>
       )}
     </Card>

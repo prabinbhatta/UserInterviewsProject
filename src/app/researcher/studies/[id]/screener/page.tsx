@@ -3,15 +3,17 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { QuestionForm } from "./QuestionForm";
 import { deleteQuestion } from "./actions";
+import { getLang } from "@/lib/getLang";
+import type { TranslationKey } from "@/lib/i18n";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { mutedLinkClasses } from "@/components/ui/link";
 
-const typeLabels: Record<string, string> = {
-  pick_one: "Pick one",
-  pick_any: "Pick any",
-  short_answer: "Short answer",
-  long_answer: "Long answer",
+const typeLabelKeys: Record<string, TranslationKey> = {
+  pick_one: "typePickOne",
+  pick_any: "typePickAny",
+  short_answer: "typeShortAnswer",
+  long_answer: "typeLongAnswer",
 };
 
 export default async function ScreenerPage({
@@ -20,6 +22,7 @@ export default async function ScreenerPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -51,14 +54,13 @@ export default async function ScreenerPage({
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
-          Back to studies
+          {t("backToStudies")}
         </Link>
         <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
-          Screener — {study.title}
+          {t("screenerTitlePrefix")} {study.title}
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/60">
-          Applicants who answer with a Rejected option are automatically
-          screened out. Everyone else lands in your review queue.
+          {t("screenerHint")}
         </p>
 
         {questions && questions.length > 0 && (
@@ -71,12 +73,12 @@ export default async function ScreenerPage({
                       {q.question_text}
                       {q.required && (
                         <span className="ml-2 text-xs text-[var(--ink)]/60">
-                          Required
+                          {t("requiredBadge")}
                         </span>
                       )}
                     </p>
                     <p className="mt-0.5 text-xs text-[var(--ink)]/70">
-                      {typeLabels[q.type]}
+                      {t(typeLabelKeys[q.type])}
                     </p>
                     {q.screener_options && q.screener_options.length > 0 && (
                       <ul className="mt-2 flex flex-wrap gap-2">
@@ -85,7 +87,7 @@ export default async function ScreenerPage({
                           .map((o) => (
                             <li key={o.id}>
                               <Badge tone={o.decision === "accept" ? "success" : "danger"}>
-                                {o.label} ({o.decision === "accept" ? "Accept" : "Reject"})
+                                {o.label} ({o.decision === "accept" ? t("acceptLabel") : t("rejectLabel")})
                               </Badge>
                             </li>
                           ))}
@@ -97,7 +99,7 @@ export default async function ScreenerPage({
                       type="submit"
                       className="text-sm text-[var(--ink)]/60 hover:text-[#a8371c]"
                     >
-                      Delete
+                      {t("deleteAction")}
                     </button>
                   </form>
                 </div>

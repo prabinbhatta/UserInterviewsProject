@@ -3,6 +3,7 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SlotForm } from "./SlotForm";
 import { deleteSlot, cancelBooking } from "./actions";
+import { getLang } from "@/lib/getLang";
 import { Card } from "@/components/ui/Card";
 import { mutedLinkClasses } from "@/components/ui/link";
 
@@ -20,6 +21,7 @@ export default async function StudySlotsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -52,13 +54,13 @@ export default async function StudySlotsPage({
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
-          Back to studies
+          {t("backToStudies")}
         </Link>
         <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
-          Time slots — {study.title}
+          {t("timeSlotsTitlePrefix")} {study.title}
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/60">
-          Approved participants can pick any open slot below.
+          {t("timeSlotsHint")}
         </p>
 
         {slots && slots.length > 0 && (
@@ -78,8 +80,8 @@ export default async function StudySlotsPage({
                   </p>
                   <p className="mt-0.5 text-sm text-[var(--ink)]/70">
                     {slot.application_id
-                      ? `Booked by ${slot.applications?.profiles?.full_name ?? "a participant"}`
-                      : "Open"}
+                      ? `${t("bookedByPrefix")} ${slot.applications?.profiles?.full_name ?? t("aParticipantFallback")}`
+                      : t("openLabel")}
                   </p>
                   {slot.location && (
                     <p className="mt-0.5 text-sm text-[var(--ink)]/70">
@@ -93,7 +95,7 @@ export default async function StudySlotsPage({
                       type="submit"
                       className={`shrink-0 text-sm ${mutedLinkClasses}`}
                     >
-                      Cancel booking
+                      {t("cancelBookingAction")}
                     </button>
                   </form>
                 ) : (
@@ -102,7 +104,7 @@ export default async function StudySlotsPage({
                       type="submit"
                       className={`shrink-0 text-sm ${mutedLinkClasses}`}
                     >
-                      Remove
+                      {t("removeAction")}
                     </button>
                   </form>
                 )}

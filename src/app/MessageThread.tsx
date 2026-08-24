@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { sendMessage } from "./messages-actions";
+import { useLanguage } from "./LanguageProvider";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses } from "@/components/ui/field";
 
@@ -25,6 +26,7 @@ export function MessageThread({
   otherPartyLabel: string;
   messages: Message[];
 }) {
+  const { t } = useLanguage();
   const boundSend = sendMessage.bind(null, applicationId, revalidatePath);
   const [state, formAction, pending] = useActionState(boundSend, {
     error: null,
@@ -34,7 +36,7 @@ export function MessageThread({
     <div className="mt-8">
       {messages.length === 0 ? (
         <p className="text-sm text-[var(--ink)]/70">
-          No messages yet. Say hello to {otherPartyLabel}.
+          {t("sayHelloPrefix")} {otherPartyLabel}.
         </p>
       ) : (
         <ul className="space-y-3">
@@ -77,14 +79,14 @@ export function MessageThread({
           name="body"
           required
           rows={3}
-          placeholder={`Message ${otherPartyLabel}...`}
+          placeholder={`${t("messageAction")} ${otherPartyLabel}...`}
           className={fieldClasses}
         />
         {state.error && (
           <p className="mt-2 text-sm text-[#a8371c]">{state.error}</p>
         )}
         <Button type="submit" disabled={pending} className="mt-3">
-          {pending ? "Sending..." : "Send"}
+          {pending ? t("sendingGeneric") : t("sendAction")}
         </Button>
       </form>
     </div>

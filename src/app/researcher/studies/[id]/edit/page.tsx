@@ -3,6 +3,7 @@ import { redirect, notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { StudyForm } from "../../StudyForm";
 import { updateStudy } from "../../actions";
+import { getLang } from "@/lib/getLang";
 import { mutedLinkClasses } from "@/components/ui/link";
 
 export default async function EditStudyPage({
@@ -11,6 +12,7 @@ export default async function EditStudyPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const { t } = await getLang();
   const supabase = await createClient();
 
   const {
@@ -40,10 +42,10 @@ export default async function EditStudyPage({
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
-          Back to studies
+          {t("backToStudies")}
         </Link>
         <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
-          Edit study
+          {t("editStudyTitle")}
         </h1>
         <div className="mt-6">
           <StudyForm
@@ -57,7 +59,7 @@ export default async function EditStudyPage({
               incentive_amount: study.incentive_amount,
               district: study.district,
             }}
-            submitLabel="Save changes"
+            submitLabel={t("saveChanges")}
           />
         </div>
       </div>
