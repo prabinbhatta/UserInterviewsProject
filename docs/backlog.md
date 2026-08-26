@@ -344,3 +344,35 @@ the 8 routes that run a real Supabase query but had none (`/browse`,
 `/browse/[id]`, participant profile, researcher participant search, and
 four `researcher/studies/[id]/*` sub-pages); skipped instant-rendering
 form pages where a skeleton would just flash uselessly.
+
+### ~~Settings forms silently reverting after save~~ — shipped 2026-08-26
+Real bug reported as "profile still shows 67% after saving." Root cause:
+both the participant profile form and the notification-preferences form
+used `<form action={fn}>` with uncontrolled fields — React 19 resets a
+`<form action={fn}>` back to its original DOM values after a successful
+submission, and that reset can land after React's own re-render, so the
+save always worked (confirmed against the database directly) but the
+form you were looking at would silently snap back to pre-edit values.
+Fixed by submitting through a plain `onSubmit` handler that calls the
+server action directly instead of handing the form to React's native
+`action` lifecycle. Also fixed along the way: two near-identical income
+options that behaved differently for profile-strength counting;
+`noValidate` so server validation errors (e.g. invalid age) aren't
+silently swallowed by the browser's own constraint validation; a new
+shared `Notice` banner component replacing plain-text error/success
+messages; and the participant dashboard now shows a small "profile
+complete" line instead of the full nudge card once there's nothing left
+to complete. See `src/app/participant/profile/ProfileForm.tsx`,
+`src/app/settings/SettingsForm.tsx`, `src/components/ui/Notice.tsx`.
+
+### ~~Role checks missing on researcher/participant sub-routes~~ — shipped 2026-08-26
+Found while usability-testing as a participant account: navigating
+directly to `/researcher/studies/new` rendered the full study-creation
+form with no redirect, and submitting it actually created a real study
+under that participant's account. Only `/researcher` and
+`/researcher/participants` checked `profile.role` — every other route
+under `/researcher/*` (and the same gap under `/participant/*`) only
+checked "is someone logged in," not "is this the right kind of account."
+Added `layout.tsx` at both route roots enforcing the role check for the
+whole subtree, so a new route added later can't forget it. Verified both
+directions redirect correctly now.
