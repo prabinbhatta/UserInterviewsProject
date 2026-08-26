@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
-import { updateNotificationPreferences } from "./actions";
+import { useRef, useState, useTransition } from "react";
+import { updateNotificationPreferences, type SettingsFormState } from "./actions";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { Notice } from "@/components/ui/Notice";
 
 type Prefs = {
   notify_approved: boolean;
@@ -12,59 +13,75 @@ type Prefs = {
   notify_incentives: boolean;
 };
 
+const FIELDS: { name: keyof Prefs; label: string }[] = [
+  { name: "notify_approved", label: "My application is approved" },
+  { name: "notify_scheduled", label: "A session is booked or cancelled" },
+  { name: "notify_messages", label: "I get a new message" },
+  { name: "notify_incentives", label: "An incentive is sent to me" },
+];
+
 export function SettingsForm({ defaultValues }: { defaultValues: Prefs }) {
-  const [state, formAction, pending] = useActionState(
-    updateNotificationPreferences,
-    { error: null },
-  );
+  const [state, setState] = useState<SettingsFormState>({ error: null });
+  const [pending, startTransition] = useTransition();
+  // Controlled + a plain onSubmit handler rather than <form action={fn}>:
+  // React 19 resets a <form action={fn}> back to its DOM-attribute
+  // defaults after a successful submission, and that reset can land after
+  // React's own re-render, silently reverting checkboxes even though the
+  // save succeeded. See ProfileForm for the fuller version of this note.
+  const [prefs, setPrefs] = useState(defaultValues);
+  const noticeRef = useRef<HTMLDivElement>(null);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = await updateNotificationPreferences(state, formData);
+      setState(result);
+      if (result.saved && result.values) {
+        setPrefs(result.values);
+      }
+      requestAnimationFrame(() => {
+        noticeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+  }
 
   return (
-    <Card as="form" action={formAction} className="mt-6">
+    <Card as="form" onSubmit={handleSubmit} className="mt-6">
       <p className="text-sm font-medium text-[var(--ink)]/80">Email me when...</p>
 
       <div className="mt-3 space-y-3">
-        <label className="flex items-center gap-3 text-sm text-[var(--ink)]/80">
-          <input
-            type="checkbox"
-            name="notify_approved"
-            defaultChecked={defaultValues.notify_approved}
-            className="h-4 w-4 accent-[var(--indigo)]"
-          />
-          My application is approved
-        </label>
-        <label className="flex items-center gap-3 text-sm text-[var(--ink)]/80">
-          <input
-            type="checkbox"
-            name="notify_scheduled"
-            defaultChecked={defaultValues.notify_scheduled}
-            className="h-4 w-4 accent-[var(--indigo)]"
-          />
-          A session is booked or cancelled
-        </label>
-        <label className="flex items-center gap-3 text-sm text-[var(--ink)]/80">
-          <input
-            type="checkbox"
-            name="notify_messages"
-            defaultChecked={defaultValues.notify_messages}
-            className="h-4 w-4 accent-[var(--indigo)]"
-          />
-          I get a new message
-        </label>
-        <label className="flex items-center gap-3 text-sm text-[var(--ink)]/80">
-          <input
-            type="checkbox"
-            name="notify_incentives"
-            defaultChecked={defaultValues.notify_incentives}
-            className="h-4 w-4 accent-[var(--indigo)]"
-          />
-          An incentive is sent to me
-        </label>
+        {FIELDS.map((field) => (
+          <label
+            key={field.name}
+            className="flex items-center gap-3 text-sm text-[var(--ink)]/80"
+          >
+            <input
+              type="checkbox"
+              name={field.name}
+              checked={prefs[field.name]}
+              onChange={(e) =>
+                setPrefs((p) => ({ ...p, [field.name]: e.target.checked }))
+              }
+              className="h-4 w-4 accent-[var(--indigo)]"
+            />
+            {field.label}
+          </label>
+        ))}
       </div>
 
-      {state.error && <p className="mt-3 text-sm text-[#a8371c]">{state.error}</p>}
-      {state.saved && (
-        <p className="mt-3 text-sm text-emerald-700">Preferences saved.</p>
-      )}
+      <div ref={noticeRef}>
+        {state.error && (
+          <Notice tone="danger" className="mt-3">
+            {state.error}
+          </Notice>
+        )}
+        {state.saved && !state.error && (
+          <Notice tone="success" className="mt-3">
+            Preferences saved.
+          </Notice>
+        )}
+      </div>
 
       <Button type="submit" disabled={pending} className="mt-4">
         {pending ? "Saving..." : "Save preferences"}

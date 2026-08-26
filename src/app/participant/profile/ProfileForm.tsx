@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState, useState } from "react";
-import { updateParticipantProfile } from "./actions";
+import { useRef, useState, useTransition } from "react";
+import { updateParticipantProfile, type ProfileFormState } from "./actions";
 import { DISTRICTS } from "@/lib/districts";
 import { useLanguage } from "@/app/LanguageProvider";
 import type { TranslationKey } from "@/lib/i18n";
 import { Button } from "@/components/ui/Button";
+import { Notice } from "@/components/ui/Notice";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
 
 const INCOME_BANDS: { value: string; labelKey: TranslationKey }[] = [
@@ -37,20 +38,67 @@ type DefaultValues = {
   devices: string[];
 };
 
+function toggle(list: string[], value: string): string[] {
+  return list.includes(value) ? list.filter((v) => v !== value) : [...list, value];
+}
+
+function deriveFields(values: DefaultValues) {
+  const initialDistrict = values.district ?? "";
+  const isKnownDistrict = DISTRICTS.includes(initialDistrict);
+  return {
+    district: isKnownDistrict ? initialDistrict : initialDistrict ? "Other" : "",
+    districtOther: isKnownDistrict ? "" : initialDistrict,
+    age: values.age?.toString() ?? "",
+    occupation: values.occupation ?? "",
+    incomeBand: values.income_band ?? "",
+    languages: values.languages,
+    devices: values.devices,
+  };
+}
+
 export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues }) {
   const { t } = useLanguage();
-  const [state, formAction, pending] = useActionState(updateParticipantProfile, {
-    error: null,
-  });
+  const [state, setState] = useState<ProfileFormState>({ error: null });
+  const [pending, startTransition] = useTransition();
 
-  const initialDistrict = defaultValues.district ?? "";
-  const isKnownDistrict = DISTRICTS.includes(initialDistrict);
-  const [district, setDistrict] = useState(
-    isKnownDistrict ? initialDistrict : initialDistrict ? "Other" : "",
-  );
+  // Every field here is controlled, and submission goes through a plain
+  // onSubmit handler rather than <form action={fn}> — React 19 resets a
+  // <form action={fn}> back to its DOM-attribute defaults after a
+  // successful submission, and that reset can land after React's own
+  // controlled re-render, silently reverting fields even though the save
+  // itself succeeded. preventDefault() + calling the action ourselves
+  // sidesteps that native form lifecycle entirely.
+  const [fields, setFields] = useState(() => deriveFields(defaultValues));
+  const { district, districtOther, age, occupation, incomeBand, languages, devices } = fields;
+  const setDistrict = (v: string) => setFields((f) => ({ ...f, district: v }));
+  const setDistrictOther = (v: string) => setFields((f) => ({ ...f, districtOther: v }));
+  const setAge = (v: string) => setFields((f) => ({ ...f, age: v }));
+  const setOccupation = (v: string) => setFields((f) => ({ ...f, occupation: v }));
+  const setIncomeBand = (v: string) => setFields((f) => ({ ...f, incomeBand: v }));
+  const setLanguages = (updater: (prev: string[]) => string[]) =>
+    setFields((f) => ({ ...f, languages: updater(f.languages) }));
+  const setDevices = (updater: (prev: string[]) => string[]) =>
+    setFields((f) => ({ ...f, devices: updater(f.devices) }));
+
+  const noticeRef = useRef<HTMLDivElement>(null);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = await updateParticipantProfile(state, formData);
+      setState(result);
+      if (result.saved && result.values) {
+        setFields(deriveFields(result.values));
+      }
+      requestAnimationFrame(() => {
+        noticeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+  }
 
   return (
-    <form action={formAction} className="w-full max-w-xl">
+    <form onSubmit={handleSubmit} noValidate className="w-full max-w-xl">
       <label className={labelClasses}>
         {t("filterDistrict")}
         <select
@@ -74,7 +122,8 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
           <input
             type="text"
             name="district_other"
-            defaultValue={isKnownDistrict ? "" : initialDistrict}
+            value={districtOther}
+            onChange={(e) => setDistrictOther(e.target.value)}
             className={fieldClasses}
           />
         </label>
@@ -88,7 +137,8 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
             name="age"
             min={1}
             max={120}
-            defaultValue={defaultValues.age ?? ""}
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
             className={fieldClasses}
           />
         </label>
@@ -98,7 +148,8 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
           <input
             type="text"
             name="occupation"
-            defaultValue={defaultValues.occupation ?? ""}
+            value={occupation}
+            onChange={(e) => setOccupation(e.target.value)}
             className={fieldClasses}
           />
         </label>
@@ -108,10 +159,11 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
         {t("monthlyIncomeFieldLabel")}
         <select
           name="income_band"
-          defaultValue={defaultValues.income_band ?? ""}
+          value={incomeBand}
+          onChange={(e) => setIncomeBand(e.target.value)}
           className={fieldClasses}
         >
-          <option value="">{t("preferNotToAnswer")}</option>
+          <option value="">{t("selectAnOption")}</option>
           {INCOME_BANDS.map((band) => (
             <option key={band.value} value={band.value}>
               {t(band.labelKey)}
@@ -132,7 +184,8 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
                 type="checkbox"
                 name="languages"
                 value={lang.value}
-                defaultChecked={defaultValues.languages.includes(lang.value)}
+                checked={languages.includes(lang.value)}
+                onChange={() => setLanguages((prev) => toggle(prev, lang.value))}
                 className="h-4 w-4 accent-[var(--indigo)]"
               />
               {t(lang.labelKey)}
@@ -153,7 +206,8 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
                 type="checkbox"
                 name="devices"
                 value={device.value}
-                defaultChecked={defaultValues.devices.includes(device.value)}
+                checked={devices.includes(device.value)}
+                onChange={() => setDevices((prev) => toggle(prev, device.value))}
                 className="h-4 w-4 accent-[var(--indigo)]"
               />
               {t(device.labelKey)}
@@ -162,10 +216,18 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
         </div>
       </div>
 
-      {state.error && <p className="mt-4 text-sm text-[#a8371c]">{state.error}</p>}
-      {state.saved && !state.error && (
-        <p className="mt-4 text-sm text-emerald-700">{t("profileSavedMessage")}</p>
-      )}
+      <div ref={noticeRef}>
+        {state.error && (
+          <Notice tone="danger" className="mt-4">
+            {state.error}
+          </Notice>
+        )}
+        {state.saved && !state.error && (
+          <Notice tone="success" className="mt-4">
+            {t("profileSavedMessage")}
+          </Notice>
+        )}
+      </div>
 
       <Button type="submit" disabled={pending} className="mt-6 w-full">
         {pending ? t("savingGeneric") : t("saveProfileAction")}

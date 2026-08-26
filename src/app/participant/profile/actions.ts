@@ -5,7 +5,18 @@ import { createClient } from "@/lib/supabase/server";
 import { friendlyError } from "@/lib/friendlyError";
 import { DISTRICTS } from "@/lib/districts";
 
-export type ProfileFormState = { error: string | null; saved?: boolean };
+export type ProfileFormState = {
+  error: string | null;
+  saved?: boolean;
+  values?: {
+    district: string | null;
+    age: number | null;
+    occupation: string | null;
+    income_band: string | null;
+    languages: string[];
+    devices: string[];
+  };
+};
 
 const DISTRICT_SET = new Set(DISTRICTS);
 
@@ -39,22 +50,22 @@ export async function updateParticipantProfile(
     return { error: "Invalid district selection." };
   }
 
-  const { error } = await supabase.from("participant_profiles").upsert(
-    {
-      user_id: user.id,
-      district: district || null,
-      age,
-      occupation: occupation || null,
-      income_band: incomeBand || null,
-      languages,
-      devices,
-    },
-    { onConflict: "user_id" },
-  );
+  const values = {
+    district: district || null,
+    age,
+    occupation: occupation || null,
+    income_band: incomeBand || null,
+    languages,
+    devices,
+  };
+
+  const { error } = await supabase
+    .from("participant_profiles")
+    .upsert({ user_id: user.id, ...values }, { onConflict: "user_id" });
 
   if (error) return { error: friendlyError(error) };
 
   revalidatePath("/participant/profile");
   revalidatePath("/participant");
-  return { error: null, saved: true };
+  return { error: null, saved: true, values };
 }

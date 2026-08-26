@@ -86,29 +86,42 @@ export default async function ParticipantDashboard() {
           {t("participantDashboardBody")}
         </p>
 
-        <Link href="/participant/profile" className="mt-6 block">
-          <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--coral)]">
-            <div className="flex items-center justify-between text-sm">
-              <span className="font-medium text-[var(--ink)]">
-                {strengthPercent === 100
-                  ? t("profileCompleteLabel")
-                  : t("completeYourProfileLabel")}
-              </span>
-              <span className="text-[var(--ink)]/70">{strengthPercent}%</span>
-            </div>
-            <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
-              <div
-                className="h-full rounded-full bg-[var(--coral)] transition-all"
-                style={{ width: `${strengthPercent}%` }}
+        {strengthPercent === 100 ? (
+          <Link
+            href="/participant/profile"
+            className="mt-6 inline-flex items-center gap-1.5 text-sm text-[var(--ink)]/60 transition-colors hover:text-[var(--coral)]"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+              <path
+                d="M8.5 12.5l2.4 2.4L16 10"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
-            </div>
-            {strengthPercent < 100 && (
-              <p className="mt-2 text-xs text-[var(--ink)]/70">
-                {t("profileHint")}
-              </p>
-            )}
-          </Card>
-        </Link>
+            </svg>
+            {t("profileCompleteLabel")}
+          </Link>
+        ) : (
+          <Link href="/participant/profile" className="mt-6 block">
+            <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--coral)]">
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-medium text-[var(--ink)]">
+                  {t("completeYourProfileLabel")}
+                </span>
+                <span className="text-[var(--ink)]/70">{strengthPercent}%</span>
+              </div>
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
+                <div
+                  className="h-full rounded-full bg-[var(--coral)] transition-all"
+                  style={{ width: `${strengthPercent}%` }}
+                />
+              </div>
+              <p className="mt-2 text-xs text-[var(--ink)]/70">{t("profileHint")}</p>
+            </Card>
+          </Link>
+        )}
 
         <Card className="mt-4">
           <p className="text-sm text-[var(--ink)]/70">{t("totalEarnedLabel")}</p>
