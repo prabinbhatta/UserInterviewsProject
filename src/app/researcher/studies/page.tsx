@@ -29,6 +29,9 @@ const formatLabelKeys: Record<string, TranslationKey> = {
   phone: "formatPhone",
 };
 
+const navPillClasses =
+  "rounded-full border border-[var(--mist)] bg-white px-3 py-1 text-xs font-medium text-[var(--ink)]/70 transition-colors hover:border-[var(--coral)] hover:text-[var(--coral)]";
+
 export default async function StudiesPage() {
   const { t } = await getLang();
   const supabase = await createClient();
@@ -86,7 +89,7 @@ export default async function StudiesPage() {
             {studies.map((study) => (
               <Card as="li" key={study.id}>
                 <div className="flex items-start justify-between gap-4">
-                  <div>
+                  <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <h2 className="font-semibold text-[var(--ink)]">
                         {study.title}
@@ -102,65 +105,69 @@ export default async function StudiesPage() {
                     </p>
                   </div>
 
-                  <div className="flex shrink-0 flex-col items-end gap-2">
-                    <Link
-                      href={`/researcher/studies/${study.id}/applications`}
-                      className={`text-sm ${mutedLinkClasses}`}
-                    >
-                      {t("applicantsNav")}
-                    </Link>
-                    <Link
-                      href={`/researcher/studies/${study.id}/invite`}
-                      className={`text-sm ${mutedLinkClasses}`}
-                    >
-                      {t("inviteNav")}
-                    </Link>
-                    <Link
-                      href={`/researcher/studies/${study.id}/slots`}
-                      className={`text-sm ${mutedLinkClasses}`}
-                    >
-                      {t("timeSlotsNav")}
-                    </Link>
-                    <Link
-                      href={`/researcher/studies/${study.id}/screener`}
-                      className={`text-sm ${mutedLinkClasses}`}
-                    >
-                      {t("screenerNav")}
-                    </Link>
-                    <Link
-                      href={`/researcher/studies/${study.id}/analytics`}
-                      className={`text-sm ${mutedLinkClasses}`}
-                    >
-                      {t("analyticsNav")}
-                    </Link>
-                    {study.status === "draft" && (
-                      <>
-                        <Link
-                          href={`/researcher/studies/${study.id}/edit`}
-                          className={`text-sm ${mutedLinkClasses}`}
-                        >
-                          {t("editNav")}
-                        </Link>
-                        <form action={publishStudy.bind(null, study.id)}>
-                          <Button type="submit" size="sm">
-                            {t("publishAction")}
-                          </Button>
-                        </form>
-                      </>
-                    )}
-                    {study.status === "active" && (
-                      <form action={closeStudy.bind(null, study.id)}>
-                        <Button type="submit" size="sm" variant="secondary">
-                          {t("closeAction")}
-                        </Button>
-                      </form>
-                    )}
-                    <form action={duplicateStudy.bind(null, study.id)}>
-                      <button type="submit" className={`text-sm ${mutedLinkClasses}`}>
-                        {t("duplicateAction")}
-                      </button>
+                  {study.status === "draft" && (
+                    <form action={publishStudy.bind(null, study.id)} className="shrink-0">
+                      <Button type="submit" size="sm">
+                        {t("publishAction")}
+                      </Button>
                     </form>
-                  </div>
+                  )}
+                  {study.status === "active" && (
+                    <form action={closeStudy.bind(null, study.id)} className="shrink-0">
+                      <Button type="submit" size="sm" variant="secondary">
+                        {t("closeAction")}
+                      </Button>
+                    </form>
+                  )}
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2 border-t border-[var(--mist)]/60 pt-4">
+                  <Link
+                    href={`/researcher/studies/${study.id}/applications`}
+                    className={navPillClasses}
+                  >
+                    {t("applicantsNav")}
+                  </Link>
+                  <Link
+                    href={`/researcher/studies/${study.id}/invite`}
+                    className={navPillClasses}
+                  >
+                    {t("inviteNav")}
+                  </Link>
+                  <Link
+                    href={`/researcher/studies/${study.id}/slots`}
+                    className={navPillClasses}
+                  >
+                    {t("timeSlotsNav")}
+                  </Link>
+                  <Link
+                    href={`/researcher/studies/${study.id}/screener`}
+                    className={navPillClasses}
+                  >
+                    {t("screenerNav")}
+                  </Link>
+                  <Link
+                    href={`/researcher/studies/${study.id}/analytics`}
+                    className={navPillClasses}
+                  >
+                    {t("analyticsNav")}
+                  </Link>
+                  {study.status === "draft" && (
+                    <Link
+                      href={`/researcher/studies/${study.id}/edit`}
+                      className={navPillClasses}
+                    >
+                      {t("editNav")}
+                    </Link>
+                  )}
+                </div>
+
+                <div className="mt-2">
+                  <form action={duplicateStudy.bind(null, study.id)}>
+                    <button type="submit" className={`text-xs ${mutedLinkClasses}`}>
+                      {t("duplicateAction")}
+                    </button>
+                  </form>
                 </div>
               </Card>
             ))}
