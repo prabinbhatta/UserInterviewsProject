@@ -53,7 +53,7 @@ export function VoiceWaveform() {
               className={`w-full min-w-[2px] rounded-full transition-colors duration-500 motion-safe:duration-700 ${
                 active
                   ? "bg-[var(--coral)] motion-safe:animate-[waveform_1.1s_ease-in-out_infinite]"
-                  : "bg-[var(--mist)] group-hover:bg-[var(--coral)]/60"
+                  : "bg-[var(--indigo)]/35 group-hover:bg-[var(--coral)]/70"
               }`}
             />
           ))}

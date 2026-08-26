@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { LinkButton } from "@/components/ui/LinkButton";
 import { VoiceWaveform } from "./VoiceWaveform";
 import { Reveal } from "./Reveal";
 import { JourneyTimeline } from "./JourneyTimeline";
@@ -48,18 +49,12 @@ export default function Home() {
               {t("heroBody")}
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/signup?role=researcher"
-                className="inline-flex h-12 items-center justify-center rounded-full bg-[var(--ink)] px-6 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-[var(--indigo)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--coral)]"
-              >
+              <LinkButton href="/signup?role=researcher" variant="primary">
                 {t("ctaResearcher")}
-              </Link>
-              <Link
-                href="/signup?role=participant"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 text-sm font-semibold text-[var(--ink)] transition-transform hover:-translate-y-0.5 hover:border-[var(--coral)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--coral)]"
-              >
+              </LinkButton>
+              <LinkButton href="/signup?role=participant" variant="secondary">
                 {t("ctaParticipant")}
-              </Link>
+              </LinkButton>
             </div>
           </div>
 
@@ -104,7 +99,7 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/signup?role=researcher"
-                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white px-5 text-sm font-semibold text-[var(--indigo)] transition-transform group-hover:-translate-y-0.5"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white px-5 text-sm font-semibold text-[var(--indigo)] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.2)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(0,0,0,0.3)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(0,0,0,0.2)]"
                 >
                   {t("startStudy")}
                   <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
@@ -129,7 +124,7 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/signup?role=participant"
-                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white transition-transform group-hover:-translate-y-0.5"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white shadow-[0_2px_8px_-2px_rgba(18,23,43,0.35)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(18,23,43,0.4)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(18,23,43,0.3)]"
                 >
                   {t("browseStudies")}
                   <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
