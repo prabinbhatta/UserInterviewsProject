@@ -387,7 +387,10 @@ mobile widths across draft, active, and closed studies.
 
 ### Remaining pages not yet usability-tested
 The 2026-08-26 usability pass covered profile/settings forms, the
-researcher studies list, an applicant detail view, and a message thread.
-Not yet covered: screener question builder, CSV bulk invite, the
-waitlist flow, researcher analytics, the admin dashboard, and the
-calendar/.ics export. Worth a dedicated pass.
+researcher studies list, an applicant detail view, a message thread,
+and the screener question builder (tested clean — no bugs found: add/
+delete questions, accept/reject option badges, answer-type toggle
+correctly hides options for free-text types, form resets after a
+successful add). Not yet covered: CSV bulk invite, the waitlist flow,
+researcher analytics, the admin dashboard, and the calendar/.ics
+export. Worth a dedicated pass.
