@@ -377,14 +377,13 @@ Added `layout.tsx` at both route roots enforcing the role check for the
 whole subtree, so a new route added later can't forget it. Verified both
 directions redirect correctly now.
 
-### Study card layout is doing too much
-On `/researcher/studies`, each card crams 5 plain-text nav links
-(Applicants/Invite/Time slots/Screener/Analytics) and up to 2 real action
-buttons (Close/Duplicate) into one narrow right-side column. They read as
-two different UI languages stacked together and get cluttered with
-several studies on the page. Consider a horizontal pill-row for
-navigation with actions (Close/Publish/Duplicate) grouped separately,
-e.g. top-right of the card. Found during the 2026-08-26 usability pass.
+### ~~Study card layout is doing too much~~ — shipped 2026-08-26
+Restructured into three tiers: the primary state-changing action
+(Publish/Close) top-right next to the title and status badge; the 5-6
+navigation destinations as a horizontal pill-chip row below a divider,
+visually distinct from real buttons; Duplicate as a small muted text
+link at the bottom, out of the primary flow. Verified at desktop and
+mobile widths across draft, active, and closed studies.
 
 ### Remaining pages not yet usability-tested
 The 2026-08-26 usability pass covered profile/settings forms, the
