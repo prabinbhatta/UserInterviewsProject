@@ -327,3 +327,20 @@ RLS enforces which `rater_role` each side may insert as, independent of
 what the client sends. Verified live: a 4-star participant rating and a
 5-star researcher rating on real completed applications both persisted
 correctly with no duplicate rows, confirmed directly via the table.
+
+### ~~Button/card depth pass + loading state gaps~~ — shipped 2026-08-26
+The shared Button and Card components had zero shadow or press feedback
+anywhere, which read as flat/non-interactive across the whole platform.
+Added a resting shadow, deeper hover shadow with lift, and a real
+active/press state (scale down, shadow flattens) to both. Found two real
+bugs auditing the landing page: the hero's primary CTAs and the two
+feature-card CTAs were bespoke one-off elements that never went through
+the shared button system (`box-shadow: none`) — fixed by routing the
+hero CTAs through the shared `LinkButton` and hand-matching depth onto
+the two card CTAs' one-off colors. Also, the voice-waveform's resting
+bars used `--mist` on a near-white card — technically rendered but too
+low-contrast to see; switched to `indigo/35`. Filled `loading.tsx` for
+the 8 routes that run a real Supabase query but had none (`/browse`,
+`/browse/[id]`, participant profile, researcher participant search, and
+four `researcher/studies/[id]/*` sub-pages); skipped instant-rendering
+form pages where a skeleton would just flash uselessly.
