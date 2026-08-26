@@ -388,9 +388,14 @@ mobile widths across draft, active, and closed studies.
 ### Remaining pages not yet usability-tested
 The 2026-08-26 usability pass covered profile/settings forms, the
 researcher studies list, an applicant detail view, a message thread,
-and the screener question builder (tested clean — no bugs found: add/
-delete questions, accept/reject option badges, answer-type toggle
-correctly hides options for free-text types, form resets after a
-successful add). Not yet covered: CSV bulk invite, the waitlist flow,
+the screener question builder, and the invite module (all tested
+clean — no bugs found). Invite-by-email correctly creates invitations,
+clears the form, and "Copy link" genuinely copies the right URL
+(verified by intercepting the clipboard API directly — it briefly
+looked broken in manual testing only because the 1.5s "Copied!"
+confirmation kept expiring between screenshots). CSV import was
+reviewed via code only (email regex validation, dedup, empty-row
+filtering all correct) since this browser automation layer can't
+drive a native file-input upload. Not yet covered: the waitlist flow,
 researcher analytics, the admin dashboard, and the calendar/.ics
 export. Worth a dedicated pass.
