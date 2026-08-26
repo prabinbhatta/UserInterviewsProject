@@ -385,17 +385,29 @@ visually distinct from real buttons; Duplicate as a small muted text
 link at the bottom, out of the primary flow. Verified at desktop and
 mobile widths across draft, active, and closed studies.
 
+### ~~Closed studies were invisible to participants, breaking the waitlist~~ — shipped 2026-08-26
+Found while usability-testing the waitlist flow: a fresh participant
+hit a 404 instead of "this study is full, join the waitlist" on a
+closed study. RLS on `studies` never had a policy for "no application
+yet, but the study is closed" — only active studies, studies you'd
+already applied to, or studies you own were readable. That made the
+join-waitlist branch completely unreachable in practice. Extended the
+read policy to cover closed studies too (drafts still hidden).
+Verified end-to-end against the database: join adds a row to
+`study_waitlist`, leave removes it, and the UI reflects both correctly
+with no reload. See `0031_closed_study_visibility_for_waitlist.sql`.
+
 ### Remaining pages not yet usability-tested
 The 2026-08-26 usability pass covered profile/settings forms, the
 researcher studies list, an applicant detail view, a message thread,
-the screener question builder, and the invite module (all tested
-clean — no bugs found). Invite-by-email correctly creates invitations,
-clears the form, and "Copy link" genuinely copies the right URL
-(verified by intercepting the clipboard API directly — it briefly
-looked broken in manual testing only because the 1.5s "Copied!"
-confirmation kept expiring between screenshots). CSV import was
-reviewed via code only (email regex validation, dedup, empty-row
-filtering all correct) since this browser automation layer can't
-drive a native file-input upload. Not yet covered: the waitlist flow,
-researcher analytics, the admin dashboard, and the calendar/.ics
-export. Worth a dedicated pass.
+the screener question builder, the invite module, and the waitlist
+flow (all tested; one real bug found and fixed in the waitlist flow,
+see above). Invite-by-email correctly creates invitations, clears the
+form, and "Copy link" genuinely copies the right URL (verified by
+intercepting the clipboard API directly — it briefly looked broken in
+manual testing only because the 1.5s "Copied!" confirmation kept
+expiring between screenshots). CSV import was reviewed via code only
+(email regex validation, dedup, empty-row filtering all correct) since
+this browser automation layer can't drive a native file-input upload.
+Not yet covered: researcher analytics, the admin dashboard, and the
+calendar/.ics export. Worth a dedicated pass.
