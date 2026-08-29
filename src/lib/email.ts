@@ -5,16 +5,63 @@ const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KE
 const FROM = "Nepal User Research <no-reply@mail.research.prabinbhatta.com.np>";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
+// Brand tokens mirrored from src/app/globals.css — email clients can't read
+// CSS custom properties, so these stay hardcoded and in sync by hand.
+const INK = "#12172b";
+const INK_MUTED = "#5b5f7a";
+const PAPER = "#f6f7fb";
+const CORAL = "#ff6b4a";
+const GOLD = "#f5b942";
+const MIST = "#c7cce0";
+const FONT_STACK =
+  "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+
+function stripTags(html: string): string {
+  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
 function wrap(bodyHtml: string, ctaHref?: string, ctaLabel?: string) {
+  const preheader = stripTags(bodyHtml).slice(0, 140);
+
   return `
-    <div style="font-family: -apple-system, Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; color: #18181b;">
-      <p style="font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: #71717a;">Nepal User Research</p>
-      ${bodyHtml}
-      ${
-        ctaHref && ctaLabel
-          ? `<p style="margin-top: 24px;"><a href="${ctaHref}" style="display: inline-block; background: #18181b; color: #ffffff; padding: 10px 20px; border-radius: 999px; text-decoration: none; font-size: 14px; font-weight: 600;">${ctaLabel}</a></p>`
-          : ""
-      }
+    <div style="background: ${PAPER}; padding: 32px 16px; font-family: ${FONT_STACK};">
+      <span style="display: none; overflow: hidden; line-height: 1px; opacity: 0; max-height: 0; max-width: 0;">
+        ${preheader}
+      </span>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px; margin: 0 auto; border-collapse: separate;">
+        <tr>
+          <td style="border-radius: 16px 16px 0 0; overflow: hidden; line-height: 0;">
+            <div style="height: 4px; background: linear-gradient(90deg, ${CORAL}, ${GOLD}); background-color: ${CORAL};"></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="background: #ffffff; border-left: 1px solid ${MIST}; border-right: 1px solid ${MIST}; padding: 32px 36px 8px;">
+            <p style="margin: 0 0 20px; font-family: ui-monospace, 'SF Mono', 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${CORAL};">
+              Nepal User Research
+            </p>
+            <div style="font-size: 15px; line-height: 1.65; color: ${INK};">
+              ${bodyHtml}
+            </div>
+            ${
+              ctaHref && ctaLabel
+                ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin: 28px 0 8px;"><tr><td style="border-radius: 999px; background: ${INK};">
+                    <a href="${ctaHref}" style="display: inline-block; padding: 12px 26px; font-size: 14px; font-weight: 600; color: #ffffff; text-decoration: none; border-radius: 999px;">${ctaLabel}</a>
+                  </td></tr></table>`
+                : ""
+            }
+          </td>
+        </tr>
+        <tr>
+          <td style="background: #ffffff; border-left: 1px solid ${MIST}; border-right: 1px solid ${MIST}; border-bottom: 1px solid ${MIST}; border-radius: 0 0 16px 16px; padding: 20px 36px 28px;">
+            <div style="border-top: 1px solid #eceef5; padding-top: 16px;">
+              <p style="margin: 0; font-size: 12px; line-height: 1.6; color: ${INK_MUTED};">
+                You're receiving this because you have an account on
+                <a href="${SITE_URL}" style="color: ${INK_MUTED}; text-decoration: underline; text-decoration-color: ${MIST};">Nepal User Research</a>.
+              </p>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
   `;
 }
