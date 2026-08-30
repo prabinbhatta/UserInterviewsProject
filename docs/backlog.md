@@ -171,8 +171,20 @@ in the app, and the one icon-only SVG (site logo) is correctly
 `aria-hidden` next to visible text; existing icon buttons already had
 `aria-label`s.
 
-### Final product name
-Deferred by founder; current working name is "Research Platform."
+### ~~Final product name~~ — shipped 2026-08-30
+Founder purchased `panelmeet.com`. Renamed everywhere: page titles/
+metadata, Open Graph image, terms/privacy copy, browse pages, the
+.ics calendar export (`PRODID`, `UID`, `DESCRIPTION`), the email
+template's brand kicker/footer link, and the portfolio project entry
+(including its "Visit site" link). The `FROM` address's display name
+changed to "PanelMeet <no-reply@mail.research.prabinbhatta.com.np>",
+but the address's own domain was deliberately left unchanged since
+it's the existing Resend-verified sending domain — migrating that
+requires a separate DNS verification step under panelmeet.com and
+would risk breaking outbound email if done casually. DNS/Vercel/
+Supabase Site URL cutover to the new domain is a separate,
+founder-side step (Spaceship A record → Vercel domain → env var →
+Supabase Auth redirect URLs), in progress.
 
 ### ~~Auto-generated video meeting links~~ — shipped 2026-08-24
 Google Meet via the dedicated Meet API (not the Calendar API — the
