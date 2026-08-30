@@ -492,3 +492,44 @@ comma/semicolon escaping it already had); and gave the download a
 filename derived from the study title instead of a fixed `session.ics`
 for every event. Auth/authorization on the route itself (must be the
 booked participant or the study's researcher) was already correct.
+
+### ~~Design system and logo revamp~~ — shipped 2026-08-30
+Retired the inherited Nepal User Research identity (coral/gold/indigo/
+mist palette, Fraunces serif, 5-bar waveform logo) for a PanelMeet-native
+one. Presented two candidate directions as a brand-board artifact —
+"Dhaka weave" (warm, textile-heritage) and "Panel grid" (cooler,
+video-meeting-product) — founder picked Panel grid.
+
+Palette went through two passes. First landed on teal per the approved
+board. Live-compared against userinterviews.com — a direct competitor —
+and found its brand color is `#156152`, the same hue family as the
+chosen teal. Retired teal and promoted the signal red (`#e24b3a`,
+already in the system as a secondary accent) to primary, moving the
+handful of decorative slots that would have collided with it (the
+second feature card, one of three trust icons, one of three
+`PlatformFlow` icons, the hero blur's second gradient stop) onto the
+amber `--warning` token instead, so no two adjacent brand elements
+share a color.
+
+Split brand-accent tokens from semantic ones during the rename —
+`--danger` and `--warning` are now their own tokens rather than riding
+on whichever hex `--coral`/`--gold` happened to hold, so status colors
+(form errors, badges, admin alert banners, star ratings) don't shift if
+the brand palette changes again. `--danger` keeps the exact old coral
+value byte-for-byte since it was already accessibility-verified against
+its paired text color; `--warning`'s contrast against ink was verified
+at 6.6:1.
+
+New 2x2 grid-tile logo mark (replacing the bar-waveform mark) applied
+consistently: header, `PlatformFlow`'s reused icon, a new `app/icon.tsx`
+favicon, and both `opengraph-image` routes. Display type moved from
+Fraunces to Space Grotesk. `email.ts`'s hardcoded brand constants (CSS
+custom properties don't reach email clients) updated to match, including
+dropping the two-color gradient accent bar for a single solid signal-red
+bar per the "one confident accent" direction. Verified via build + live
+dev server: fonts, logo colors, and the two previously collision-prone
+card/icon groups all render with the intended distinct colors.
+
+Not yet done: the actual `mail.research.prabinbhatta.com.np` sending
+domain and Vercel/Supabase Site URL cutover to `panelmeet.com` DNS —
+tracked separately under "Final product name" above, founder-side.
