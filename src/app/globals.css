@@ -6,21 +6,30 @@
  * A stray dark-mode media query here previously made body text near-white
  * on any OS in dark mode, which was invisible against the light UI.
  *
- * PanelMeet identity ("panel grid" direction): a cooler, contemporary
- * meeting-product palette — one confident signal-red accent (originally
- * planned as teal, moved off it deliberately: too close to a direct
- * competitor's brand color in the same research-recruiting category) and
- * navy for deep/info surfaces. --warning doubles as a decorative tertiary
- * accent (the second feature card, one of the three trust icons) as well
- * as its semantic badge/alert role. --danger stays untied to the brand
- * accents so status meaning doesn't shift if the brand palette ever does
- * again.
+ * PanelMeet identity ("panel grid" direction, third pass): navy as the
+ * one confident accent — not a competitor color (ruled out teal, matched
+ * userinterviews.com), not a category cliché (ruled out plain blue), not
+ * an AI-purple tell (ruled out violet), and not disliked on taste
+ * (ruled out the red that briefly replaced teal). --accent is a
+ * lighter/more saturated step off --navy so it has enough pop as a
+ * primary CTA/focus-ring color; --navy itself stays for deep card fills
+ * where the darker value reads better. --warning doubles as a decorative
+ * tertiary accent (the second feature card, one of the three trust
+ * icons) as well as its semantic badge/alert role. --danger stays
+ * untied to the brand accents so status meaning doesn't shift if the
+ * brand palette ever does again.
+ *
+ * Motion: two named easing curves, not per-component guesses.
+ * --ease-interact (fast, ease-out-cubic) is for anything a person
+ * touches — buttons, links, cards. --ease-reveal (slower, ease-in-out-
+ * cubic) is for content arriving on scroll. Both are real, named,
+ * widely-used curves (easings.net), not invented values.
  */
 :root {
   --paper: #eef1f4;
   --ink: #12161d;
   --navy: #1b2f45;
-  --signal: #e24b3a;
+  --accent: #29527c;
   --line: #d7dee5;
 
   --warning: #c9930f;
@@ -35,6 +44,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-manrope);
   --font-mono: var(--font-plex-mono);
+  --ease-interact: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-reveal: cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 body {

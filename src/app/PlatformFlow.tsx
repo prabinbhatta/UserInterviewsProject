@@ -24,11 +24,13 @@ function ClipboardIcon() {
 
 function PlatformIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      <rect x="0" y="0" width="9.5" height="9.5" rx="2.5" fill="currentColor" />
-      <rect x="12.5" y="0" width="9.5" height="9.5" rx="2.5" fill="currentColor" opacity="0.4" />
-      <rect x="0" y="12.5" width="9.5" height="9.5" rx="2.5" fill="currentColor" opacity="0.4" />
-      <rect x="12.5" y="12.5" width="9.5" height="9.5" rx="2.5" fill="currentColor" />
+    <svg width="26" height="18" viewBox="0 0 70 22" fill="none" aria-hidden="true">
+      <circle cx="7" cy="11" r="3.4" fill="currentColor" opacity="0.28" />
+      <circle cx="18" cy="11" r="4.3" fill="currentColor" opacity="0.45" />
+      <circle cx="31" cy="11" r="6.5" fill="currentColor" />
+      <circle cx="31" cy="11" r="9" stroke="currentColor" strokeWidth="1.3" fill="none" />
+      <circle cx="44" cy="11" r="4.3" fill="currentColor" opacity="0.45" />
+      <circle cx="55" cy="11" r="3.4" fill="currentColor" opacity="0.28" />
     </svg>
   );
 }
@@ -70,7 +72,7 @@ export function PlatformFlow({
     {
       icon: <ClipboardIcon />,
       label: step1,
-      iconClasses: "text-[var(--signal)] bg-[var(--signal)]/10",
+      iconClasses: "text-[var(--accent)] bg-[var(--accent)]/10",
     },
     {
       icon: <PlatformIcon />,
@@ -88,7 +90,7 @@ export function PlatformFlow({
     <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-0">
       {nodes.map((node, i) => (
         <div key={node.label} className="flex w-full items-center sm:contents">
-          <div className="flex flex-1 flex-col items-center gap-3 rounded-2xl border border-[var(--line)] bg-white px-6 py-6 text-center transition-transform duration-300 hover:-translate-y-1">
+          <div className="flex flex-1 flex-col items-center gap-3 rounded-2xl border border-[var(--line)] bg-white px-6 py-6 text-center transition-transform duration-300 ease-interact hover:-translate-y-1">
             <div
               className={`flex h-12 w-12 items-center justify-center rounded-full ${node.iconClasses}`}
             >

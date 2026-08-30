@@ -126,7 +126,7 @@ export default async function StudyAnalyticsPage({
                 <dd className="flex items-center gap-2">
                   <div className="h-2 w-32 overflow-hidden rounded-full bg-[var(--line)]/40">
                     <div
-                      className="h-full rounded-full bg-[var(--signal)]"
+                      className="h-full rounded-full bg-[var(--accent)]"
                       style={{
                         width: `${totalApplied > 0 ? (counts[step] / totalApplied) * 100 : 0}%`,
                       }}

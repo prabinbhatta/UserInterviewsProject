@@ -185,7 +185,7 @@ export default async function BrowseStudiesPage({
             {studies.map((study) => (
               <li key={study.id}>
                 <Link href={`/participant/studies/${study.id}`} className="block">
-                  <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)]">
+                  <Card className="transition-all duration-200 ease-interact hover:-translate-y-0.5 hover:border-[var(--accent)]">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <h2 className="font-semibold text-[var(--ink)]">

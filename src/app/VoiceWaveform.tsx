@@ -40,7 +40,7 @@ export function VoiceWaveform() {
         onFocus={activate}
         onClick={activate}
         aria-label={t("voicePlayAriaLabel")}
-        className="group w-full cursor-pointer rounded-2xl border border-[var(--line)] bg-white/70 p-6 text-left shadow-[0_1px_0_rgba(18,22,29,0.04)] backdrop-blur-sm transition-colors hover:border-[var(--signal)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--signal)]"
+        className="group w-full cursor-pointer rounded-2xl border border-[var(--line)] bg-white/70 p-6 text-left shadow-[0_1px_0_rgba(18,22,29,0.04)] backdrop-blur-sm transition-colors duration-150 ease-interact hover:border-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
       >
         <div className="flex h-20 items-end gap-[3px] sm:h-24">
           {BARS.map((h, i) => (
@@ -50,10 +50,10 @@ export function VoiceWaveform() {
                 height: `${h}%`,
                 animationDelay: `${(i % 12) * 70}ms`,
               }}
-              className={`w-full min-w-[2px] rounded-full transition-colors duration-500 motion-safe:duration-700 ${
+              className={`w-full min-w-[2px] rounded-full transition-colors duration-500 ease-interact motion-safe:duration-700 ${
                 active
-                  ? "bg-[var(--signal)] motion-safe:animate-[waveform_1.1s_ease-in-out_infinite]"
-                  : "bg-[var(--navy)]/35 group-hover:bg-[var(--signal)]/70"
+                  ? "bg-[var(--accent)] motion-safe:animate-[waveform_1.1s_ease-in-out_infinite]"
+                  : "bg-[var(--navy)]/35 group-hover:bg-[var(--accent)]/70"
               }`}
             />
           ))}

@@ -28,12 +28,12 @@ export default function Home() {
       <section className="relative mx-auto w-full max-w-6xl overflow-hidden px-6 pt-8 pb-20 sm:px-10 sm:pt-14">
         <div className="relative grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="motion-safe:animate-[riseIn_0.7s_ease-out]">
-            <p className="font-mono-utility text-xs uppercase tracking-[0.2em] text-[var(--signal)]">
+            <p className="font-mono-utility text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
               {t("heroKicker")}
             </p>
             <h1 className="font-display mt-4 text-[2.5rem] font-medium sm:text-6xl">
               {t("heroTitleLead")}{" "}
-              <span className="text-[var(--signal)]">
+              <span className="text-[var(--accent)]">
                 {t("heroTitleEmphasis")}
               </span>
             </h1>
@@ -77,7 +77,7 @@ export default function Home() {
           </Reveal>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <Reveal delay={80}>
-              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--navy)] p-8 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(27,47,69,0.5)]">
+              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--navy)] p-8 text-white transition-all duration-300 ease-interact hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(27,47,69,0.5)]">
                 <p className="font-mono-utility text-xs uppercase tracking-widest text-white/60">
                   {t("forCompanies")}
                 </p>
@@ -91,10 +91,10 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/signup?role=researcher"
-                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white px-5 text-sm font-semibold text-[var(--navy)] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.2)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(0,0,0,0.3)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(0,0,0,0.2)]"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white px-5 text-sm font-semibold text-[var(--navy)] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.2)] transition-all duration-150 ease-interact group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(0,0,0,0.3)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(0,0,0,0.2)]"
                 >
                   {t("startStudy")}
-                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                  <span aria-hidden="true" className="transition-transform duration-150 ease-interact group-hover:translate-x-0.5">
                     →
                   </span>
                 </Link>
@@ -102,7 +102,7 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--warning)] p-8 text-[var(--ink)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(201,147,15,0.5)]">
+              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--warning)] p-8 text-[var(--ink)] transition-all duration-300 ease-interact hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(201,147,15,0.5)]">
                 <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
                   {t("forParticipants")}
                 </p>
@@ -116,10 +116,10 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/signup?role=participant"
-                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white shadow-[0_2px_8px_-2px_rgba(18,22,29,0.35)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(18,22,29,0.4)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(18,22,29,0.3)]"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white shadow-[0_2px_8px_-2px_rgba(18,22,29,0.35)] transition-all duration-150 ease-interact group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(18,22,29,0.4)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(18,22,29,0.3)]"
                 >
                   {t("browseStudies")}
-                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                  <span aria-hidden="true" className="transition-transform duration-150 ease-interact group-hover:translate-x-0.5">
                     →
                   </span>
                 </Link>
@@ -155,7 +155,7 @@ export default function Home() {
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             <Reveal delay={80} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--signal)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--accent)] transition-transform duration-300 ease-interact group-hover:scale-110 group-hover:rotate-6">
                 <ScreenerIcon />
               </div>
               <h3 className="mt-4 font-semibold">{t("trust1Title")}</h3>
@@ -164,7 +164,7 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={180} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--navy)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--navy)] transition-transform duration-300 ease-interact group-hover:scale-110 group-hover:rotate-6">
                 <CalendarIcon />
               </div>
               <h3 className="mt-4 font-semibold">{t("trust2Title")}</h3>
@@ -173,7 +173,7 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={280} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--warning)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--warning)] transition-transform duration-300 ease-interact group-hover:scale-110 group-hover:rotate-6">
                 <PaymentCheckIcon />
               </div>
               <h3 className="mt-4 font-semibold">{t("trust3Title")}</h3>
@@ -192,10 +192,10 @@ export default function Home() {
             {t("footerTagline")}
           </p>
           <div className="flex items-center gap-4 text-sm text-[var(--ink)]/60">
-            <Link href="/terms" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--signal)]">
+            <Link href="/terms" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--accent)]">
               {t("termsLink")}
             </Link>
-            <Link href="/privacy" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--signal)]">
+            <Link href="/privacy" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--accent)]">
               {t("privacyLink")}
             </Link>
             <span>&copy; {new Date().getFullYear()} — {t("brand")}</span>

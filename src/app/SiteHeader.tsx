@@ -19,7 +19,7 @@ export function SiteHeader() {
 
   return (
     <div
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ease-interact ${
         scrolled
           ? "border-b border-[var(--line)]/70 bg-[var(--paper)]/80 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
@@ -27,11 +27,13 @@ export function SiteHeader() {
     >
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 sm:px-10">
         <div className="flex items-center gap-2.5">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <rect x="0" y="0" width="9.5" height="9.5" rx="2.5" fill="var(--ink)" />
-            <rect x="12.5" y="0" width="9.5" height="9.5" rx="2.5" fill="var(--signal)" />
-            <rect x="0" y="12.5" width="9.5" height="9.5" rx="2.5" fill="var(--signal)" />
-            <rect x="12.5" y="12.5" width="9.5" height="9.5" rx="2.5" fill="var(--ink)" />
+          <svg width="60" height="19" viewBox="0 0 70 22" fill="none" aria-hidden="true">
+            <circle cx="7" cy="11" r="3.4" fill="var(--ink)" opacity="0.28" />
+            <circle cx="18" cy="11" r="4.3" fill="var(--ink)" opacity="0.45" />
+            <circle cx="31" cy="11" r="6.5" fill="var(--accent)" />
+            <circle cx="31" cy="11" r="9" stroke="var(--accent)" strokeWidth="1.3" fill="none" />
+            <circle cx="44" cy="11" r="4.3" fill="var(--ink)" opacity="0.45" />
+            <circle cx="55" cy="11" r="3.4" fill="var(--ink)" opacity="0.28" />
           </svg>
           <span className="font-display text-[15px] font-semibold text-[var(--ink)]">
             {t("brand")}
@@ -43,7 +45,7 @@ export function SiteHeader() {
               type="button"
               onClick={() => setLang("en")}
               aria-pressed={lang === "en"}
-              className={`rounded-full px-2.5 py-1 transition-colors ${
+              className={`rounded-full px-2.5 py-1 transition-colors duration-150 ease-interact ${
                 lang === "en"
                   ? "bg-[var(--ink)] text-white"
                   : "text-[var(--ink)]/60 hover:text-[var(--ink)]"
@@ -55,7 +57,7 @@ export function SiteHeader() {
               type="button"
               onClick={() => setLang("ne")}
               aria-pressed={lang === "ne"}
-              className={`rounded-full px-2.5 py-1 transition-colors ${
+              className={`rounded-full px-2.5 py-1 transition-colors duration-150 ease-interact ${
                 lang === "ne"
                   ? "bg-[var(--ink)] text-white"
                   : "text-[var(--ink)]/60 hover:text-[var(--ink)]"
@@ -66,7 +68,7 @@ export function SiteHeader() {
           </div>
           <Link
             href="/login"
-            className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)] underline decoration-[var(--line)] underline-offset-4 transition-colors hover:decoration-[var(--signal)]"
+            className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)] underline decoration-[var(--line)] underline-offset-4 transition-colors duration-150 ease-interact hover:decoration-[var(--accent)]"
           >
             {t("logIn")}
           </Link>

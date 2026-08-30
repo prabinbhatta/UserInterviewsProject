@@ -16,7 +16,7 @@ export default async function Image() {
           padding: "80px",
           background: "#EEF1F4",
           backgroundImage:
-            "radial-gradient(circle at 85% 15%, rgba(226,75,58,0.18), transparent 55%), radial-gradient(circle at 10% 85%, rgba(27,47,69,0.14), transparent 50%)",
+            "radial-gradient(circle at 85% 15%, rgba(41,82,124,0.18), transparent 55%), radial-gradient(circle at 10% 85%, rgba(27,47,69,0.14), transparent 50%)",
         }}
       >
         <div
@@ -27,7 +27,7 @@ export default async function Image() {
             fontSize: 22,
             letterSpacing: 4,
             textTransform: "uppercase",
-            color: "#E24B3A",
+            color: "#29527C",
             fontWeight: 600,
           }}
         >

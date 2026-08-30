@@ -21,7 +21,7 @@ export function StarRatingInput({ name }: { name: string }) {
           onClick={() => setValue(n)}
           aria-label={`${n} star${n > 1 ? "s" : ""}`}
           aria-pressed={value === n}
-          className="text-2xl leading-none transition-transform hover:scale-110"
+          className="text-2xl leading-none transition-transform duration-150 ease-interact hover:scale-110"
         >
           <span className={shown >= n ? "text-[var(--warning)]" : "text-[var(--line)]"}>
             ★

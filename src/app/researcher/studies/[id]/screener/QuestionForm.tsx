@@ -150,7 +150,7 @@ function QuestionFields({
           <button
             type="button"
             onClick={() => setOptions([...options, { label: "", decision: "accept" }])}
-            className="mt-2 text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)]"
+            className="mt-2 text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)]"
           >
             {t("addOptionAction")}
           </button>

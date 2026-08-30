@@ -59,7 +59,7 @@ export default async function ParticipantProfilePage() {
           </div>
           <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-[var(--line)]/40">
             <div
-              className="h-full rounded-full bg-[var(--signal)] transition-all"
+              className="h-full rounded-full bg-[var(--accent)] transition-all duration-300 ease-interact"
               style={{ width: `${strengthPercent}%` }}
             />
           </div>

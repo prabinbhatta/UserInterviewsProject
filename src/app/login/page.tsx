@@ -41,7 +41,7 @@ export default function LoginPage() {
         <p className="mt-2 text-right text-sm">
           <Link
             href="/forgot-password"
-            className="text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+            className="text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
           >
             Forgot password?
           </Link>
@@ -57,7 +57,7 @@ export default function LoginPage() {
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+            className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
           >
             Sign up
           </Link>

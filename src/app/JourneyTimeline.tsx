@@ -38,8 +38,8 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
                 setPaused(true);
                 setActive(i);
               }}
-              className={`group relative cursor-pointer border-l-2 pl-5 transition-colors duration-500 ${
-                isActive ? "border-[var(--signal)]" : "border-[var(--line)]"
+              className={`group relative cursor-pointer border-l-2 pl-5 transition-colors duration-500 ease-interact ${
+                isActive ? "border-[var(--accent)]" : "border-[var(--line)]"
               }`}
             >
               {/* Progress fill that runs the length of the auto-advance timer,
@@ -48,21 +48,21 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
                 {isActive && !paused && (
                   <span
                     key={active}
-                    className="block h-full w-full origin-top bg-[var(--signal)] motion-safe:animate-[fillDown_var(--step-duration)_linear_forwards]"
+                    className="block h-full w-full origin-top bg-[var(--accent)] motion-safe:animate-[fillDown_var(--step-duration)_linear_forwards]"
                     style={{ "--step-duration": `${STEP_DURATION_MS}ms` } as React.CSSProperties}
                   />
                 )}
               </span>
 
               <span
-                className={`font-mono-utility text-xs transition-colors duration-500 ${
-                  isActive ? "text-[var(--signal)]" : "text-[var(--ink)]/60"
+                className={`font-mono-utility text-xs transition-colors duration-500 ease-interact ${
+                  isActive ? "text-[var(--accent)]" : "text-[var(--ink)]/60"
                 }`}
               >
                 {step.time}
               </span>
               <h3
-                className={`font-display mt-2 text-lg font-medium transition-transform duration-300 ${
+                className={`font-display mt-2 text-lg font-medium transition-transform duration-300 ease-interact ${
                   isActive ? "translate-x-1" : "translate-x-0"
                 }`}
               >
@@ -86,9 +86,9 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
               setPaused(true);
               setActive(i);
             }}
-            className={`h-1.5 rounded-full transition-all duration-500 ${
+            className={`h-1.5 rounded-full transition-all duration-500 ease-interact ${
               i === active
-                ? "w-8 bg-[var(--signal)]"
+                ? "w-8 bg-[var(--accent)]"
                 : "w-1.5 bg-[var(--line)] hover:bg-[var(--navy)]/40"
             }`}
           />

@@ -27,7 +27,7 @@ function EmptyIllustration() {
         strokeLinejoin="round"
         fill="none"
       />
-      <circle cx="66" cy="30" r="7" fill="var(--signal)" />
+      <circle cx="66" cy="30" r="7" fill="var(--accent)" />
       <path
         d="M63 30 L65.2 32.2 L69.5 27.5"
         stroke="white"

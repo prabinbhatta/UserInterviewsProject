@@ -16,22 +16,31 @@ export default async function Image() {
           padding: "80px",
           background: "#EEF1F4",
           backgroundImage:
-            "radial-gradient(circle at 85% 15%, rgba(226,75,58,0.18), transparent 55%), radial-gradient(circle at 10% 85%, rgba(27,47,69,0.14), transparent 50%)",
+            "radial-gradient(circle at 85% 15%, rgba(41,82,124,0.18), transparent 55%), radial-gradient(circle at 10% 85%, rgba(27,47,69,0.14), transparent 50%)",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            fontSize: 22,
-            letterSpacing: 4,
-            textTransform: "uppercase",
-            color: "#E24B3A",
-            fontWeight: 600,
-          }}
-        >
-          PanelMeet
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <svg width="46" height="15" viewBox="0 0 70 22" fill="none">
+            <circle cx="7" cy="11" r="3.4" fill="#12161D" opacity="0.28" />
+            <circle cx="18" cy="11" r="4.3" fill="#12161D" opacity="0.45" />
+            <circle cx="31" cy="11" r="6.5" fill="#29527C" />
+            <circle cx="31" cy="11" r="9" stroke="#29527C" strokeWidth="1.3" fill="none" />
+            <circle cx="44" cy="11" r="4.3" fill="#12161D" opacity="0.45" />
+            <circle cx="55" cy="11" r="3.4" fill="#12161D" opacity="0.28" />
+          </svg>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: 22,
+              letterSpacing: 4,
+              textTransform: "uppercase",
+              color: "#29527C",
+              fontWeight: 600,
+            }}
+          >
+            PanelMeet
+          </div>
         </div>
         <div
           style={{

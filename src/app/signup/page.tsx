@@ -34,7 +34,7 @@ function SignupForm() {
         </p>
         <Link
           href="/login"
-          className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+          className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
         >
           {t("goToLogin")}
         </Link>
@@ -55,7 +55,7 @@ function SignupForm() {
         <button
           type="button"
           onClick={() => setRole("researcher")}
-          className={`flex-1 rounded-full py-2 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-full py-2 text-sm font-medium transition-colors duration-150 ease-interact ${
             role === "researcher"
               ? "bg-[var(--ink)] text-white"
               : "text-[var(--ink)]/60"
@@ -66,7 +66,7 @@ function SignupForm() {
         <button
           type="button"
           onClick={() => setRole("participant")}
-          className={`flex-1 rounded-full py-2 text-sm font-medium transition-colors ${
+          className={`flex-1 rounded-full py-2 text-sm font-medium transition-colors duration-150 ease-interact ${
             role === "participant"
               ? "bg-[var(--ink)] text-white"
               : "text-[var(--ink)]/60"
@@ -108,11 +108,11 @@ function SignupForm() {
 
       <p className="mt-4 text-center text-xs text-[var(--ink)]/70">
         {t("agreeToTerms")}{" "}
-        <Link href="/terms" className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)]">
+        <Link href="/terms" className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)]">
           {t("termsLink")}
         </Link>{" "}
         {t("and")}{" "}
-        <Link href="/privacy" className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)]">
+        <Link href="/privacy" className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)]">
           {t("privacyLink")}
         </Link>
         .
@@ -126,7 +126,7 @@ function SignupForm() {
         {t("alreadyHaveAccount")}{" "}
         <Link
           href="/login"
-          className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+          className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
         >
           {t("logInLink")}
         </Link>
@@ -143,7 +143,7 @@ function LanguageToggle() {
         type="button"
         onClick={() => setLang("en")}
         aria-pressed={lang === "en"}
-        className={`rounded-full px-2.5 py-1 transition-colors ${
+        className={`rounded-full px-2.5 py-1 transition-colors duration-150 ease-interact ${
           lang === "en" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/70"
         }`}
       >
@@ -153,7 +153,7 @@ function LanguageToggle() {
         type="button"
         onClick={() => setLang("ne")}
         aria-pressed={lang === "ne"}
-        className={`rounded-full px-2.5 py-1 transition-colors ${
+        className={`rounded-full px-2.5 py-1 transition-colors duration-150 ease-interact ${
           lang === "ne" ? "bg-[var(--ink)] text-white" : "text-[var(--ink)]/70"
         }`}
       >

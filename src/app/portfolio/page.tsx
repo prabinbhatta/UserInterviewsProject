@@ -160,7 +160,7 @@ export default function PortfolioPage() {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60 transition-colors hover:text-[var(--signal)]"
+                className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60 transition-colors duration-150 ease-interact hover:text-[var(--accent)]"
               >
                 {link.label}
               </a>
@@ -168,7 +168,7 @@ export default function PortfolioPage() {
           </nav>
           <a
             href="#contact"
-            className="rounded-full bg-[var(--ink)] px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-[var(--navy)] hover:-translate-y-0.5"
+            className="rounded-full bg-[var(--ink)] px-4 py-2 text-xs font-semibold text-white transition-all duration-150 ease-interact hover:bg-[var(--navy)] hover:-translate-y-0.5"
           >
             Get in touch
           </a>
@@ -178,7 +178,7 @@ export default function PortfolioPage() {
       <main id="top" className="mx-auto w-full max-w-4xl flex-1 px-6 sm:px-10">
         {/* Hero */}
         <section className="pt-16 pb-20 sm:pt-24 sm:pb-28">
-          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--signal)]">
+          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--accent)]">
             Business Analyst · Kathmandu, Nepal
           </p>
           <h1 className="mt-4 font-display text-4xl font-medium text-[var(--ink)] sm:text-6xl">
@@ -193,7 +193,7 @@ export default function PortfolioPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#projects"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--navy)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all duration-150 ease-interact hover:bg-[var(--navy)] hover:-translate-y-0.5"
             >
               See what I&apos;ve built
             </a>
@@ -201,7 +201,7 @@ export default function PortfolioPage() {
               href="https://linkedin.com/in/bhattaprabin/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--signal)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all duration-150 ease-interact hover:border-[var(--accent)] hover:-translate-y-0.5"
             >
               Connect on LinkedIn
             </a>
@@ -224,7 +224,7 @@ export default function PortfolioPage() {
               href="https://panelmeet.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--ink)] underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+              className="text-[var(--ink)] underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
             >
               project below
             </a>{" "}
@@ -270,7 +270,7 @@ export default function PortfolioPage() {
                       key={bullet}
                       className="flex gap-2 text-sm leading-relaxed text-[var(--ink)]/70"
                     >
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--signal)]" />
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" />
                       {bullet}
                     </li>
                   ))}
@@ -325,7 +325,7 @@ export default function PortfolioPage() {
             href="https://panelmeet.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 block rounded-2xl border border-[var(--line)] bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)] sm:p-8"
+            className="mt-8 block rounded-2xl border border-[var(--line)] bg-white p-6 transition-all duration-200 ease-interact hover:-translate-y-0.5 hover:border-[var(--accent)] sm:p-8"
           >
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
@@ -403,13 +403,13 @@ export default function PortfolioPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="mailto:prabinbhatta07@gmail.com"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--navy)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all duration-150 ease-interact hover:bg-[var(--navy)] hover:-translate-y-0.5"
             >
               prabinbhatta07@gmail.com
             </a>
             <a
               href="tel:+9779848633635"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--signal)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all duration-150 ease-interact hover:border-[var(--accent)] hover:-translate-y-0.5"
             >
               +977 984 863 3635
             </a>
@@ -417,7 +417,7 @@ export default function PortfolioPage() {
               href="https://linkedin.com/in/bhattaprabin/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--signal)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all duration-150 ease-interact hover:border-[var(--accent)] hover:-translate-y-0.5"
             >
               LinkedIn
             </a>

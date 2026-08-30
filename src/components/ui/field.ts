@@ -2,6 +2,6 @@
 // string rather than a wrapper component, since call sites need to keep
 // passing arbitrary native props (min, step, rows, accept, ...).
 export const fieldClasses =
-  "mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-[var(--ink)] focus:border-[var(--navy)] focus:outline-none focus:ring-2 focus:ring-[var(--navy)]/30";
+  "mt-1 w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-[var(--ink)] transition-colors duration-150 ease-interact focus:border-[var(--navy)] focus:outline-none focus:ring-2 focus:ring-[var(--navy)]/30";
 
 export const labelClasses = "block text-sm font-medium text-[var(--ink)]/80";

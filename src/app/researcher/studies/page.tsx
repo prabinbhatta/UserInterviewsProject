@@ -30,7 +30,7 @@ const formatLabelKeys: Record<string, TranslationKey> = {
 };
 
 const navPillClasses =
-  "rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs font-medium text-[var(--ink)]/70 transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]";
+  "rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs font-medium text-[var(--ink)]/70 transition-colors duration-150 ease-interact hover:border-[var(--accent)] hover:text-[var(--accent)]";
 
 export default async function StudiesPage() {
   const { t } = await getLang();

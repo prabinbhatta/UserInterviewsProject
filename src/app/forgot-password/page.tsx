@@ -47,7 +47,7 @@ export default function ForgotPasswordPage() {
           </p>
           <Link
             href="/login"
-            className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+            className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
           >
             Back to login
           </Link>
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
         <p className="mt-4 text-center text-sm text-[var(--ink)]/60">
           <Link
             href="/login"
-            className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+            className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
           >
             Back to login
           </Link>

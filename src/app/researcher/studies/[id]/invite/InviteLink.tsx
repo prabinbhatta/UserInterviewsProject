@@ -18,7 +18,7 @@ export function InviteLink({ token }: { token: string }) {
     <button
       type="button"
       onClick={copy}
-      className="shrink-0 rounded-full border border-[var(--line)] px-3 py-1 text-xs font-medium text-[var(--ink)]/70 transition-colors hover:border-[var(--signal)] hover:text-[var(--ink)]"
+      className="shrink-0 rounded-full border border-[var(--line)] px-3 py-1 text-xs font-medium text-[var(--ink)]/70 transition-colors duration-150 ease-interact hover:border-[var(--accent)] hover:text-[var(--ink)]"
     >
       {copied ? t("copiedLink") : t("copyLink")}
     </button>

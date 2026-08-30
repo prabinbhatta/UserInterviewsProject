@@ -68,14 +68,14 @@ export default async function ParticipantDashboard() {
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/settings"
-              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
             >
               {t("settingsLink")}
             </Link>
             <form action={signOut}>
               <button
                 type="submit"
-                className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
+                className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
               >
                 {t("logOut")}
               </button>
@@ -89,7 +89,7 @@ export default async function ParticipantDashboard() {
         {strengthPercent === 100 ? (
           <Link
             href="/participant/profile"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm text-[var(--ink)]/60 transition-colors hover:text-[var(--signal)]"
+            className="mt-6 inline-flex items-center gap-1.5 text-sm text-[var(--ink)]/60 transition-colors duration-150 ease-interact hover:text-[var(--accent)]"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
@@ -105,7 +105,7 @@ export default async function ParticipantDashboard() {
           </Link>
         ) : (
           <Link href="/participant/profile" className="mt-6 block">
-            <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)]">
+            <Card className="transition-all duration-200 ease-interact hover:-translate-y-0.5 hover:border-[var(--accent)]">
               <div className="flex items-center justify-between text-sm">
                 <span className="font-medium text-[var(--ink)]">
                   {t("completeYourProfileLabel")}
@@ -114,7 +114,7 @@ export default async function ParticipantDashboard() {
               </div>
               <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--line)]/40">
                 <div
-                  className="h-full rounded-full bg-[var(--signal)] transition-all"
+                  className="h-full rounded-full bg-[var(--accent)] transition-all duration-300 ease-interact"
                   style={{ width: `${strengthPercent}%` }}
                 />
               </div>

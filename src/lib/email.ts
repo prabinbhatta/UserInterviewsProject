@@ -10,7 +10,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const INK = "#12161d";
 const INK_MUTED = "#5b6472";
 const PAPER = "#eef1f4";
-const SIGNAL = "#e24b3a";
+const ACCENT = "#29527c";
 const LINE = "#d7dee5";
 const FONT_STACK =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
@@ -30,12 +30,12 @@ function wrap(bodyHtml: string, ctaHref?: string, ctaLabel?: string) {
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px; margin: 0 auto; border-collapse: separate;">
         <tr>
           <td style="border-radius: 16px 16px 0 0; overflow: hidden; line-height: 0;">
-            <div style="height: 4px; background-color: ${SIGNAL};"></div>
+            <div style="height: 4px; background-color: ${ACCENT};"></div>
           </td>
         </tr>
         <tr>
           <td style="background: #ffffff; border-left: 1px solid ${LINE}; border-right: 1px solid ${LINE}; padding: 32px 36px 8px;">
-            <p style="margin: 0 0 20px; font-family: ui-monospace, 'SF Mono', 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${SIGNAL};">
+            <p style="margin: 0 0 20px; font-family: ui-monospace, 'SF Mono', 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${ACCENT};">
               PanelMeet
             </p>
             <div style="font-size: 15px; line-height: 1.65; color: ${INK};">

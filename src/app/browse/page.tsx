@@ -55,7 +55,7 @@ export default async function PublicBrowsePage() {
             {studies.map((study) => (
               <li key={study.id}>
                 <Link href={`/browse/${study.id}`} className="block">
-                  <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)]">
+                  <Card className="transition-all duration-200 ease-interact hover:-translate-y-0.5 hover:border-[var(--accent)]">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <h2 className="font-semibold text-[var(--ink)]">{study.title}</h2>
