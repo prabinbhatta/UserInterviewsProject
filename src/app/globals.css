@@ -43,9 +43,17 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-/* Landing page type utilities — scoped by usage, not global defaults */
+/*
+ * Landing page type utilities — scoped by usage, not global defaults.
+ * The tracking/line-height here aren't arbitrary: Linear and Attio (both
+ * on Inter-family faces, same as most sites) apply roughly -2% tracking
+ * and sub-1.0 line-height on display type — that calibration, not the
+ * font choice itself, is what reads as considered rather than default.
+ */
 .font-display {
   font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 .font-mono-utility {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
@@ -89,16 +97,6 @@ body {
   }
   to {
     transform: scaleY(1);
-  }
-}
-
-@keyframes floatSlow {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(2%, -3%);
   }
 }
 

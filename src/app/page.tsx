@@ -26,20 +26,12 @@ export default function Home() {
 
       {/* Hero */}
       <section className="relative mx-auto w-full max-w-6xl overflow-hidden px-6 pt-8 pb-20 sm:px-10 sm:pt-14">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-24 -right-32 h-[26rem] w-[26rem] rounded-full bg-gradient-to-br from-[var(--signal)]/25 via-[var(--warning)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_14s_ease-in-out_infinite]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute top-1/3 -left-24 h-72 w-72 rounded-full bg-gradient-to-tr from-[var(--navy)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_18s_ease-in-out_infinite_reverse]"
-        />
         <div className="relative grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="motion-safe:animate-[riseIn_0.7s_ease-out]">
             <p className="font-mono-utility text-xs uppercase tracking-[0.2em] text-[var(--signal)]">
               {t("heroKicker")}
             </p>
-            <h1 className="font-display mt-4 text-[2.5rem] leading-[1.08] font-medium tracking-tight sm:text-6xl">
+            <h1 className="font-display mt-4 text-[2.5rem] font-medium sm:text-6xl">
               {t("heroTitleLead")}{" "}
               <span className="text-[var(--signal)]">
                 {t("heroTitleEmphasis")}

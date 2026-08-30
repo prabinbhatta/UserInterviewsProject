@@ -33,7 +33,7 @@ export function SiteHeader() {
             <rect x="0" y="12.5" width="9.5" height="9.5" rx="2.5" fill="var(--signal)" />
             <rect x="12.5" y="12.5" width="9.5" height="9.5" rx="2.5" fill="var(--ink)" />
           </svg>
-          <span className="font-display text-[15px] font-semibold tracking-tight text-[var(--ink)]">
+          <span className="font-display text-[15px] font-semibold text-[var(--ink)]">
             {t("brand")}
           </span>
         </div>

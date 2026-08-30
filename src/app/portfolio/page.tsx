@@ -181,7 +181,7 @@ export default function PortfolioPage() {
           <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--signal)]">
             Business Analyst · Kathmandu, Nepal
           </p>
-          <h1 className="mt-4 font-display text-4xl font-medium leading-tight text-[var(--ink)] sm:text-6xl">
+          <h1 className="mt-4 font-display text-4xl font-medium text-[var(--ink)] sm:text-6xl">
             I turn ambiguous requirements into software people actually ship.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--ink)]/70">
