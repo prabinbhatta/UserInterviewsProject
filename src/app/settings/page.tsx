@@ -25,7 +25,7 @@ export default async function SettingsPage() {
         <Link href={backHref} className={`text-sm ${mutedLinkClasses}`}>
           Back to dashboard
         </Link>
-        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
           Settings
         </h1>
 

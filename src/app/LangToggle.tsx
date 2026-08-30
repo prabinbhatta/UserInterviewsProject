@@ -6,7 +6,7 @@ export function LangToggle() {
   const { lang, setLang } = useLanguage();
 
   return (
-    <div className="flex items-center rounded-full border border-[var(--mist)] p-0.5 text-[11px] uppercase tracking-wider">
+    <div className="flex items-center rounded-full border border-[var(--line)] p-0.5 text-[11px] uppercase tracking-wider">
       <button
         type="button"
         onClick={() => setLang("en")}

@@ -89,7 +89,7 @@ function QuestionFields({
             type="checkbox"
             name="required"
             defaultChecked
-            className="h-4 w-4 accent-[var(--indigo)]"
+            className="h-4 w-4 accent-[var(--navy)]"
           />
           {t("requiredBadge")}
         </label>
@@ -150,7 +150,7 @@ function QuestionFields({
           <button
             type="button"
             onClick={() => setOptions([...options, { label: "", decision: "accept" }])}
-            className="mt-2 text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]"
+            className="mt-2 text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)]"
           >
             {t("addOptionAction")}
           </button>

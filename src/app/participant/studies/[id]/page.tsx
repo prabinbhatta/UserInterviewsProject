@@ -93,7 +93,7 @@ export default async function StudyDetailPage({
         </div>
 
         <div className="mt-2 flex items-start justify-between gap-4">
-          <h1 className="font-serif-display text-2xl font-medium text-[var(--ink)]">
+          <h1 className="font-display text-2xl font-medium text-[var(--ink)]">
             {study.title}
           </h1>
           <Badge tone="success" className="shrink-0">
@@ -150,7 +150,7 @@ export default async function StudyDetailPage({
 
         <Link
           href={`/report?studyId=${study.id}`}
-          className="mt-8 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[#a8371c]"
+          className="mt-8 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[#a8371c]"
         >
           {t("reportStudy")}
         </Link>

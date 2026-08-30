@@ -62,20 +62,20 @@ export default async function ParticipantDashboard() {
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-2xl">
         <div className="flex items-start justify-between gap-4">
-          <h1 className="min-w-0 font-serif-display text-3xl font-medium text-[var(--ink)]">
+          <h1 className="min-w-0 font-display text-3xl font-medium text-[var(--ink)]">
             {t("welcomeComma")} {profile?.full_name ?? user.email}
           </h1>
           <div className="flex shrink-0 items-center gap-3">
             <Link
               href="/settings"
-              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
             >
               {t("settingsLink")}
             </Link>
             <form action={signOut}>
               <button
                 type="submit"
-                className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+                className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
               >
                 {t("logOut")}
               </button>
@@ -89,7 +89,7 @@ export default async function ParticipantDashboard() {
         {strengthPercent === 100 ? (
           <Link
             href="/participant/profile"
-            className="mt-6 inline-flex items-center gap-1.5 text-sm text-[var(--ink)]/60 transition-colors hover:text-[var(--coral)]"
+            className="mt-6 inline-flex items-center gap-1.5 text-sm text-[var(--ink)]/60 transition-colors hover:text-[var(--signal)]"
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
@@ -105,16 +105,16 @@ export default async function ParticipantDashboard() {
           </Link>
         ) : (
           <Link href="/participant/profile" className="mt-6 block">
-            <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--coral)]">
+            <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)]">
               <div className="flex items-center justify-between text-sm">
                 <span className="font-medium text-[var(--ink)]">
                   {t("completeYourProfileLabel")}
                 </span>
                 <span className="text-[var(--ink)]/70">{strengthPercent}%</span>
               </div>
-              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
+              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[var(--line)]/40">
                 <div
-                  className="h-full rounded-full bg-[var(--coral)] transition-all"
+                  className="h-full rounded-full bg-[var(--signal)] transition-all"
                   style={{ width: `${strengthPercent}%` }}
                 />
               </div>
@@ -125,7 +125,7 @@ export default async function ParticipantDashboard() {
 
         <Card className="mt-4">
           <p className="text-sm text-[var(--ink)]/70">{t("totalEarnedLabel")}</p>
-          <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
+          <p className="mt-1 font-display text-3xl font-medium text-[var(--ink)]">
             NPR {totalEarned}
           </p>
         </Card>

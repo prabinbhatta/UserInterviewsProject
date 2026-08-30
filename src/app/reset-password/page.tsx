@@ -48,7 +48,7 @@ export default function ResetPasswordPage() {
     return (
       <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
         <div className="w-full max-w-sm text-center">
-          <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+          <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
             Password updated
           </h1>
           <p className="mt-3 text-[var(--ink)]/70">Taking you to login...</p>
@@ -60,7 +60,7 @@ export default function ResetPasswordPage() {
   return (
     <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
           Set a new password
         </h1>
 

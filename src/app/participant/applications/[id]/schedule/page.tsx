@@ -58,7 +58,7 @@ export default async function ScheduleApplicationPage({
         <Link href="/participant/applications" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToYourApplicationsLink")}
         </Link>
-        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-2xl font-medium text-[var(--ink)]">
           {t("scheduleTitlePrefix")} {title}
         </h1>
 

@@ -55,7 +55,7 @@ export default async function InvitePage({
         <p className="text-sm font-medium text-[var(--ink)]/70">
           You&apos;re invited to join a study
         </p>
-        <h1 className="mt-1 font-serif-display text-2xl font-medium text-[var(--ink)]">
+        <h1 className="mt-1 font-display text-2xl font-medium text-[var(--ink)]">
           {study?.title}
         </h1>
         {study && (
@@ -68,7 +68,7 @@ export default async function InvitePage({
           <p className="mt-4 text-[var(--ink)]/80">{study.description}</p>
         )}
 
-        <div className="mt-6 border-t border-[var(--mist)]/60 pt-6">
+        <div className="mt-6 border-t border-[var(--line)]/60 pt-6">
           {invite.status === "accepted" ? (
             <p className="text-sm text-[var(--ink)]/60">
               This invite has already been used.{" "}

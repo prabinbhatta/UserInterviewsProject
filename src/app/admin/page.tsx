@@ -129,17 +129,17 @@ export default async function AdminPage() {
       <div className="w-full max-w-3xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+            <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
               Admin
             </p>
-            <h1 className="mt-1 font-serif-display text-2xl font-medium text-[var(--ink)]">
+            <h1 className="mt-1 font-display text-2xl font-medium text-[var(--ink)]">
               Platform overview
             </h1>
           </div>
           <form action={signOut} className="shrink-0">
             <button
               type="submit"
-              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+              className="whitespace-nowrap text-sm text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
             >
               Log out
             </button>
@@ -147,7 +147,7 @@ export default async function AdminPage() {
         </div>
 
         {needsAttention.length > 0 && (
-          <div className="mt-8 rounded-2xl border border-[var(--coral)]/30 bg-[var(--coral)]/10 p-5">
+          <div className="mt-8 rounded-2xl border border-[var(--danger)]/30 bg-[var(--danger)]/10 p-5">
             <h2 className="font-semibold text-[#a8371c]">
               Needs your attention ({needsAttention.length})
             </h2>
@@ -182,7 +182,7 @@ export default async function AdminPage() {
         )}
 
         {openReports.length > 0 && (
-          <div className="mt-8 rounded-2xl border border-[var(--gold)]/40 bg-[var(--gold)]/10 p-5">
+          <div className="mt-8 rounded-2xl border border-[var(--warning)]/40 bg-[var(--warning)]/10 p-5">
             <h2 className="font-semibold text-[#8a5a00]">
               Open reports ({openReports.length})
             </h2>
@@ -233,7 +233,7 @@ export default async function AdminPage() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
               <p className="text-sm text-[var(--ink)]/60">Pageviews</p>
-              <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
+              <p className="mt-1 font-display text-3xl font-medium text-[var(--ink)]">
                 {pageviews.length}
               </p>
               {topPaths.length > 0 && (

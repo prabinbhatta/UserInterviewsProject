@@ -44,7 +44,7 @@ export default async function EditStudyPage({
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToStudies")}
         </Link>
-        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
           {t("editStudyTitle")}
         </h1>
         <div className="mt-6">

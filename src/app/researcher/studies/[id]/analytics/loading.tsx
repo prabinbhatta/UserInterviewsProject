@@ -11,7 +11,7 @@ export default function Loading() {
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className={`rounded-2xl border border-[var(--mist)] bg-white p-5 ${i === 2 ? "sm:col-span-2" : ""}`}
+              className={`rounded-2xl border border-[var(--line)] bg-white p-5 ${i === 2 ? "sm:col-span-2" : ""}`}
             >
               <Skeleton className="h-3 w-32" />
               <Skeleton className="mt-2 h-8 w-16" />
@@ -19,7 +19,7 @@ export default function Loading() {
           ))}
         </div>
 
-        <div className="mt-8 rounded-2xl border border-[var(--mist)] bg-white p-5">
+        <div className="mt-8 rounded-2xl border border-[var(--line)] bg-white p-5">
           <Skeleton className="h-4 w-32" />
           <div className="mt-3 space-y-2">
             {Array.from({ length: 7 }).map((_, i) => (

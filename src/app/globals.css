@@ -6,17 +6,25 @@
  * A stray dark-mode media query here previously made body text near-white
  * on any OS in dark mode, which was invisible against the light UI.
  *
- * Color and font tokens below are the same identity established on the
- * landing page (originally scoped locally to that page) — now global so
- * every page in the app can share it instead of each one reinventing it.
+ * PanelMeet identity ("panel grid" direction): a cooler, contemporary
+ * meeting-product palette — one confident signal-red accent (originally
+ * planned as teal, moved off it deliberately: too close to a direct
+ * competitor's brand color in the same research-recruiting category) and
+ * navy for deep/info surfaces. --warning doubles as a decorative tertiary
+ * accent (the second feature card, one of the three trust icons) as well
+ * as its semantic badge/alert role. --danger stays untied to the brand
+ * accents so status meaning doesn't shift if the brand palette ever does
+ * again.
  */
 :root {
-  --paper: #f6f7fb;
-  --ink: #12172b;
-  --indigo: #2d3470;
-  --coral: #ff6b4a;
-  --gold: #f5b942;
-  --mist: #c7cce0;
+  --paper: #eef1f4;
+  --ink: #12161d;
+  --navy: #1b2f45;
+  --signal: #e24b3a;
+  --line: #d7dee5;
+
+  --warning: #c9930f;
+  --danger: #ff6b4a;
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -36,8 +44,8 @@ body {
 }
 
 /* Landing page type utilities — scoped by usage, not global defaults */
-.font-serif-display {
-  font-family: var(--font-fraunces), Georgia, serif;
+.font-display {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
 }
 .font-mono-utility {
   font-family: var(--font-plex-mono), ui-monospace, monospace;

@@ -49,7 +49,7 @@ export default async function ReportPage({
     <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <BackButton />
-        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-2xl font-medium text-[var(--ink)]">
           Report a problem
         </h1>
         {context && <p className="mt-1 text-[var(--ink)]/70">{context}</p>}

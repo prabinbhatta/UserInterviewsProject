@@ -8,7 +8,7 @@ export default function Loading() {
         <Skeleton className="mt-2 h-8 w-56" />
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="rounded-2xl border border-[var(--mist)] bg-white p-5">
+            <div key={i} className="rounded-2xl border border-[var(--line)] bg-white p-5">
               <Skeleton className="h-4 w-20" />
               <Skeleton className="mt-3 h-3 w-full" />
               <Skeleton className="mt-2 h-3 w-full" />

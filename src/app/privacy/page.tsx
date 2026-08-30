@@ -12,7 +12,7 @@ export default function PrivacyPage() {
         <Link href="/" className={`text-sm ${mutedLinkClasses}`}>
           Back home
         </Link>
-        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
           Privacy Policy
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/70">Last updated 23 August 2026</p>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          <p className="border-t border-[var(--mist)] pt-6 text-sm text-[var(--ink)]/70">
+          <p className="border-t border-[var(--line)] pt-6 text-sm text-[var(--ink)]/70">
             This is a plain-language policy for an early-stage platform, not a
             substitute for independent legal advice.
           </p>

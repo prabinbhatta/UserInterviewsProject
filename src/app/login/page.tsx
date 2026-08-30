@@ -14,7 +14,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form action={formAction} className="w-full max-w-sm">
-        <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
           Log in
         </h1>
 
@@ -41,7 +41,7 @@ export default function LoginPage() {
         <p className="mt-2 text-right text-sm">
           <Link
             href="/forgot-password"
-            className="text-[var(--ink)]/70 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+            className="text-[var(--ink)]/70 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
           >
             Forgot password?
           </Link>
@@ -57,7 +57,7 @@ export default function LoginPage() {
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+            className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
           >
             Sign up
           </Link>

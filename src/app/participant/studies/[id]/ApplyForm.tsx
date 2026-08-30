@@ -45,14 +45,14 @@ export function ApplyForm({
               {question.screener_options.map((option) => (
                 <label
                   key={option.id}
-                  className="flex cursor-pointer items-center gap-3 rounded-lg border border-[var(--mist)] px-4 py-3 hover:bg-[var(--paper)]"
+                  className="flex cursor-pointer items-center gap-3 rounded-lg border border-[var(--line)] px-4 py-3 hover:bg-[var(--paper)]"
                 >
                   <input
                     type="radio"
                     name={`q_${question.id}`}
                     value={option.id}
                     required={question.required}
-                    className="h-4 w-4 accent-[var(--indigo)]"
+                    className="h-4 w-4 accent-[var(--navy)]"
                   />
                   {option.label}
                 </label>
@@ -65,13 +65,13 @@ export function ApplyForm({
               {question.screener_options.map((option) => (
                 <label
                   key={option.id}
-                  className="flex cursor-pointer items-center gap-3 rounded-lg border border-[var(--mist)] px-4 py-3 hover:bg-[var(--paper)]"
+                  className="flex cursor-pointer items-center gap-3 rounded-lg border border-[var(--line)] px-4 py-3 hover:bg-[var(--paper)]"
                 >
                   <input
                     type="checkbox"
                     name={`q_${question.id}`}
                     value={option.id}
-                    className="h-4 w-4 accent-[var(--indigo)]"
+                    className="h-4 w-4 accent-[var(--navy)]"
                   />
                   {option.label}
                 </label>

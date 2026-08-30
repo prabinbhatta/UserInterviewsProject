@@ -80,7 +80,7 @@ export default async function ParticipantSearchPage({
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
           Back to studies
         </Link>
-        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
           Search participants
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/60">

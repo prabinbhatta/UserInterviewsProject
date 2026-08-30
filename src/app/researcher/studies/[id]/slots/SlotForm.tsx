@@ -63,7 +63,7 @@ export function SlotForm({
             name="auto_meet"
             checked={autoMeet}
             onChange={(e) => setAutoMeet(e.target.checked)}
-            className="h-4 w-4 accent-[var(--indigo)]"
+            className="h-4 w-4 accent-[var(--navy)]"
           />
           {t("autoMeetLinkLabel")}
         </label>

@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
     return (
       <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
         <div className="w-full max-w-sm text-center">
-          <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+          <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
             Check your email
           </h1>
           <p className="mt-3 text-[var(--ink)]/70">
@@ -47,7 +47,7 @@ export default function ForgotPasswordPage() {
           </p>
           <Link
             href="/login"
-            className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+            className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
           >
             Back to login
           </Link>
@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
-        <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
           Reset your password
         </h1>
         <p className="mt-2 text-sm text-[var(--ink)]/70">
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
         <p className="mt-4 text-center text-sm text-[var(--ink)]/60">
           <Link
             href="/login"
-            className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+            className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
           >
             Back to login
           </Link>

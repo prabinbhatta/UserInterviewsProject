@@ -84,20 +84,20 @@ export default async function StudyAnalyticsPage({
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToStudies")}
         </Link>
-        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-2xl font-medium text-[var(--ink)]">
           {t("analyticsTitlePrefix")} {study.title}
         </h1>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <Card>
             <p className="text-sm text-[var(--ink)]/70">{t("totalApplicantsLabel")}</p>
-            <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
+            <p className="mt-1 font-display text-3xl font-medium text-[var(--ink)]">
               {totalApplied}
             </p>
           </Card>
           <Card>
             <p className="text-sm text-[var(--ink)]/70">{t("notAMatchRateLabel")}</p>
-            <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
+            <p className="mt-1 font-display text-3xl font-medium text-[var(--ink)]">
               {totalApplied > 0 ? `${notMatchRate}%` : "—"}
             </p>
             <p className="mt-1 text-xs text-[var(--ink)]/60">
@@ -106,7 +106,7 @@ export default async function StudyAnalyticsPage({
           </Card>
           <Card className="sm:col-span-2">
             <p className="text-sm text-[var(--ink)]/70">{t("averageIncentivePaidLabel")}</p>
-            <p className="mt-1 font-serif-display text-3xl font-medium text-[var(--ink)]">
+            <p className="mt-1 font-display text-3xl font-medium text-[var(--ink)]">
               {averageIncentive !== null
                 ? `NPR ${averageIncentive.toFixed(0)}`
                 : "—"}
@@ -124,9 +124,9 @@ export default async function StudyAnalyticsPage({
               <div key={step} className="flex items-center justify-between">
                 <dt className="text-[var(--ink)]/60">{t(FUNNEL_LABEL_KEYS[step])}</dt>
                 <dd className="flex items-center gap-2">
-                  <div className="h-2 w-32 overflow-hidden rounded-full bg-[var(--mist)]/40">
+                  <div className="h-2 w-32 overflow-hidden rounded-full bg-[var(--line)]/40">
                     <div
-                      className="h-full rounded-full bg-[var(--coral)]"
+                      className="h-full rounded-full bg-[var(--signal)]"
                       style={{
                         width: `${totalApplied > 0 ? (counts[step] / totalApplied) * 100 : 0}%`,
                       }}

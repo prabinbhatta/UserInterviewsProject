@@ -24,12 +24,11 @@ function ClipboardIcon() {
 
 function PlatformIcon() {
   return (
-    <svg width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true">
-      <rect x="0" y="6" width="3" height="6" rx="1.5" fill="currentColor" />
-      <rect x="6" y="2" width="3" height="14" rx="1.5" fill="currentColor" />
-      <rect x="12" y="0" width="3" height="18" rx="1.5" fill="currentColor" />
-      <rect x="18" y="4" width="3" height="10" rx="1.5" fill="currentColor" />
-      <rect x="23" y="7" width="3" height="4" rx="1.5" fill="currentColor" />
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="0" y="0" width="9.5" height="9.5" rx="2.5" fill="currentColor" />
+      <rect x="12.5" y="0" width="9.5" height="9.5" rx="2.5" fill="currentColor" opacity="0.4" />
+      <rect x="0" y="12.5" width="9.5" height="9.5" rx="2.5" fill="currentColor" opacity="0.4" />
+      <rect x="12.5" y="12.5" width="9.5" height="9.5" rx="2.5" fill="currentColor" />
     </svg>
   );
 }
@@ -53,7 +52,7 @@ function Connector() {
   return (
     <div
       aria-hidden="true"
-      className="mx-2 hidden h-px flex-1 self-center bg-[repeating-linear-gradient(90deg,var(--mist)_0,var(--mist)_6px,transparent_6px,transparent_12px)] sm:block"
+      className="mx-2 hidden h-px flex-1 self-center bg-[repeating-linear-gradient(90deg,var(--line)_0,var(--line)_6px,transparent_6px,transparent_12px)] sm:block"
     />
   );
 }
@@ -71,17 +70,17 @@ export function PlatformFlow({
     {
       icon: <ClipboardIcon />,
       label: step1,
-      iconClasses: "text-[var(--coral)] bg-[var(--coral)]/10",
+      iconClasses: "text-[var(--signal)] bg-[var(--signal)]/10",
     },
     {
       icon: <PlatformIcon />,
       label: step2,
-      iconClasses: "text-[var(--indigo)] bg-[var(--indigo)]/10",
+      iconClasses: "text-[var(--navy)] bg-[var(--navy)]/10",
     },
     {
       icon: <VoiceIcon />,
       label: step3,
-      iconClasses: "text-[var(--gold)] bg-[var(--gold)]/15",
+      iconClasses: "text-[var(--warning)] bg-[var(--warning)]/15",
     },
   ];
 
@@ -89,7 +88,7 @@ export function PlatformFlow({
     <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-0">
       {nodes.map((node, i) => (
         <div key={node.label} className="flex w-full items-center sm:contents">
-          <div className="flex flex-1 flex-col items-center gap-3 rounded-2xl border border-[var(--mist)] bg-white px-6 py-6 text-center transition-transform duration-300 hover:-translate-y-1">
+          <div className="flex flex-1 flex-col items-center gap-3 rounded-2xl border border-[var(--line)] bg-white px-6 py-6 text-center transition-transform duration-300 hover:-translate-y-1">
             <div
               className={`flex h-12 w-12 items-center justify-center rounded-full ${node.iconClasses}`}
             >

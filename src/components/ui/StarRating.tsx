@@ -23,7 +23,7 @@ export function StarRatingInput({ name }: { name: string }) {
           aria-pressed={value === n}
           className="text-2xl leading-none transition-transform hover:scale-110"
         >
-          <span className={shown >= n ? "text-[var(--gold)]" : "text-[var(--mist)]"}>
+          <span className={shown >= n ? "text-[var(--warning)]" : "text-[var(--line)]"}>
             ★
           </span>
         </button>
@@ -38,7 +38,7 @@ export function StarRatingDisplay({ rating }: { rating: number }) {
       {STARS.map((n) => (
         <span
           key={n}
-          className={n <= rating ? "text-[var(--gold)]" : "text-[var(--mist)]"}
+          className={n <= rating ? "text-[var(--warning)]" : "text-[var(--line)]"}
         >
           ★
         </span>

@@ -178,7 +178,7 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
           {LANGUAGES.map((lang) => (
             <label
               key={lang.value}
-              className="flex items-center gap-2 rounded-lg border border-[var(--mist)] px-3 py-2 text-sm text-[var(--ink)]/80"
+              className="flex items-center gap-2 rounded-lg border border-[var(--line)] px-3 py-2 text-sm text-[var(--ink)]/80"
             >
               <input
                 type="checkbox"
@@ -186,7 +186,7 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
                 value={lang.value}
                 checked={languages.includes(lang.value)}
                 onChange={() => setLanguages((prev) => toggle(prev, lang.value))}
-                className="h-4 w-4 accent-[var(--indigo)]"
+                className="h-4 w-4 accent-[var(--navy)]"
               />
               {t(lang.labelKey)}
             </label>
@@ -200,7 +200,7 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
           {DEVICES.map((device) => (
             <label
               key={device.value}
-              className="flex items-center gap-2 rounded-lg border border-[var(--mist)] px-3 py-2 text-sm text-[var(--ink)]/80"
+              className="flex items-center gap-2 rounded-lg border border-[var(--line)] px-3 py-2 text-sm text-[var(--ink)]/80"
             >
               <input
                 type="checkbox"
@@ -208,7 +208,7 @@ export function ProfileForm({ defaultValues }: { defaultValues: DefaultValues })
                 value={device.value}
                 checked={devices.includes(device.value)}
                 onChange={() => setDevices((prev) => toggle(prev, device.value))}
-                className="h-4 w-4 accent-[var(--indigo)]"
+                className="h-4 w-4 accent-[var(--navy)]"
               />
               {t(device.labelKey)}
             </label>

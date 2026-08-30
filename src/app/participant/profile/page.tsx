@@ -45,7 +45,7 @@ export default async function ParticipantProfilePage() {
         <Link href="/participant" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToDashboard")}
         </Link>
-        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
           {t("yourProfileTitle")}
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/60">
@@ -57,9 +57,9 @@ export default async function ParticipantProfilePage() {
             <span className="font-medium text-[var(--ink)]/80">{t("profileStrengthLabel")}</span>
             <span className="text-[var(--ink)]/70">{strengthPercent}%</span>
           </div>
-          <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-[var(--mist)]/40">
+          <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-[var(--line)]/40">
             <div
-              className="h-full rounded-full bg-[var(--coral)] transition-all"
+              className="h-full rounded-full bg-[var(--signal)] transition-all"
               style={{ width: `${strengthPercent}%` }}
             />
           </div>

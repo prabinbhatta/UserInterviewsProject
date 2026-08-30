@@ -63,7 +63,7 @@ export default async function MyApplicationsPage() {
         <Link href="/participant" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToDashboard")}
         </Link>
-        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
           {t("yourApplicationsTitle")}
         </h1>
 
@@ -131,7 +131,7 @@ export default async function MyApplicationsPage() {
 
                 {application.status === "completed" &&
                   application.incentive_records && (
-                    <div className="mt-3 border-t border-[var(--mist)]/50 pt-3">
+                    <div className="mt-3 border-t border-[var(--line)]/50 pt-3">
                       {application.incentive_records.status === "pending" && (
                         <p className="text-sm text-[var(--ink)]/70">
                           {t("incentiveNotSentYetParticipant")}
@@ -180,7 +180,7 @@ export default async function MyApplicationsPage() {
 
                       {application.incentive_records.status ===
                         "not_received" && (
-                        <div className="rounded-lg bg-[var(--coral)]/10 p-3 text-sm text-[#a8371c]">
+                        <div className="rounded-lg bg-[var(--danger)]/10 p-3 text-sm text-[#a8371c]">
                           <p className="font-medium">
                             {t("notReceivedReportedTitle")}
                           </p>
@@ -197,7 +197,7 @@ export default async function MyApplicationsPage() {
                   )}
 
                 {application.status === "completed" && (
-                  <div className="mt-3 border-t border-[var(--mist)]/50 pt-3">
+                  <div className="mt-3 border-t border-[var(--line)]/50 pt-3">
                     {(() => {
                       const myRating = application.session_ratings?.find(
                         (r) => r.rater_role === "participant",
@@ -225,7 +225,7 @@ export default async function MyApplicationsPage() {
                             name="comment"
                             rows={2}
                             placeholder={t("ratingCommentPlaceholder")}
-                            className="rounded-lg border border-[var(--mist)] bg-white px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/40 focus:border-[var(--indigo)] focus:outline-none"
+                            className="rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/40 focus:border-[var(--navy)] focus:outline-none"
                           />
                           <Button type="submit" size="sm" className="self-start">
                             {t("submitRatingAction")}

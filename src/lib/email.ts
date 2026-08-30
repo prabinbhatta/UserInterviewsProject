@@ -7,12 +7,11 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 // Brand tokens mirrored from src/app/globals.css — email clients can't read
 // CSS custom properties, so these stay hardcoded and in sync by hand.
-const INK = "#12172b";
-const INK_MUTED = "#5b5f7a";
-const PAPER = "#f6f7fb";
-const CORAL = "#ff6b4a";
-const GOLD = "#f5b942";
-const MIST = "#c7cce0";
+const INK = "#12161d";
+const INK_MUTED = "#5b6472";
+const PAPER = "#eef1f4";
+const SIGNAL = "#e24b3a";
+const LINE = "#d7dee5";
 const FONT_STACK =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
@@ -31,12 +30,12 @@ function wrap(bodyHtml: string, ctaHref?: string, ctaLabel?: string) {
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px; margin: 0 auto; border-collapse: separate;">
         <tr>
           <td style="border-radius: 16px 16px 0 0; overflow: hidden; line-height: 0;">
-            <div style="height: 4px; background: linear-gradient(90deg, ${CORAL}, ${GOLD}); background-color: ${CORAL};"></div>
+            <div style="height: 4px; background-color: ${SIGNAL};"></div>
           </td>
         </tr>
         <tr>
-          <td style="background: #ffffff; border-left: 1px solid ${MIST}; border-right: 1px solid ${MIST}; padding: 32px 36px 8px;">
-            <p style="margin: 0 0 20px; font-family: ui-monospace, 'SF Mono', 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${CORAL};">
+          <td style="background: #ffffff; border-left: 1px solid ${LINE}; border-right: 1px solid ${LINE}; padding: 32px 36px 8px;">
+            <p style="margin: 0 0 20px; font-family: ui-monospace, 'SF Mono', 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${SIGNAL};">
               PanelMeet
             </p>
             <div style="font-size: 15px; line-height: 1.65; color: ${INK};">
@@ -52,11 +51,11 @@ function wrap(bodyHtml: string, ctaHref?: string, ctaLabel?: string) {
           </td>
         </tr>
         <tr>
-          <td style="background: #ffffff; border-left: 1px solid ${MIST}; border-right: 1px solid ${MIST}; border-bottom: 1px solid ${MIST}; border-radius: 0 0 16px 16px; padding: 20px 36px 28px;">
+          <td style="background: #ffffff; border-left: 1px solid ${LINE}; border-right: 1px solid ${LINE}; border-bottom: 1px solid ${LINE}; border-radius: 0 0 16px 16px; padding: 20px 36px 28px;">
             <div style="border-top: 1px solid #eceef5; padding-top: 16px;">
               <p style="margin: 0; font-size: 12px; line-height: 1.6; color: ${INK_MUTED};">
                 You're receiving this because you have an account on
-                <a href="${SITE_URL}" style="color: ${INK_MUTED}; text-decoration: underline; text-decoration-color: ${MIST};">PanelMeet</a>.
+                <a href="${SITE_URL}" style="color: ${INK_MUTED}; text-decoration: underline; text-decoration-color: ${LINE};">PanelMeet</a>.
               </p>
             </div>
           </td>

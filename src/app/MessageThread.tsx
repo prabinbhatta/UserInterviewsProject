@@ -51,7 +51,7 @@ export function MessageThread({
                   className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm ${
                     mine
                       ? "bg-[var(--ink)] text-white"
-                      : "border border-[var(--mist)] bg-white text-[var(--ink)]"
+                      : "border border-[var(--line)] bg-white text-[var(--ink)]"
                   }`}
                 >
                   <p className="leading-relaxed whitespace-pre-wrap">

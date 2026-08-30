@@ -64,7 +64,7 @@ export default async function PublicStudyDetailPage({
         </Link>
 
         <div className="mt-2 flex items-start justify-between gap-4">
-          <h1 className="font-serif-display text-2xl font-medium text-[var(--ink)]">
+          <h1 className="font-display text-2xl font-medium text-[var(--ink)]">
             {study.title}
           </h1>
           <Badge tone="success" className="shrink-0">

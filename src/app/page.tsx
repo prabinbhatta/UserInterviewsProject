@@ -28,20 +28,20 @@ export default function Home() {
       <section className="relative mx-auto w-full max-w-6xl overflow-hidden px-6 pt-8 pb-20 sm:px-10 sm:pt-14">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -top-24 -right-32 h-[26rem] w-[26rem] rounded-full bg-gradient-to-br from-[var(--coral)]/25 via-[var(--gold)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_14s_ease-in-out_infinite]"
+          className="pointer-events-none absolute -top-24 -right-32 h-[26rem] w-[26rem] rounded-full bg-gradient-to-br from-[var(--signal)]/25 via-[var(--warning)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_14s_ease-in-out_infinite]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/3 -left-24 h-72 w-72 rounded-full bg-gradient-to-tr from-[var(--indigo)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_18s_ease-in-out_infinite_reverse]"
+          className="pointer-events-none absolute top-1/3 -left-24 h-72 w-72 rounded-full bg-gradient-to-tr from-[var(--navy)]/15 to-transparent blur-3xl motion-safe:animate-[floatSlow_18s_ease-in-out_infinite_reverse]"
         />
         <div className="relative grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="motion-safe:animate-[riseIn_0.7s_ease-out]">
-            <p className="font-mono-utility text-xs uppercase tracking-[0.2em] text-[var(--coral)]">
+            <p className="font-mono-utility text-xs uppercase tracking-[0.2em] text-[var(--signal)]">
               {t("heroKicker")}
             </p>
-            <h1 className="font-serif-display mt-4 text-[2.5rem] leading-[1.08] font-medium tracking-tight sm:text-6xl">
+            <h1 className="font-display mt-4 text-[2.5rem] leading-[1.08] font-medium tracking-tight sm:text-6xl">
               {t("heroTitleLead")}{" "}
-              <span className="italic text-[var(--indigo)]">
+              <span className="text-[var(--signal)]">
                 {t("heroTitleEmphasis")}
               </span>
             </h1>
@@ -76,20 +76,20 @@ export default function Home() {
       </section>
 
       {/* Two paths */}
-      <section className="border-t border-[var(--mist)]/70 bg-white/40">
+      <section className="border-t border-[var(--line)]/70 bg-white/40">
         <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
           <Reveal>
-            <h2 className="font-serif-display max-w-md text-3xl font-medium sm:text-4xl">
+            <h2 className="font-display max-w-md text-3xl font-medium sm:text-4xl">
               {t("twoPathsTitle")}
             </h2>
           </Reveal>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <Reveal delay={80}>
-              <div className="group h-full rounded-2xl border border-[var(--mist)] bg-[var(--indigo)] p-8 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(45,52,112,0.5)]">
+              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--navy)] p-8 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(27,47,69,0.5)]">
                 <p className="font-mono-utility text-xs uppercase tracking-widest text-white/60">
                   {t("forCompanies")}
                 </p>
-                <h3 className="font-serif-display mt-3 text-2xl font-medium">
+                <h3 className="font-display mt-3 text-2xl font-medium">
                   {t("forCompaniesTitle")}
                 </h3>
                 <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-white/80">
@@ -99,7 +99,7 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/signup?role=researcher"
-                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white px-5 text-sm font-semibold text-[var(--indigo)] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.2)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(0,0,0,0.3)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(0,0,0,0.2)]"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-white px-5 text-sm font-semibold text-[var(--navy)] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.2)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(0,0,0,0.3)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(0,0,0,0.2)]"
                 >
                   {t("startStudy")}
                   <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
@@ -110,11 +110,11 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="group h-full rounded-2xl border border-[var(--mist)] bg-[var(--gold)] p-8 text-[var(--ink)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(245,185,66,0.5)]">
+              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--warning)] p-8 text-[var(--ink)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(201,147,15,0.5)]">
                 <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
                   {t("forParticipants")}
                 </p>
-                <h3 className="font-serif-display mt-3 text-2xl font-medium">
+                <h3 className="font-display mt-3 text-2xl font-medium">
                   {t("forParticipantsTitle")}
                 </h3>
                 <ul className="mt-6 space-y-3 text-[15px] leading-relaxed text-[var(--ink)]/80">
@@ -124,7 +124,7 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/signup?role=participant"
-                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white shadow-[0_2px_8px_-2px_rgba(18,23,43,0.35)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(18,23,43,0.4)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(18,23,43,0.3)]"
+                  className="mt-8 inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-[var(--ink)] px-5 text-sm font-semibold text-white shadow-[0_2px_8px_-2px_rgba(18,22,29,0.35)] transition-all duration-150 ease-out group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_20px_-6px_rgba(18,22,29,0.4)] active:translate-y-0 active:scale-[0.97] active:shadow-[0_2px_4px_-2px_rgba(18,22,29,0.3)]"
                 >
                   {t("browseStudies")}
                   <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
@@ -140,7 +140,7 @@ export default function Home() {
       {/* How it works */}
       <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
         <Reveal>
-          <h2 className="font-serif-display max-w-md text-3xl font-medium sm:text-4xl">
+          <h2 className="font-display max-w-md text-3xl font-medium sm:text-4xl">
             {t("journeyTitle")}
           </h2>
           <p className="mt-3 max-w-lg text-[var(--ink)]/70">{t("journeyBody")}</p>
@@ -152,10 +152,10 @@ export default function Home() {
       </section>
 
       {/* Honest trust section */}
-      <section className="border-t border-[var(--mist)]/70 bg-white/40">
+      <section className="border-t border-[var(--line)]/70 bg-white/40">
         <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-10">
           <Reveal>
-            <h2 className="font-serif-display max-w-lg text-3xl font-medium sm:text-4xl">
+            <h2 className="font-display max-w-lg text-3xl font-medium sm:text-4xl">
               {t("trustTitle")}
             </h2>
             <p className="mt-3 max-w-lg text-[var(--ink)]/70">{t("trustBody")}</p>
@@ -163,7 +163,7 @@ export default function Home() {
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             <Reveal delay={80} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--coral)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--signal)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                 <ScreenerIcon />
               </div>
               <h3 className="mt-4 font-semibold">{t("trust1Title")}</h3>
@@ -172,7 +172,7 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={180} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--indigo)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--navy)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                 <CalendarIcon />
               </div>
               <h3 className="mt-4 font-semibold">{t("trust2Title")}</h3>
@@ -181,7 +181,7 @@ export default function Home() {
               </p>
             </Reveal>
             <Reveal delay={280} className="group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--warning)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
                 <PaymentCheckIcon />
               </div>
               <h3 className="mt-4 font-semibold">{t("trust3Title")}</h3>
@@ -194,16 +194,16 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-[var(--mist)]/70">
+      <footer className="mt-auto border-t border-[var(--line)]/70">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-10">
           <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
             {t("footerTagline")}
           </p>
           <div className="flex items-center gap-4 text-sm text-[var(--ink)]/60">
-            <Link href="/terms" className="underline decoration-[var(--mist)] underline-offset-4 hover:decoration-[var(--coral)]">
+            <Link href="/terms" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--signal)]">
               {t("termsLink")}
             </Link>
-            <Link href="/privacy" className="underline decoration-[var(--mist)] underline-offset-4 hover:decoration-[var(--coral)]">
+            <Link href="/privacy" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--signal)]">
               {t("privacyLink")}
             </Link>
             <span>&copy; {new Date().getFullYear()} — {t("brand")}</span>

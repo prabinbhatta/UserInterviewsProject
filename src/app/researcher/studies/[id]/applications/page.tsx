@@ -91,7 +91,7 @@ export default async function StudyApplicationsPage({
             {t("exportCsvAction")}
           </a>
         </div>
-        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-2xl font-medium text-[var(--ink)]">
           {t("applicantsTitlePrefix")} {study.title}
         </h1>
 
@@ -184,7 +184,7 @@ export default async function StudyApplicationsPage({
                 </div>
 
                 {application.status === "completed" && (
-                  <div className="border-t border-[var(--mist)]/50 pt-3">
+                  <div className="border-t border-[var(--line)]/50 pt-3">
                     {(() => {
                       const myRating = application.session_ratings?.find(
                         (r) => r.rater_role === "researcher",
@@ -216,7 +216,7 @@ export default async function StudyApplicationsPage({
                             name="comment"
                             rows={2}
                             placeholder={t("ratingCommentPlaceholder")}
-                            className="rounded-lg border border-[var(--mist)] bg-white px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/40 focus:border-[var(--indigo)] focus:outline-none"
+                            className="rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink)]/40 focus:border-[var(--navy)] focus:outline-none"
                           />
                           <Button type="submit" size="sm" className="self-start">
                             {t("submitRatingAction")}

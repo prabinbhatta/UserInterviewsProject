@@ -2,7 +2,7 @@ export type NoticeTone = "success" | "danger";
 
 const TONES: Record<NoticeTone, string> = {
   success: "bg-emerald-50 text-emerald-800 border border-emerald-200",
-  danger: "bg-[var(--coral)]/10 text-[#a8371c] border border-[var(--coral)]/20",
+  danger: "bg-[var(--danger)]/10 text-[#a8371c] border border-[var(--danger)]/20",
 };
 
 function CheckCircleIcon() {

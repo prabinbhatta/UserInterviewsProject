@@ -63,7 +63,7 @@ export function SettingsForm({ defaultValues }: { defaultValues: Prefs }) {
               onChange={(e) =>
                 setPrefs((p) => ({ ...p, [field.name]: e.target.checked }))
               }
-              className="h-4 w-4 accent-[var(--indigo)]"
+              className="h-4 w-4 accent-[var(--navy)]"
             />
             {field.label}
           </label>

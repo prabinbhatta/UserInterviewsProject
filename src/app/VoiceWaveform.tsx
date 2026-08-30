@@ -40,7 +40,7 @@ export function VoiceWaveform() {
         onFocus={activate}
         onClick={activate}
         aria-label={t("voicePlayAriaLabel")}
-        className="group w-full cursor-pointer rounded-2xl border border-[var(--mist)] bg-white/70 p-6 text-left shadow-[0_1px_0_rgba(18,23,43,0.04)] backdrop-blur-sm transition-colors hover:border-[var(--coral)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--coral)]"
+        className="group w-full cursor-pointer rounded-2xl border border-[var(--line)] bg-white/70 p-6 text-left shadow-[0_1px_0_rgba(18,22,29,0.04)] backdrop-blur-sm transition-colors hover:border-[var(--signal)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--signal)]"
       >
         <div className="flex h-20 items-end gap-[3px] sm:h-24">
           {BARS.map((h, i) => (
@@ -52,24 +52,24 @@ export function VoiceWaveform() {
               }}
               className={`w-full min-w-[2px] rounded-full transition-colors duration-500 motion-safe:duration-700 ${
                 active
-                  ? "bg-[var(--coral)] motion-safe:animate-[waveform_1.1s_ease-in-out_infinite]"
-                  : "bg-[var(--indigo)]/35 group-hover:bg-[var(--coral)]/70"
+                  ? "bg-[var(--signal)] motion-safe:animate-[waveform_1.1s_ease-in-out_infinite]"
+                  : "bg-[var(--navy)]/35 group-hover:bg-[var(--signal)]/70"
               }`}
             />
           ))}
         </div>
 
-        <div className="mt-5 min-h-[3.25rem] border-t border-dashed border-[var(--mist)] pt-4">
+        <div className="mt-5 min-h-[3.25rem] border-t border-dashed border-[var(--line)] pt-4">
           <p
             key={active ? quoteIndex : "idle"}
-            className={`font-serif-display text-[1.05rem] leading-snug text-[var(--ink)] transition-opacity duration-500 sm:text-lg ${
+            className={`font-display text-[1.05rem] leading-snug text-[var(--ink)] transition-opacity duration-500 sm:text-lg ${
               active ? "motion-safe:animate-[fadeIn_0.6s_ease-out]" : "opacity-60"
             }`}
           >
             {active ? `“${quote.text}”` : t("voiceHoverHint")}
           </p>
           {active && (
-            <p className="mt-2 font-mono-utility text-xs tracking-wide text-[var(--indigo)]/70 uppercase">
+            <p className="mt-2 font-mono-utility text-xs tracking-wide text-[var(--navy)]/70 uppercase">
               {quote.tag}
             </p>
           )}

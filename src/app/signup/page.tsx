@@ -26,7 +26,7 @@ function SignupForm() {
   if (state.submitted) {
     return (
       <div className="w-full max-w-sm text-center">
-        <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
           {t("checkEmailTitle")}
         </h1>
         <p className="mt-3 text-[var(--ink)]/70">
@@ -34,7 +34,7 @@ function SignupForm() {
         </p>
         <Link
           href="/login"
-          className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+          className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
         >
           {t("goToLogin")}
         </Link>
@@ -44,14 +44,14 @@ function SignupForm() {
 
   return (
     <form action={formAction} className="w-full max-w-sm">
-      <h1 className="font-serif-display text-3xl font-medium text-[var(--ink)]">
+      <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
         {t("signupTitle")}
       </h1>
 
       <input type="hidden" name="role" value={role} />
       <input type="hidden" name="referredBy" value={referredBy} />
 
-      <div className="mt-6 flex rounded-full border border-[var(--mist)] p-1">
+      <div className="mt-6 flex rounded-full border border-[var(--line)] p-1">
         <button
           type="button"
           onClick={() => setRole("researcher")}
@@ -108,11 +108,11 @@ function SignupForm() {
 
       <p className="mt-4 text-center text-xs text-[var(--ink)]/70">
         {t("agreeToTerms")}{" "}
-        <Link href="/terms" className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]">
+        <Link href="/terms" className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)]">
           {t("termsLink")}
         </Link>{" "}
         {t("and")}{" "}
-        <Link href="/privacy" className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)]">
+        <Link href="/privacy" className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)]">
           {t("privacyLink")}
         </Link>
         .
@@ -126,7 +126,7 @@ function SignupForm() {
         {t("alreadyHaveAccount")}{" "}
         <Link
           href="/login"
-          className="underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+          className="underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
         >
           {t("logInLink")}
         </Link>
@@ -138,7 +138,7 @@ function SignupForm() {
 function LanguageToggle() {
   const { lang, setLang } = useLanguage();
   return (
-    <div className="absolute top-6 right-6 flex items-center rounded-full border border-[var(--mist)] p-0.5 text-xs">
+    <div className="absolute top-6 right-6 flex items-center rounded-full border border-[var(--line)] p-0.5 text-xs">
       <button
         type="button"
         onClick={() => setLang("en")}

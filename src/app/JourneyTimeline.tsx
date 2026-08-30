@@ -39,7 +39,7 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
                 setActive(i);
               }}
               className={`group relative cursor-pointer border-l-2 pl-5 transition-colors duration-500 ${
-                isActive ? "border-[var(--coral)]" : "border-[var(--mist)]"
+                isActive ? "border-[var(--signal)]" : "border-[var(--line)]"
               }`}
             >
               {/* Progress fill that runs the length of the auto-advance timer,
@@ -48,7 +48,7 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
                 {isActive && !paused && (
                   <span
                     key={active}
-                    className="block h-full w-full origin-top bg-[var(--coral)] motion-safe:animate-[fillDown_var(--step-duration)_linear_forwards]"
+                    className="block h-full w-full origin-top bg-[var(--signal)] motion-safe:animate-[fillDown_var(--step-duration)_linear_forwards]"
                     style={{ "--step-duration": `${STEP_DURATION_MS}ms` } as React.CSSProperties}
                   />
                 )}
@@ -56,13 +56,13 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
 
               <span
                 className={`font-mono-utility text-xs transition-colors duration-500 ${
-                  isActive ? "text-[var(--coral)]" : "text-[var(--ink)]/60"
+                  isActive ? "text-[var(--signal)]" : "text-[var(--ink)]/60"
                 }`}
               >
                 {step.time}
               </span>
               <h3
-                className={`font-serif-display mt-2 text-lg font-medium transition-transform duration-300 ${
+                className={`font-display mt-2 text-lg font-medium transition-transform duration-300 ${
                   isActive ? "translate-x-1" : "translate-x-0"
                 }`}
               >
@@ -88,8 +88,8 @@ export function JourneyTimeline({ steps }: { steps: Step[] }) {
             }}
             className={`h-1.5 rounded-full transition-all duration-500 ${
               i === active
-                ? "w-8 bg-[var(--coral)]"
-                : "w-1.5 bg-[var(--mist)] hover:bg-[var(--indigo)]/40"
+                ? "w-8 bg-[var(--signal)]"
+                : "w-1.5 bg-[var(--line)] hover:bg-[var(--navy)]/40"
             }`}
           />
         ))}

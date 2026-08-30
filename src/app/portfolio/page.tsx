@@ -152,7 +152,7 @@ export default function PortfolioPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-transparent bg-[var(--paper)]/80 backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-6 sm:px-10">
-          <a href="#top" className="font-serif-display text-lg font-medium text-[var(--ink)]">
+          <a href="#top" className="font-display text-lg font-medium text-[var(--ink)]">
             Prabin Bhatta
           </a>
           <nav className="hidden items-center gap-6 sm:flex">
@@ -160,7 +160,7 @@ export default function PortfolioPage() {
               <a
                 key={link.href}
                 href={link.href}
-                className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60 transition-colors hover:text-[var(--coral)]"
+                className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60 transition-colors hover:text-[var(--signal)]"
               >
                 {link.label}
               </a>
@@ -168,7 +168,7 @@ export default function PortfolioPage() {
           </nav>
           <a
             href="#contact"
-            className="rounded-full bg-[var(--ink)] px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-[var(--indigo)] hover:-translate-y-0.5"
+            className="rounded-full bg-[var(--ink)] px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-[var(--navy)] hover:-translate-y-0.5"
           >
             Get in touch
           </a>
@@ -178,10 +178,10 @@ export default function PortfolioPage() {
       <main id="top" className="mx-auto w-full max-w-4xl flex-1 px-6 sm:px-10">
         {/* Hero */}
         <section className="pt-16 pb-20 sm:pt-24 sm:pb-28">
-          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--coral)]">
+          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--signal)]">
             Business Analyst · Kathmandu, Nepal
           </p>
-          <h1 className="mt-4 font-serif-display text-4xl font-medium leading-tight text-[var(--ink)] sm:text-6xl">
+          <h1 className="mt-4 font-display text-4xl font-medium leading-tight text-[var(--ink)] sm:text-6xl">
             I turn ambiguous requirements into software people actually ship.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--ink)]/70">
@@ -193,7 +193,7 @@ export default function PortfolioPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#projects"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--indigo)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--navy)] hover:-translate-y-0.5"
             >
               See what I&apos;ve built
             </a>
@@ -201,7 +201,7 @@ export default function PortfolioPage() {
               href="https://linkedin.com/in/bhattaprabin/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--coral)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--signal)] hover:-translate-y-0.5"
             >
               Connect on LinkedIn
             </a>
@@ -209,8 +209,8 @@ export default function PortfolioPage() {
         </section>
 
         {/* About */}
-        <section id="about" className="border-t border-[var(--mist)]/70 py-16">
-          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+        <section id="about" className="border-t border-[var(--line)]/70 py-16">
+          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
             About
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[var(--ink)]/80">
@@ -224,7 +224,7 @@ export default function PortfolioPage() {
               href="https://panelmeet.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--ink)] underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
+              className="text-[var(--ink)] underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--signal)] hover:decoration-[var(--signal)]"
             >
               project below
             </a>{" "}
@@ -233,18 +233,18 @@ export default function PortfolioPage() {
         </section>
 
         {/* Experience */}
-        <section id="experience" className="border-t border-[var(--mist)]/70 py-16">
-          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+        <section id="experience" className="border-t border-[var(--line)]/70 py-16">
+          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
             Experience
           </p>
           <ul className="mt-8 space-y-10">
             {EXPERIENCE.map((job) => (
               <li
                 key={job.company}
-                className="rounded-2xl border border-[var(--mist)] bg-white p-6"
+                className="rounded-2xl border border-[var(--line)] bg-white p-6"
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <h3 className="font-serif-display text-xl font-medium text-[var(--ink)]">
+                  <h3 className="font-display text-xl font-medium text-[var(--ink)]">
                     {job.company}
                     {job.subtitle && (
                       <span className="ml-2 text-sm font-normal text-[var(--ink)]/50">
@@ -256,7 +256,7 @@ export default function PortfolioPage() {
                 </div>
                 <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1">
                   {job.roles.map((role) => (
-                    <p key={role.title} className="text-sm font-medium text-[var(--indigo)]">
+                    <p key={role.title} className="text-sm font-medium text-[var(--navy)]">
                       {role.title}{" "}
                       <span className="font-normal text-[var(--ink)]/60">
                         · {role.period}
@@ -270,7 +270,7 @@ export default function PortfolioPage() {
                       key={bullet}
                       className="flex gap-2 text-sm leading-relaxed text-[var(--ink)]/70"
                     >
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--coral)]" />
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--signal)]" />
                       {bullet}
                     </li>
                   ))}
@@ -279,7 +279,7 @@ export default function PortfolioPage() {
             ))}
           </ul>
 
-          <div className="mt-8 rounded-2xl border border-dashed border-[var(--mist)] p-6">
+          <div className="mt-8 rounded-2xl border border-dashed border-[var(--line)] p-6">
             <p className="text-sm font-medium text-[var(--ink)]/80">Earlier</p>
             <ul className="mt-3 space-y-2">
               {EARLIER_ROLES.map((role) => (
@@ -293,19 +293,19 @@ export default function PortfolioPage() {
         </section>
 
         {/* Skills */}
-        <section id="skills" className="border-t border-[var(--mist)]/70 py-16">
-          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+        <section id="skills" className="border-t border-[var(--line)]/70 py-16">
+          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
             Skills
           </p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
             {SKILL_GROUPS.map((group) => (
-              <div key={group.label} className="rounded-2xl border border-[var(--mist)] bg-white p-5">
+              <div key={group.label} className="rounded-2xl border border-[var(--line)] bg-white p-5">
                 <h3 className="text-sm font-semibold text-[var(--ink)]">{group.label}</h3>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="rounded-full border border-[var(--mist)] px-3 py-1 text-xs text-[var(--ink)]/70"
+                      className="rounded-full border border-[var(--line)] px-3 py-1 text-xs text-[var(--ink)]/70"
                     >
                       {skill}
                     </span>
@@ -317,19 +317,19 @@ export default function PortfolioPage() {
         </section>
 
         {/* Projects */}
-        <section id="projects" className="border-t border-[var(--mist)]/70 py-16">
-          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+        <section id="projects" className="border-t border-[var(--line)]/70 py-16">
+          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
             Projects
           </p>
           <a
             href="https://panelmeet.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 block rounded-2xl border border-[var(--mist)] bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--coral)] sm:p-8"
+            className="mt-8 block rounded-2xl border border-[var(--line)] bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)] sm:p-8"
           >
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h3 className="font-serif-display text-2xl font-medium text-[var(--ink)]">
+                <h3 className="font-display text-2xl font-medium text-[var(--ink)]">
                   PanelMeet
                 </h3>
                 <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--ink)]/70">
@@ -349,7 +349,7 @@ export default function PortfolioPage() {
                 (tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-[var(--mist)] px-3 py-1 font-mono-utility text-[11px] uppercase tracking-wider text-[var(--indigo)]"
+                    className="rounded-full border border-[var(--line)] px-3 py-1 font-mono-utility text-[11px] uppercase tracking-wider text-[var(--navy)]"
                   >
                     {tag}
                   </span>
@@ -360,10 +360,10 @@ export default function PortfolioPage() {
         </section>
 
         {/* Education & Certifications */}
-        <section className="border-t border-[var(--mist)]/70 py-16">
+        <section className="border-t border-[var(--line)]/70 py-16">
           <div className="grid gap-10 sm:grid-cols-2">
             <div>
-              <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+              <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
                 Education
               </p>
               <ul className="mt-6 space-y-5">
@@ -377,7 +377,7 @@ export default function PortfolioPage() {
               </ul>
             </div>
             <div>
-              <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+              <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
                 Certifications
               </p>
               <ul className="mt-6 space-y-2">
@@ -393,23 +393,23 @@ export default function PortfolioPage() {
         </section>
 
         {/* Contact */}
-        <section id="contact" className="border-t border-[var(--mist)]/70 py-16">
-          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--indigo)]">
+        <section id="contact" className="border-t border-[var(--line)]/70 py-16">
+          <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--navy)]">
             Contact
           </p>
-          <h2 className="mt-4 font-serif-display text-3xl font-medium text-[var(--ink)] sm:text-4xl">
+          <h2 className="mt-4 font-display text-3xl font-medium text-[var(--ink)] sm:text-4xl">
             Let&apos;s talk about what you&apos;re building.
           </h2>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="mailto:prabinbhatta07@gmail.com"
-              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--indigo)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[var(--navy)] hover:-translate-y-0.5"
             >
               prabinbhatta07@gmail.com
             </a>
             <a
               href="tel:+9779848633635"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--coral)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--signal)] hover:-translate-y-0.5"
             >
               +977 984 863 3635
             </a>
@@ -417,7 +417,7 @@ export default function PortfolioPage() {
               href="https://linkedin.com/in/bhattaprabin/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--coral)] hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full border border-[var(--ink)]/15 bg-white px-6 py-3 text-sm font-semibold text-[var(--ink)] transition-all hover:border-[var(--signal)] hover:-translate-y-0.5"
             >
               LinkedIn
             </a>
@@ -426,7 +426,7 @@ export default function PortfolioPage() {
         </section>
       </main>
 
-      <footer className="border-t border-[var(--mist)]/70 py-8">
+      <footer className="border-t border-[var(--line)]/70 py-8">
         <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-1 px-6 text-center text-xs text-[var(--ink)]/50 sm:px-10">
           <p>© {new Date().getFullYear()} Prabin Bhatta</p>
         </div>

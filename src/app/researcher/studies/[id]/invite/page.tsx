@@ -45,7 +45,7 @@ export default async function StudyInvitePage({
         <Link href="/researcher/studies" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToStudies")}
         </Link>
-        <h1 className="mt-2 font-serif-display text-2xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-2xl font-medium text-[var(--ink)]">
           {t("inviteParticipantsTitlePrefix")} {study.title}
         </h1>
         <p className="mt-1 text-sm text-[var(--ink)]/60">

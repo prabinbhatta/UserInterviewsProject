@@ -7,11 +7,11 @@ export type BadgeTone =
   | "strong";
 
 const TONES: Record<BadgeTone, string> = {
-  neutral: "bg-[var(--mist)]/30 text-[var(--ink)]/70",
-  info: "bg-[var(--indigo)]/10 text-[var(--indigo)]",
+  neutral: "bg-[var(--line)]/30 text-[var(--ink)]/70",
+  info: "bg-[var(--navy)]/10 text-[var(--navy)]",
   success: "bg-emerald-100 text-emerald-800",
-  warning: "bg-[var(--gold)]/20 text-[#8a5a00]",
-  danger: "bg-[var(--coral)]/15 text-[#a8371c]",
+  warning: "bg-[var(--warning)]/20 text-[#8a5a00]",
+  danger: "bg-[var(--danger)]/15 text-[#a8371c]",
   strong: "bg-[var(--ink)] text-white",
 };
 

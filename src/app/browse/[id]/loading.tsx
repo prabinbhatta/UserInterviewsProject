@@ -13,7 +13,7 @@ export default function Loading() {
         <Skeleton className="mt-4 h-4 w-full" />
         <Skeleton className="mt-1.5 h-4 w-5/6" />
         <Skeleton className="mt-1.5 h-4 w-2/3" />
-        <div className="mt-8 rounded-2xl border border-[var(--mist)] bg-white p-5">
+        <div className="mt-8 rounded-2xl border border-[var(--line)] bg-white p-5">
           <Skeleton className="h-4 w-40" />
           <Skeleton className="mt-2 h-3 w-56" />
           <Skeleton className="mt-4 h-11 w-full rounded-full" />

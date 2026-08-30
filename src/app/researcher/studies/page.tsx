@@ -30,7 +30,7 @@ const formatLabelKeys: Record<string, TranslationKey> = {
 };
 
 const navPillClasses =
-  "rounded-full border border-[var(--mist)] bg-white px-3 py-1 text-xs font-medium text-[var(--ink)]/70 transition-colors hover:border-[var(--coral)] hover:text-[var(--coral)]";
+  "rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs font-medium text-[var(--ink)]/70 transition-colors hover:border-[var(--signal)] hover:text-[var(--signal)]";
 
 export default async function StudiesPage() {
   const { t } = await getLang();
@@ -57,7 +57,7 @@ export default async function StudiesPage() {
             <Link href="/researcher" className={`text-sm ${mutedLinkClasses}`}>
               {t("backToDashboard")}
             </Link>
-            <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+            <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
               {t("yourStudies")}
             </h1>
           </div>
@@ -121,7 +121,7 @@ export default async function StudiesPage() {
                   )}
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2 border-t border-[var(--mist)]/60 pt-4">
+                <div className="mt-4 flex flex-wrap gap-2 border-t border-[var(--line)]/60 pt-4">
                   <Link
                     href={`/researcher/studies/${study.id}/applications`}
                     className={navPillClasses}

@@ -100,7 +100,7 @@ export function CsvInviteForm({ studyId }: { studyId: string }) {
               <li
                 key={i}
                 className={`flex items-center justify-between gap-2 rounded px-2 py-1 ${
-                  row.valid ? "text-[var(--ink)]/80" : "bg-[var(--coral)]/10 text-[#a8371c]"
+                  row.valid ? "text-[var(--ink)]/80" : "bg-[var(--danger)]/10 text-[#a8371c]"
                 }`}
               >
                 <span className="truncate">

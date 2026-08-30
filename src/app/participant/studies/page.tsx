@@ -89,7 +89,7 @@ export default async function BrowseStudiesPage({
           </Link>
           <LangToggle />
         </div>
-        <h1 className="mt-2 font-serif-display text-3xl font-medium text-[var(--ink)]">
+        <h1 className="mt-2 font-display text-3xl font-medium text-[var(--ink)]">
           {t("openStudies")}
         </h1>
 
@@ -185,7 +185,7 @@ export default async function BrowseStudiesPage({
             {studies.map((study) => (
               <li key={study.id}>
                 <Link href={`/participant/studies/${study.id}`} className="block">
-                  <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--coral)]">
+                  <Card className="transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)]">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <h2 className="font-semibold text-[var(--ink)]">

@@ -8,7 +8,7 @@ function EmptyIllustration() {
       aria-hidden="true"
       className="mx-auto"
     >
-      <circle cx="48" cy="48" r="44" fill="var(--mist)" fillOpacity="0.25" />
+      <circle cx="48" cy="48" r="44" fill="var(--line)" fillOpacity="0.25" />
       <rect
         x="26"
         y="34"
@@ -16,18 +16,18 @@ function EmptyIllustration() {
         height="32"
         rx="6"
         fill="white"
-        stroke="var(--mist)"
+        stroke="var(--line)"
         strokeWidth="2"
       />
       <path
         d="M26 40 L48 54 L70 40"
-        stroke="var(--indigo)"
+        stroke="var(--navy)"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
       />
-      <circle cx="66" cy="30" r="7" fill="var(--coral)" />
+      <circle cx="66" cy="30" r="7" fill="var(--signal)" />
       <path
         d="M63 30 L65.2 32.2 L69.5 27.5"
         stroke="white"
@@ -50,7 +50,7 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="mt-8 flex flex-col items-center rounded-2xl border border-dashed border-[var(--mist)] px-6 py-12 text-center">
+    <div className="mt-8 flex flex-col items-center rounded-2xl border border-dashed border-[var(--line)] px-6 py-12 text-center">
       <EmptyIllustration />
       <p className="mt-4 font-medium text-[var(--ink)]">{title}</p>
       {body && <p className="mt-1.5 max-w-sm text-sm text-[var(--ink)]/70">{body}</p>}
