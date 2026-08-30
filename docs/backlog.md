@@ -4,6 +4,20 @@ Running list of scoped-but-not-yet-built work, grouped by priority. Update as it
 
 ## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
+### Vercel auto-deploy stopped after Aug 24 — investigating
+`panelmeet.com` and `prabinbhatta.com.np` are both serving a build from
+before Aug 24 — none of the commits since (including today's design
+system and landing-page motion work) have gone live. Vercel's project
+Git settings show the GitHub repo connected (since Aug 23) with the
+right events enabled, and the Vercel GitHub App's repository access
+includes `UserInterviewsProject` and isn't suspended — both look
+healthy. Recent Vercel deployment history shows only manual "Redeploy"
+clicks reusing the same stale Aug 24 build, nothing newer. Cause still
+unconfirmed; this commit is a live test to see whether a fresh push
+triggers a real deployment now. If it doesn't, next to check: Ignored
+Build Step and Production Branch under Project Settings → Build and
+Deployment.
+
 ### ~~Resend domain verification~~ — shipped 2026-08-24
 Verified `mail.research.prabinbhatta.com.np` in Resend (DKIM/SPF/DMARC
 records added via Vercel DNS). This fixed two separate things: (1)
