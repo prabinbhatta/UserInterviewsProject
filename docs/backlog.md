@@ -445,3 +445,35 @@ expiring between screenshots). CSV import was reviewed via code only
 this browser automation layer can't drive a native file-input upload.
 Not yet covered: researcher analytics, the admin dashboard, and the
 calendar/.ics export. Worth a dedicated pass.
+
+### ~~Researcher analytics, admin dashboard, and calendar/.ics export review~~ — shipped 2026-08-30
+Closed out the pass above. This one was code review rather than live
+click-through — Claude can't authenticate as a test researcher/admin
+(entering passwords isn't something it does even with permission), so
+this needs a live pass from an actual logged-in session to fully match
+the rigor of the 2026-08-26 pass.
+
+Researcher analytics (`/researcher/studies/[id]/analytics`) and its
+loading skeleton checked out clean: correctly scoped to the study's own
+`researcher_id`, funnel math is sound, skeleton mirrors the real layout.
+
+Found and fixed one real authorization bug in the admin dashboard:
+`adminResolveIncentive`/`adminResolveReport` in `src/app/admin/actions.ts`
+had no `is_admin` check, relying entirely on RLS. That was fine for
+`adminResolveReport` (the `reports` table's only UPDATE policy is
+admin-gated), but `incentive_records` also grants researchers and
+participants a `for all` policy on their own rows — so any researcher
+could call `adminResolveIncentive` directly on their own study's disputed
+incentive and flip a participant's "not received" report to "received"
+without any admin ever reviewing it, defeating the point of the "needs
+your attention" queue. Fixed by adding an explicit `is_admin` check to
+both actions.
+
+Also hardened `/calendar/[slotId]` (the .ics export): added RFC 5545 line
+folding for long/multi-byte (Nepali) SUMMARY/LOCATION/DESCRIPTION lines,
+which stricter clients like Outlook desktop can reject unfolded; fixed
+`escapeIcsText` to escape backslashes (was missing, ahead of the
+comma/semicolon escaping it already had); and gave the download a
+filename derived from the study title instead of a fixed `session.ics`
+for every event. Auth/authorization on the route itself (must be the
+booked participant or the study's researcher) was already correct.
