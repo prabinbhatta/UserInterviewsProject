@@ -6,9 +6,13 @@ import { VoiceWaveform } from "./VoiceWaveform";
 import { Reveal } from "./Reveal";
 import { JourneyTimeline } from "./JourneyTimeline";
 import { PlatformFlow } from "./PlatformFlow";
-import { ScreenerIcon, CalendarIcon, PaymentCheckIcon } from "./TrustIcons";
+import { ScreenerIcon, CalendarIcon, PaymentCheckIcon, BuildingIcon, SpeechIcon } from "./TrustIcons";
 import { SiteHeader } from "./SiteHeader";
 import { useLanguage } from "./LanguageProvider";
+import { SplitReveal } from "./SplitReveal";
+import { Magnetic } from "./Magnetic";
+import { Tilt } from "./Tilt";
+import { PanelIllustration } from "./PanelIllustration";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -27,26 +31,32 @@ export default function Home() {
       {/* Hero */}
       <section className="relative mx-auto w-full max-w-6xl overflow-hidden px-6 pt-8 pb-20 sm:px-10 sm:pt-14">
         <div className="relative grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="motion-safe:animate-[riseIn_0.7s_ease-out]">
+          <div className="motion-safe:animate-[fadeIn_0.5s_ease-out]">
             <p className="font-mono-utility text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
               {t("heroKicker")}
             </p>
             <h1 className="font-display mt-4 text-[2.5rem] font-medium sm:text-6xl">
-              {t("heroTitleLead")}{" "}
-              <span className="text-[var(--accent)]">
-                {t("heroTitleEmphasis")}
-              </span>
+              <SplitReveal text={t("heroTitleLead")} />{" "}
+              <SplitReveal
+                text={t("heroTitleEmphasis")}
+                className="text-[var(--accent)]"
+                startDelay={280}
+              />
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-[var(--ink)]/75">
               {t("heroBody")}
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <LinkButton href="/signup?role=researcher" variant="primary">
-                {t("ctaResearcher")}
-              </LinkButton>
-              <LinkButton href="/signup?role=participant" variant="secondary">
-                {t("ctaParticipant")}
-              </LinkButton>
+              <Magnetic>
+                <LinkButton href="/signup?role=researcher" variant="primary">
+                  {t("ctaResearcher")}
+                </LinkButton>
+              </Magnetic>
+              <Magnetic>
+                <LinkButton href="/signup?role=participant" variant="secondary">
+                  {t("ctaParticipant")}
+                </LinkButton>
+              </Magnetic>
             </div>
           </div>
 
@@ -54,6 +64,13 @@ export default function Home() {
             <VoiceWaveform />
           </div>
         </div>
+      </section>
+
+      {/* Panel illustration — a visual break stating the mechanic before the flow explains it */}
+      <section className="mx-auto w-full max-w-6xl px-6 pb-14 sm:px-10">
+        <Reveal>
+          <PanelIllustration />
+        </Reveal>
       </section>
 
       {/* Platform flow — what this actually is, at a glance */}
@@ -77,8 +94,12 @@ export default function Home() {
           </Reveal>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <Reveal delay={80}>
-              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--navy)] p-8 text-white transition-all duration-300 ease-interact hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(27,47,69,0.5)]">
-                <p className="font-mono-utility text-xs uppercase tracking-widest text-white/60">
+              <Tilt max={5} className="group h-full">
+                <div className="h-full rounded-2xl border border-[var(--line)] bg-[var(--navy)] p-8 text-white shadow-[0_1px_3px_rgba(18,22,29,0.05)] transition-shadow duration-300 ease-interact group-hover:shadow-[0_24px_44px_-18px_rgba(27,47,69,0.6)]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
+                  <BuildingIcon />
+                </div>
+                <p className="mt-4 font-mono-utility text-xs uppercase tracking-widest text-white/60">
                   {t("forCompanies")}
                 </p>
                 <h3 className="font-display mt-3 text-2xl font-medium">
@@ -98,12 +119,17 @@ export default function Home() {
                     →
                   </span>
                 </Link>
-              </div>
+                </div>
+              </Tilt>
             </Reveal>
 
             <Reveal delay={200}>
-              <div className="group h-full rounded-2xl border border-[var(--line)] bg-[var(--warning)] p-8 text-[var(--ink)] transition-all duration-300 ease-interact hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(201,147,15,0.5)]">
-                <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
+              <Tilt max={5} className="group h-full">
+                <div className="h-full rounded-2xl border border-[var(--line)] bg-[var(--warning)] p-8 text-[var(--ink)] shadow-[0_1px_3px_rgba(18,22,29,0.05)] transition-shadow duration-300 ease-interact group-hover:shadow-[0_24px_44px_-18px_rgba(201,147,15,0.55)]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/50">
+                  <SpeechIcon />
+                </div>
+                <p className="mt-4 font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/60">
                   {t("forParticipants")}
                 </p>
                 <h3 className="font-display mt-3 text-2xl font-medium">
@@ -123,7 +149,8 @@ export default function Home() {
                     →
                   </span>
                 </Link>
-              </div>
+                </div>
+              </Tilt>
             </Reveal>
           </div>
         </div>

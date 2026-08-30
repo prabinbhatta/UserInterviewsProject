@@ -80,6 +80,16 @@ body {
   }
 }
 
+@keyframes panelPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
