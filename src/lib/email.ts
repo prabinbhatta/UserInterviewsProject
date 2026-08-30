@@ -2,7 +2,7 @@ import { Resend } from "resend";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-const FROM = "PanelMeet <no-reply@mail.research.prabinbhatta.com.np>";
+const FROM = "PanelMeet <no-reply@panelmeet.com>";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 // Brand tokens mirrored from src/app/globals.css — email clients can't read

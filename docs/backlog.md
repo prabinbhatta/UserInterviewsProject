@@ -176,15 +176,18 @@ Founder purchased `panelmeet.com`. Renamed everywhere: page titles/
 metadata, Open Graph image, terms/privacy copy, browse pages, the
 .ics calendar export (`PRODID`, `UID`, `DESCRIPTION`), the email
 template's brand kicker/footer link, and the portfolio project entry
-(including its "Visit site" link). The `FROM` address's display name
-changed to "PanelMeet <no-reply@mail.research.prabinbhatta.com.np>",
-but the address's own domain was deliberately left unchanged since
-it's the existing Resend-verified sending domain — migrating that
-requires a separate DNS verification step under panelmeet.com and
-would risk breaking outbound email if done casually. DNS/Vercel/
-Supabase Site URL cutover to the new domain is a separate,
-founder-side step (Spaceship A record → Vercel domain → env var →
-Supabase Auth redirect URLs), in progress.
+(including its "Visit site" link, found and fixed a second missed
+occurrence of the old href after the first pass). DNS cut over in
+Spaceship (A record → Vercel), Vercel primary domain + redeploy, and
+Supabase Auth Site URL/Redirect URLs all updated to panelmeet.com.
+
+Outbound email fully migrated too: verified `panelmeet.com` in Resend
+(DKIM/SPF/DMARC records added in Spaceship) and switched `FROM` in
+`src/lib/email.ts` from `no-reply@mail.research.prabinbhatta.com.np`
+to `no-reply@panelmeet.com` — no more references to the old domain
+anywhere in the app. `research.prabinbhatta.com.np` itself is being
+retired; `prabinbhatta.com.np` stays as-is for the founder's
+portfolio.
 
 ### ~~Auto-generated video meeting links~~ — shipped 2026-08-24
 Google Meet via the dedicated Meet API (not the Calendar API — the

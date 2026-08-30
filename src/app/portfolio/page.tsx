@@ -322,7 +322,7 @@ export default function PortfolioPage() {
             Projects
           </p>
           <a
-            href="https://research.prabinbhatta.com.np"
+            href="https://panelmeet.com"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 block rounded-2xl border border-[var(--mist)] bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--coral)] sm:p-8"
