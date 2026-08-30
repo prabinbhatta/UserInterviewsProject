@@ -397,6 +397,40 @@ Verified end-to-end against the database: join adds a row to
 `study_waitlist`, leave removes it, and the UI reflects both correctly
 with no reload. See `0031_closed_study_visibility_for_waitlist.sql`.
 
+### ~~Confirmation and notification emails linking to localhost in production~~ — shipped 2026-08-29
+Reported by the founder: the signup confirmation email's link pointed at
+`localhost:3000` instead of the real domain. Root cause was a naming
+mismatch, not a missing config step — Vercel's production env vars had
+a `NEXT_PUBLIC_BASE_URL` variable set, but `src/app/signup/actions.ts`,
+`src/lib/email.ts`, and `src/app/layout.tsx` all read
+`NEXT_PUBLIC_SITE_URL` specifically, which didn't exist, so every one
+silently fell back to its `http://localhost:3000` default. This affected
+the Supabase Auth signup confirmation link and all 7 in-app notification
+email CTAs in `email.ts` (approved, slot booked, new message, cancelled,
+reminder, waitlist, incentive sent); `/forgot-password` was unaffected
+since it derives the origin from `window.location.origin` client-side
+rather than this env var. Fixed by adding `NEXT_PUBLIC_SITE_URL=https://
+prabinbhatta.com.np` under the correct name in Vercel (Config type, not
+Secret, since `NEXT_PUBLIC_` values ship to the browser regardless) and
+redeploying. This is the actual resolution of the `NEXT_PUBLIC_SITE_URL`
+follow-up flagged under "DNS propagation" above, which had only checked
+that DNS routing itself worked, not that the app's own env var was set
+under the name the code expects.
+
+### ~~Notification email template redesign~~ — shipped 2026-08-29
+The shared `wrap()` template in `src/lib/email.ts` used placeholder
+styling (gray zinc text, `#18181b` button) unrelated to the app's actual
+brand — every one of the 7 in-app notification emails inherited it.
+Rebuilt with the real palette from `globals.css` (coral/gold accent bar,
+mono-uppercase brand kicker, ink pill CTA button matching the site's
+`LinkButton` primary variant, mist-bordered card), a hidden preheader
+auto-derived from the body text so inbox previews show real content, and
+a footer explaining why the recipient is getting the email. Table-based
+layout for Outlook/client compatibility. No call sites changed — all 7
+`send*Email` functions pick up the new look automatically. Verified by
+rendering the template standalone in-browser with sample content (real
+delivery not exercised, since that requires a live Resend send).
+
 ### Remaining pages not yet usability-tested
 The 2026-08-26 usability pass covered profile/settings forms, the
 researcher studies list, an applicant detail view, a message thread,
