@@ -189,6 +189,14 @@ anywhere in the app. `research.prabinbhatta.com.np` itself is being
 retired; `prabinbhatta.com.np` stays as-is for the founder's
 portfolio.
 
+One spot the migration missed on the first pass: Supabase Auth's own
+custom SMTP sender (Authentication → Emails → SMTP Settings) is a
+separate setting from Site URL/Redirect URLs and from `email.ts`'s
+`FROM` — it was still sending Supabase's built-in confirmation/reset
+emails from `no-reply@mail.research.prabinbhatta.com.np` with sender
+name "Nepal User Research". Updated to `no-reply@panelmeet.com` /
+"PanelMeet" so those emails match the rest of the rebrand.
+
 ### ~~Auto-generated video meeting links~~ — shipped 2026-08-24
 Google Meet via the dedicated Meet API (not the Calendar API — the
 Calendar API's auto-generated conference data always defaults to
