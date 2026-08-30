@@ -6,7 +6,31 @@ function formatIcsDate(date: Date): string {
 }
 
 function escapeIcsText(text: string): string {
-  return text.replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
+  return text.replace(/\\/g, "\\\\").replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
+}
+
+// RFC 5545 requires content lines over 75 octets to be folded onto
+// continuation lines starting with a single space. Study titles can be
+// long (and, since this app is bilingual, multi-byte Devanagari text), so
+// this folds on UTF-8 byte boundaries — stricter clients like Outlook
+// desktop reject or mangle unfolded long lines.
+function foldIcsLine(line: string): string {
+  const bytes = Buffer.from(line, "utf8");
+  if (bytes.length <= 75) return line;
+
+  const chunks: string[] = [];
+  let start = 0;
+  let limit = 75;
+  while (start < bytes.length) {
+    let end = Math.min(start + limit, bytes.length);
+    // Don't split in the middle of a multi-byte UTF-8 sequence
+    // (continuation bytes are 10xxxxxx, i.e. 0x80-0xBF).
+    while (end < bytes.length && (bytes[end] & 0xc0) === 0x80) end--;
+    chunks.push(bytes.subarray(start, end).toString("utf8"));
+    start = end;
+    limit = 74; // continuation lines start with a folding space
+  }
+  return chunks.join("\r\n ");
 }
 
 export async function GET(
@@ -60,17 +84,26 @@ export async function GET(
     `DTSTAMP:${formatIcsDate(new Date())}`,
     `DTSTART:${formatIcsDate(start)}`,
     `DTEND:${formatIcsDate(end)}`,
-    `SUMMARY:${escapeIcsText(title)}`,
-    ...(slot.location ? [`LOCATION:${escapeIcsText(slot.location)}`] : []),
-    `DESCRIPTION:${escapeIcsText(`Research session for "${title}" via Nepal User Research.`)}`,
+    foldIcsLine(`SUMMARY:${escapeIcsText(title)}`),
+    ...(slot.location ? [foldIcsLine(`LOCATION:${escapeIcsText(slot.location)}`)] : []),
+    foldIcsLine(
+      `DESCRIPTION:${escapeIcsText(`Research session for "${title}" via Nepal User Research.`)}`,
+    ),
     "END:VEVENT",
     "END:VCALENDAR",
   ];
 
+  const filenameSlug =
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60) || "session";
+
   return new NextResponse(lines.join("\r\n"), {
     headers: {
       "Content-Type": "text/calendar; charset=utf-8",
-      "Content-Disposition": `attachment; filename="session.ics"`,
+      "Content-Disposition": `attachment; filename="${filenameSlug}.ics"`,
     },
   });
 }
