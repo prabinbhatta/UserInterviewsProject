@@ -28,9 +28,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const study = await getStudy(id);
-  if (!study) return { title: "Study not found — Nepal User Research" };
+  if (!study) return { title: "Study not found — PanelMeet" };
 
-  const title = `${study.title} — Nepal User Research`;
+  const title = `${study.title} — PanelMeet`;
   const description = study.description.slice(0, 160);
   return {
     title,

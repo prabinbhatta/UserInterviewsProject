@@ -8,7 +8,7 @@ import { LinkButton } from "@/components/ui/LinkButton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { mutedLinkClasses } from "@/components/ui/link";
 
-const TITLE = "Open Studies — Nepal User Research";
+const TITLE = "Open Studies — PanelMeet";
 const DESCRIPTION =
   "Browse paid research studies open to participants in Nepal right now — online, in-person, and phone sessions.";
 

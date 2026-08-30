@@ -2,7 +2,7 @@ import { Resend } from "resend";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-const FROM = "Nepal User Research <no-reply@mail.research.prabinbhatta.com.np>";
+const FROM = "PanelMeet <no-reply@mail.research.prabinbhatta.com.np>";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 // Brand tokens mirrored from src/app/globals.css — email clients can't read
@@ -37,7 +37,7 @@ function wrap(bodyHtml: string, ctaHref?: string, ctaLabel?: string) {
         <tr>
           <td style="background: #ffffff; border-left: 1px solid ${MIST}; border-right: 1px solid ${MIST}; padding: 32px 36px 8px;">
             <p style="margin: 0 0 20px; font-family: ui-monospace, 'SF Mono', 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: ${CORAL};">
-              Nepal User Research
+              PanelMeet
             </p>
             <div style="font-size: 15px; line-height: 1.65; color: ${INK};">
               ${bodyHtml}
@@ -56,7 +56,7 @@ function wrap(bodyHtml: string, ctaHref?: string, ctaLabel?: string) {
             <div style="border-top: 1px solid #eceef5; padding-top: 16px;">
               <p style="margin: 0; font-size: 12px; line-height: 1.6; color: ${INK_MUTED};">
                 You're receiving this because you have an account on
-                <a href="${SITE_URL}" style="color: ${INK_MUTED}; text-decoration: underline; text-decoration-color: ${MIST};">Nepal User Research</a>.
+                <a href="${SITE_URL}" style="color: ${INK_MUTED}; text-decoration: underline; text-decoration-color: ${MIST};">PanelMeet</a>.
               </p>
             </div>
           </td>

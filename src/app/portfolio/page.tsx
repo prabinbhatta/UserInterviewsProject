@@ -221,7 +221,7 @@ export default function PortfolioPage() {
             Entrepreneurship, which is also why I don&apos;t just analyze products — I
             build them. The{" "}
             <a
-              href="https://research.prabinbhatta.com.np"
+              href="https://panelmeet.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[var(--ink)] underline decoration-[var(--mist)] underline-offset-4 hover:text-[var(--coral)] hover:decoration-[var(--coral)]"
@@ -330,7 +330,7 @@ export default function PortfolioPage() {
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h3 className="font-serif-display text-2xl font-medium text-[var(--ink)]">
-                  Nepal User Research
+                  PanelMeet
                 </h3>
                 <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--ink)]/70">
                   A two-sided marketplace connecting Nepali companies with research

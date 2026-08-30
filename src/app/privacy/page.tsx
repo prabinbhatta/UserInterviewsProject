@@ -2,7 +2,7 @@ import Link from "next/link";
 import { mutedLinkClasses } from "@/components/ui/link";
 
 export const metadata = {
-  title: "Privacy Policy — Nepal User Research",
+  title: "Privacy Policy — PanelMeet",
 };
 
 export default function PrivacyPage() {
@@ -19,7 +19,7 @@ export default function PrivacyPage() {
 
         <div className="mt-8 space-y-6 text-[var(--ink)]/80">
           <p>
-            This page explains what information Nepal User Research collects
+            This page explains what information PanelMeet collects
             and how it&apos;s used. We collect only what&apos;s needed to run the
             platform and keep it trustworthy for both researchers and
             participants.

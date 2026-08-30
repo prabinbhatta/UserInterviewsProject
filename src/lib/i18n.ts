@@ -2,7 +2,7 @@ export type Lang = "en" | "ne";
 
 export const translations = {
   en: {
-    brand: "Research Platform",
+    brand: "PanelMeet",
     logIn: "Log in",
     heroKicker: "User research · Starting in Nepal",
     heroTitleLead: "Every great insight starts as",
@@ -341,7 +341,7 @@ export const translations = {
     emptySlotsTitle: "No open time slots",
   },
   ne: {
-    brand: "अनुसन्धान प्लेटफर्म",
+    brand: "PanelMeet",
     logIn: "लगइन",
     heroKicker: "प्रयोगकर्ता अनुसन्धान · नेपालबाट सुरु",
     heroTitleLead: "हरेक उत्कृष्ट अन्तर्दृष्टि सुरु हुन्छ",

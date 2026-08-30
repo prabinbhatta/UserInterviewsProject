@@ -31,7 +31,7 @@ export default async function Image() {
             fontWeight: 600,
           }}
         >
-          Research Platform
+          PanelMeet
         </div>
         <div
           style={{

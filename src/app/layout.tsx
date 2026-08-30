@@ -26,8 +26,8 @@ const plexMono = IBM_Plex_Mono({
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const TITLE = "Nepal User Research";
-const DESCRIPTION = "Connecting Nepali companies with research participants.";
+const TITLE = "PanelMeet";
+const DESCRIPTION = "PanelMeet connects Nepali companies with research participants.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

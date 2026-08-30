@@ -2,7 +2,7 @@ import Link from "next/link";
 import { mutedLinkClasses } from "@/components/ui/link";
 
 export const metadata = {
-  title: "Terms of Service — Nepal User Research",
+  title: "Terms of Service — PanelMeet",
 };
 
 export default function TermsPage() {
@@ -19,7 +19,7 @@ export default function TermsPage() {
 
         <div className="mt-8 space-y-6 text-[var(--ink)]/80">
           <p>
-            Nepal User Research (&ldquo;the platform&rdquo;, &ldquo;we&rdquo;) connects
+            PanelMeet (&ldquo;the platform&rdquo;, &ldquo;we&rdquo;) connects
             companies running user research studies (&ldquo;researchers&rdquo;) with
             people willing to take part in them (&ldquo;participants&rdquo;). By
             creating an account, you agree to these terms.
