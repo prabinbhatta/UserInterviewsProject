@@ -1,20 +1,17 @@
-// The PanelMeet mark: a row of dots (a panel of applicants) with the
-// center one solid-filled and ringed — the active-speaker convention
-// from video calls (a meet). One shared component so every placement
-// (header, favicon reuse in PlatformFlow, future spots) stays in sync
-// instead of each one hand-rolling its own copy of the same SVG.
+// The PanelMeet mark: two overlapping speech-bubble tiles — researcher
+// and participant, meeting in the middle. One shared component so every
+// placement (header, favicon reuse in PlatformFlow, future spots) stays
+// in sync instead of each one hand-rolling its own copy of the SVG.
 //
-// `mono` renders every dot in currentColor (for contexts already inside
-// a colored badge/icon circle, e.g. PlatformFlow). The default duotone
-// version uses ink for the outer dots and the brand accent for the
-// match — this is the one that reads as "the logo."
-
-const DOTS = [
-  { cx: 7, r: 3.4, opacity: 0.32 },
-  { cx: 18, r: 4.4, opacity: 0.52 },
-  { cx: 44, r: 4.4, opacity: 0.52 },
-  { cx: 55, r: 3.4, opacity: 0.32 },
-];
+// The paper-colored outline on the front bubble isn't decorative — it's
+// what keeps the two shapes reading as distinct once this gets shrunk to
+// favicon size instead of blurring into one blob.
+//
+// `mono` renders both bubbles in currentColor (for contexts already
+// inside a colored badge/icon circle, e.g. PlatformFlow) and drops the
+// separating outline, since there's no fixed background color to punch
+// through with there. The default duotone version — navy back bubble,
+// accent front bubble — is the one that reads as "the logo."
 
 export function LogoMark({
   size = 22,
@@ -25,23 +22,36 @@ export function LogoMark({
   mono?: boolean;
   className?: string;
 }) {
-  const dotFill = mono ? "currentColor" : "var(--ink)";
-  const matchFill = mono ? "currentColor" : "var(--accent)";
+  const back = mono ? "currentColor" : "var(--navy)";
+  const front = mono ? "currentColor" : "var(--accent)";
 
   return (
     <svg
-      width={size * (70 / 22)}
+      width={size}
       height={size}
-      viewBox="0 0 70 22"
+      viewBox="0 0 96 96"
       fill="none"
       aria-hidden="true"
       className={className}
     >
-      {DOTS.map((dot) => (
-        <circle key={dot.cx} cx={dot.cx} cy={11} r={dot.r} fill={dotFill} opacity={mono ? dot.opacity : dot.opacity} />
-      ))}
-      <circle cx={31} cy={11} r={6.5} fill={matchFill} />
-      <circle cx={31} cy={11} r={9.2} stroke={matchFill} strokeWidth={1.5} fill="none" />
+      <rect x="8" y="19" width="53" height="42" rx="13" fill={back} />
+      <path d="M19 61 L19 75 L32 61 Z" fill={back} />
+      <rect
+        x="35"
+        y="35"
+        width="53"
+        height="42"
+        rx="13"
+        fill={front}
+        opacity={mono ? 0.6 : 1}
+        stroke={mono ? "none" : "var(--paper)"}
+        strokeWidth={mono ? 0 : 3}
+      />
+      <path
+        d="M77 77 L77 91 L64 77 Z"
+        fill={front}
+        opacity={mono ? 0.6 : 1}
+      />
     </svg>
   );
 }

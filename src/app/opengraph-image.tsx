@@ -20,13 +20,11 @@ export default async function Image() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <svg width="46" height="15" viewBox="0 0 70 22" fill="none">
-            <circle cx="7" cy="11" r="3.4" fill="#12161D" opacity="0.28" />
-            <circle cx="18" cy="11" r="4.3" fill="#12161D" opacity="0.45" />
-            <circle cx="31" cy="11" r="6.5" fill="#29527C" />
-            <circle cx="31" cy="11" r="9" stroke="#29527C" strokeWidth="1.3" fill="none" />
-            <circle cx="44" cy="11" r="4.3" fill="#12161D" opacity="0.45" />
-            <circle cx="55" cy="11" r="3.4" fill="#12161D" opacity="0.28" />
+          <svg width="34" height="34" viewBox="0 0 96 96" fill="none">
+            <rect x="8" y="19" width="53" height="42" rx="13" fill="#1B2F45" />
+            <path d="M19 61 L19 75 L32 61 Z" fill="#1B2F45" />
+            <rect x="35" y="35" width="53" height="42" rx="13" fill="#29527C" stroke="#EEF1F4" strokeWidth="3" />
+            <path d="M77 77 L77 91 L64 77 Z" fill="#29527C" />
           </svg>
           <div
             style={{
