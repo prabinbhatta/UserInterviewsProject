@@ -4,6 +4,22 @@ Running list of scoped-but-not-yet-built work, grouped by priority. Update as it
 
 ## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
+### ~~Shared Logo component, branding on every page~~ — shipped 2026-08-30
+The panel-illustration caption added earlier didn't read well — removed
+per feedback rather than reworded, on the judgment that the illustration
+stands fine as a visual break without an explanation attached to it.
+
+Separately: the mark had been hand-copied as raw SVG independently in
+SiteHeader, PlatformFlow, and opengraph-image, and an audit turned up
+that every authenticated route (researcher, participant, admin) and
+every auth/public page (login, signup, forgot/reset-password, settings,
+report, browse, browse/[id], invite/[token], terms, privacy) had zero
+brand presence at all — no logo, no wordmark. Built `src/components/
+Logo.tsx` (`LogoMark` + `Logo`, duotone or mono via a prop) as the one
+source of truth, and `src/components/AppHeader.tsx`, a slim logo-only
+header wired in at the layout level for researcher/participant (covers
+every subpage automatically) and directly into every other page listed
+above.
 ### ~~Vercel auto-deploy stopped after Aug 24~~ — root cause found 2026-08-30
 `panelmeet.com` and `prabinbhatta.com.np` were both serving a build from
 before Aug 24 — nothing since (including the design system and
