@@ -34,23 +34,26 @@ export function LogoMark({
       aria-hidden="true"
       className={className}
     >
-      <rect x="8" y="19" width="53" height="42" rx="13" fill={back} />
-      <path d="M19 61 L19 75 L32 61 Z" fill={back} />
+      <rect x="8" y="19" width="53" height="42" rx="14" fill={back} />
+      <path d="M18 61 Q13 71 10 78 Q21 74 31 61 Z" fill={back} />
       <rect
         x="35"
         y="35"
         width="53"
         height="42"
-        rx="13"
+        rx="14"
         fill={front}
         opacity={mono ? 0.6 : 1}
         stroke={mono ? "none" : "var(--paper)"}
         strokeWidth={mono ? 0 : 3}
       />
       <path
-        d="M77 77 L77 91 L64 77 Z"
+        d="M76 77 Q81 87 84 94 Q73 90 63 77 Z"
         fill={front}
         opacity={mono ? 0.6 : 1}
+        stroke={mono ? "none" : "var(--paper)"}
+        strokeWidth={mono ? 0 : 3}
+        strokeLinejoin="round"
       />
     </svg>
   );
