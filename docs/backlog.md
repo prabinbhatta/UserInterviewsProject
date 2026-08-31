@@ -4,6 +4,23 @@ Running list of scoped-but-not-yet-built work, grouped by priority. Update as it
 
 ## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
+### ~~Logo mark: Conversation~~ — shipped 2026-08-30
+Explored 10 distinct concepts (video-call ring, app-icon tile, speech
+bubbles, waveform panel, P monogram, round table, converging arrows,
+mountain peak, target/compass, stacked cards) before picking — the
+dots-and-ring mark from earlier wasn't cutting it as "a real logo."
+Chose "Conversation" (two overlapping speech-bubble tiles, researcher
+and participant meeting in the middle) over the recommended pick
+(Waveform Panel, which tied back to the hero's real audio waveform) —
+explicit tradeoff of a more common visual language for immediate,
+zero-explanation readability. Added a paper-colored outline on the
+front bubble so the two shapes stay distinct at favicon size instead of
+blurring into one blob — verified at actual 32x32 render, not just
+scaled down in a browser. See `src/components/Logo.tsx` (now the one
+place the mark is defined — SiteHeader/AppHeader/PlatformFlow all
+consume it, so this one change propagated everywhere); `icon.tsx` and
+`opengraph-image.tsx` needed separate manual updates since Satori can't
+resolve CSS custom properties.
 ### ~~Shared Logo component, branding on every page~~ — shipped 2026-08-30
 The panel-illustration caption added earlier didn't read well — removed
 per feedback rather than reworded, on the judgment that the illustration
