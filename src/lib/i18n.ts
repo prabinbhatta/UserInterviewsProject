@@ -14,6 +14,8 @@ export const translations = {
     voiceHoverHint: "Hover to hear a moment from a real session.",
     voicePlayAriaLabel: "Play a sample moment from a research session",
 
+    panelIllustrationCaption: "Post a study, get a panel of applicants — meet the one who fits.",
+
     twoPathsTitle: "Two sides. One conversation.",
     forCompanies: "For companies",
     forCompaniesTitle: "Teams who build things people use",
@@ -352,6 +354,8 @@ export const translations = {
     ctaParticipant: "म मेरो आवाज साझा गर्न चाहन्छु",
     voiceHoverHint: "वास्तविक सत्रको एक क्षण सुन्न होभर गर्नुहोस्।",
     voicePlayAriaLabel: "अनुसन्धान सत्रको नमूना क्षण बजाउनुहोस्",
+
+    panelIllustrationCaption: "अध्ययन पोस्ट गर्नुहोस्, आवेदकहरूको समूह पाउनुहोस् — उपयुक्त व्यक्तिलाई भेट्नुहोस्।",
 
     twoPathsTitle: "दुई पक्ष। एउटै कुराकानी।",
     forCompanies: "कम्पनीहरूका लागि",
