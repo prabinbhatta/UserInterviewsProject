@@ -4,20 +4,34 @@ Running list of scoped-but-not-yet-built work, grouped by priority. Update as it
 
 ## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
-### Vercel auto-deploy stopped after Aug 24 — investigating
-`panelmeet.com` and `prabinbhatta.com.np` are both serving a build from
-before Aug 24 — none of the commits since (including today's design
-system and landing-page motion work) have gone live. Vercel's project
-Git settings showed the GitHub repo connected (since Aug 23) with the
-right events enabled, and the Vercel GitHub App's repository access
-included `UserInterviewsProject` and wasn't suspended — both looked
-healthy, yet a real push (`3b0db41`) produced zero deployment entry,
-not even a failed one, confirming the webhook itself was silently dead
-despite both sides reporting healthy. Disconnected and reconnected the
-Git repository in Project Settings → Git to force Vercel to
-re-register the hook. This commit is the test of whether that fixed
-it. If it doesn't show up, next to check: Ignored Build Step and
-Production Branch under Project Settings → Build and Deployment.
+### ~~Vercel auto-deploy stopped after Aug 24~~ — root cause found 2026-08-30
+`panelmeet.com` and `prabinbhatta.com.np` were both serving a build from
+before Aug 24 — nothing since (including the design system and
+landing-page motion work) had gone live. Root cause: `vercel.json`
+scheduled the session-reminders cron every 15 minutes, but the
+project's on the Hobby plan, which caps cron frequency at once/day —
+Vercel was rejecting every deployment outright over the invalid
+schedule. Confirmed via a failing commit status check on GitHub (the
+Vercel bot posting a failed check against every push), not visible in
+the Deployments list itself since the deploy never got that far. The
+disconnect/reconnect of the Git integration along the way (see below)
+wasn't the actual fix, but is harmless and can't hurt.
+
+Fixed by changing the schedule to `0 8 * * *` (once daily, 08:00 UTC).
+Real cost: the reminder logic (`pop_due_session_reminders`, 60-minute
+window) now only catches sessions starting 08:00-09:00 UTC on the day
+it runs — everything else gets no reminder. Chosen deliberately over
+upgrading to Pro, to unblock deployment immediately at zero cost;
+revisit if a real reminder cadence matters enough to pay for Pro, or
+redesign the reminder as a daily digest instead of a time-window catch.
+See `vercel.json`, `src/app/api/cron/session-reminders/route.ts`.
+
+Also disconnected and reconnected the Vercel↔GitHub Git integration in
+Project Settings → Git after ruling out GitHub App suspension/access
+and domain assignment (`panelmeet.com` was correctly assigned to this
+project in Production the whole time) — turned out to be a red herring
+once the cron issue was found, but left in place since it's a clean
+no-op if the connection was already fine.
 
 ### ~~Resend domain verification~~ — shipped 2026-08-24
 Verified `mail.research.prabinbhatta.com.np` in Resend (DKIM/SPF/DMARC

@@ -10,10 +10,14 @@ type DueReminder = {
   participant_name: string | null;
 };
 
-// Runs every 15 minutes (see vercel.json) and reminds anyone whose booked
-// session starts within the next hour. pop_due_session_reminders() marks
-// each slot reminded in the same call it reads them, so overlapping runs
-// can't double-send.
+// Runs once daily at 08:00 UTC (see vercel.json — Vercel's Hobby plan
+// caps cron frequency at once/day) and reminds anyone whose booked
+// session starts within the next hour of that run. In practice this
+// only catches sessions between 08:00-09:00 UTC on the day it runs;
+// everything else gets no reminder. Revisit (either the schedule, if
+// upgrading to Pro, or the window/logic here) rather than treating this
+// as the real fix. pop_due_session_reminders() marks each slot reminded
+// in the same call it reads them, so overlapping runs can't double-send.
 export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
