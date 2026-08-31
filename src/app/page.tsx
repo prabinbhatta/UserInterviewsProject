@@ -70,9 +70,6 @@ export default function Home() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-14 sm:px-10">
         <Reveal>
           <PanelIllustration />
-          <p className="font-mono-utility mt-4 text-center text-xs uppercase tracking-widest text-[var(--ink)]/70">
-            {t("panelIllustrationCaption")}
-          </p>
         </Reveal>
       </section>
 

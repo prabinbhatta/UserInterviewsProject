@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { friendlyError } from "@/lib/friendlyError";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
+import { AppHeader } from "@/components/AppHeader";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -46,19 +47,24 @@ export default function ResetPasswordPage() {
 
   if (done) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
-        <div className="w-full max-w-sm text-center">
-          <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
-            Password updated
-          </h1>
-          <p className="mt-3 text-[var(--ink)]/70">Taking you to login...</p>
+      <>
+        <AppHeader />
+        <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
+          <div className="w-full max-w-sm text-center">
+            <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
+              Password updated
+            </h1>
+            <p className="mt-3 text-[var(--ink)]/70">Taking you to login...</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
           Set a new password
@@ -94,6 +100,7 @@ export default function ResetPasswordPage() {
           {loading ? "Updating..." : "Update password"}
         </Button>
       </form>
-    </div>
+      </div>
+    </>
   );
 }

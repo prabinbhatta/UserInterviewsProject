@@ -4,6 +4,7 @@ import { signOut } from "@/app/actions";
 import { adminResolveIncentive, adminResolveReport } from "./actions";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { AppHeader } from "@/components/AppHeader";
 
 const studyStatuses = ["draft", "active", "closed"] as const;
 const applicationStatuses = [
@@ -125,7 +126,9 @@ export default async function AdminPage() {
     });
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader href="/admin" />
+      <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-3xl">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -321,6 +324,7 @@ export default async function AdminPage() {
           </Card>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

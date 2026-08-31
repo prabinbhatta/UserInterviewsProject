@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "./LanguageProvider";
+import { Logo } from "@/components/Logo";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -26,19 +27,7 @@ export function SiteHeader() {
       }`}
     >
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 sm:px-10">
-        <div className="flex items-center gap-2.5">
-          <svg width="60" height="19" viewBox="0 0 70 22" fill="none" aria-hidden="true">
-            <circle cx="7" cy="11" r="3.4" fill="var(--ink)" opacity="0.28" />
-            <circle cx="18" cy="11" r="4.3" fill="var(--ink)" opacity="0.45" />
-            <circle cx="31" cy="11" r="6.5" fill="var(--accent)" />
-            <circle cx="31" cy="11" r="9" stroke="var(--accent)" strokeWidth="1.3" fill="none" />
-            <circle cx="44" cy="11" r="4.3" fill="var(--ink)" opacity="0.45" />
-            <circle cx="55" cy="11" r="3.4" fill="var(--ink)" opacity="0.28" />
-          </svg>
-          <span className="font-display text-[15px] font-semibold text-[var(--ink)]">
-            {t("brand")}
-          </span>
-        </div>
+        <Logo wordmark={t("brand")} size={19} />
         <div className="flex items-center gap-5">
           <div className="flex items-center rounded-full border border-[var(--line)] p-0.5 font-mono-utility text-[11px] uppercase tracking-wider">
             <button

@@ -7,6 +7,7 @@ import { useLanguage } from "@/app/LanguageProvider";
 import { signUp, type SignupFormState } from "./actions";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
+import { AppHeader } from "@/components/AppHeader";
 
 type Role = "researcher" | "participant";
 
@@ -165,11 +166,14 @@ function LanguageToggle() {
 
 export default function SignupPage() {
   return (
-    <div className="relative flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
-      <LanguageToggle />
-      <Suspense>
-        <SignupForm />
-      </Suspense>
-    </div>
+    <>
+      <AppHeader />
+      <div className="relative flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
+        <LanguageToggle />
+        <Suspense>
+          <SignupForm />
+        </Suspense>
+      </div>
+    </>
   );
 }

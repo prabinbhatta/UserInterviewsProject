@@ -1,5 +1,7 @@
 "use client";
 
+import { LogoMark } from "@/components/Logo";
+
 function ClipboardIcon() {
   return (
     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -23,16 +25,7 @@ function ClipboardIcon() {
 }
 
 function PlatformIcon() {
-  return (
-    <svg width="26" height="18" viewBox="0 0 70 22" fill="none" aria-hidden="true">
-      <circle cx="7" cy="11" r="3.4" fill="currentColor" opacity="0.28" />
-      <circle cx="18" cy="11" r="4.3" fill="currentColor" opacity="0.45" />
-      <circle cx="31" cy="11" r="6.5" fill="currentColor" />
-      <circle cx="31" cy="11" r="9" stroke="currentColor" strokeWidth="1.3" fill="none" />
-      <circle cx="44" cy="11" r="4.3" fill="currentColor" opacity="0.45" />
-      <circle cx="55" cy="11" r="3.4" fill="currentColor" opacity="0.28" />
-    </svg>
-  );
+  return <LogoMark size={18} mono />;
 }
 
 function VoiceIcon() {

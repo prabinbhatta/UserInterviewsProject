@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { friendlyError } from "@/lib/friendlyError";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
+import { AppHeader } from "@/components/AppHeader";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -36,28 +37,33 @@ export default function ForgotPasswordPage() {
 
   if (submitted) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
-        <div className="w-full max-w-sm text-center">
-          <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
-            Check your email
-          </h1>
-          <p className="mt-3 text-[var(--ink)]/70">
-            If an account exists for <strong>{email}</strong>, we sent a link
-            to reset your password.
-          </p>
-          <Link
-            href="/login"
-            className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
-          >
-            Back to login
-          </Link>
+      <>
+        <AppHeader />
+        <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
+          <div className="w-full max-w-sm text-center">
+            <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
+              Check your email
+            </h1>
+            <p className="mt-3 text-[var(--ink)]/70">
+              If an account exists for <strong>{email}</strong>, we sent a link
+              to reset your password.
+            </p>
+            <Link
+              href="/login"
+              className="mt-6 inline-block text-sm text-[var(--ink)]/60 underline decoration-[var(--line)] underline-offset-4 hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+            >
+              Back to login
+            </Link>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
           Reset your password
@@ -93,6 +99,7 @@ export default function ForgotPasswordPage() {
           </Link>
         </p>
       </form>
-    </div>
+      </div>
+    </>
   );
 }

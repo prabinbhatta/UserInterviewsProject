@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { AppHeader } from "@/components/AppHeader";
 
 export default async function ResearcherLayout({
   children,
@@ -20,5 +21,10 @@ export default async function ResearcherLayout({
 
   if (profile?.role !== "researcher") redirect("/participant");
 
-  return <>{children}</>;
+  return (
+    <>
+      <AppHeader href="/researcher" />
+      {children}
+    </>
+  );
 }

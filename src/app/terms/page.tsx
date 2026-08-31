@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { AppHeader } from "@/components/AppHeader";
 
 export const metadata = {
   title: "Terms of Service — PanelMeet",
@@ -7,7 +8,9 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-2xl">
         <Link href="/" className={`text-sm ${mutedLinkClasses}`}>
           Back home
@@ -111,6 +114,7 @@ export default function TermsPage() {
           </p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

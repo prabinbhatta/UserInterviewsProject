@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { one } from "@/lib/one";
 import { ReportForm } from "./ReportForm";
 import { BackButton } from "./BackButton";
+import { AppHeader } from "@/components/AppHeader";
 
 export default async function ReportPage({
   searchParams,
@@ -46,7 +47,9 @@ export default async function ReportPage({
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <BackButton />
         <h1 className="mt-2 font-display text-2xl font-medium text-[var(--ink)]">
@@ -60,6 +63,7 @@ export default async function ReportPage({
 
         <ReportForm applicationId={applicationId} studyId={studyId} />
       </div>
-    </div>
+      </div>
+    </>
   );
 }

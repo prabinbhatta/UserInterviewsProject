@@ -5,6 +5,7 @@ import Link from "next/link";
 import { login, type LoginFormState } from "./actions";
 import { Button } from "@/components/ui/Button";
 import { fieldClasses, labelClasses } from "@/components/ui/field";
+import { AppHeader } from "@/components/AppHeader";
 
 const initialState: LoginFormState = { error: null };
 
@@ -12,7 +13,9 @@ export default function LoginPage() {
   const [state, formAction, pending] = useActionState(login, initialState);
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 items-center justify-center bg-[var(--paper)] px-6 py-16">
       <form action={formAction} className="w-full max-w-sm">
         <h1 className="font-display text-3xl font-medium text-[var(--ink)]">
           Log in
@@ -63,6 +66,7 @@ export default function LoginPage() {
           </Link>
         </p>
       </form>
-    </div>
+      </div>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { Button } from "@/components/ui/Button";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { AppHeader } from "@/components/AppHeader";
 
 const formatLabels: Record<string, string> = {
   online: "Online",
@@ -50,7 +51,9 @@ export default async function InvitePage({
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <Card className="w-full max-w-lg">
         <p className="text-sm font-medium text-[var(--ink)]/70">
           You&apos;re invited to join a study
@@ -111,6 +114,7 @@ export default async function InvitePage({
           )}
         </div>
       </Card>
-    </div>
+      </div>
+    </>
   );
 }

@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { AppHeader } from "@/components/AppHeader";
 
 async function getStudy(id: string) {
   const supabase = await createClient();
@@ -57,7 +58,9 @@ export default async function PublicStudyDetailPage({
   };
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-xl">
         <Link href="/browse" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToStudies")}
@@ -95,6 +98,7 @@ export default async function PublicStudyDetailPage({
           </LinkButton>
         </Card>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { mutedLinkClasses } from "@/components/ui/link";
+import { AppHeader } from "@/components/AppHeader";
 
 const TITLE = "Open Studies — PanelMeet";
 const DESCRIPTION =
@@ -36,7 +37,9 @@ export default async function PublicBrowsePage() {
     .order("incentive_amount", { ascending: false });
 
   return (
-    <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
+    <>
+      <AppHeader />
+      <div className="flex flex-1 flex-col items-center bg-[var(--paper)] px-6 py-16">
       <div className="w-full max-w-2xl">
         <Link href="/" className={`text-sm ${mutedLinkClasses}`}>
           {t("backToDashboard")}
@@ -85,6 +88,7 @@ export default async function PublicBrowsePage() {
           </LinkButton>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
