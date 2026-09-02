@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { LinkButton } from "@/components/ui/LinkButton";
-import { VoiceWaveform } from "./VoiceWaveform";
 import { StudyPreviewCard } from "./StudyPreviewCard";
+import { ParticipantQuotes } from "./ParticipantQuotes";
 import { Reveal } from "./Reveal";
 import { JourneyTimeline } from "./JourneyTimeline";
 import { PlatformFlow } from "./PlatformFlow";
@@ -215,8 +215,8 @@ export default function Home() {
             <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/50">
               One more thing — don&apos;t take our word for it
             </p>
-            <div className="mt-3 max-w-md">
-              <VoiceWaveform />
+            <div className="mt-3">
+              <ParticipantQuotes />
             </div>
           </Reveal>
         </div>

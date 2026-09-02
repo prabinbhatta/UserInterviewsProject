@@ -70,16 +70,6 @@ body {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
 }
 
-@keyframes waveform {
-  0%,
-  100% {
-    transform: scaleY(1);
-  }
-  50% {
-    transform: scaleY(0.72);
-  }
-}
-
 @keyframes panelPulse {
   0%,
   100% {

@@ -11,8 +11,6 @@ export const translations = {
       "Post a study, get matched with real people who fit your screener, and pay them directly once it's done — scheduled and verified, without the back-and-forth.",
     ctaResearcher: "I need user research",
     ctaParticipant: "I want to join a study",
-    voiceHoverHint: "Hover to hear a moment from a real session.",
-    voicePlayAriaLabel: "Play a sample moment from a research session",
 
 
     twoPathsTitle: "Two sides. One platform.",
@@ -351,8 +349,6 @@ export const translations = {
       "अध्ययन पोस्ट गर्नुहोस्, तपाईंको स्क्रिनरसँग मेल खाने वास्तविक मानिसहरूसँग म्याच हुनुहोस्, र सकिएपछि सिधै भुक्तानी गर्नुहोस् — तालिकाबद्ध र प्रमाणित, बारम्बार आदानप्रदान बिना।",
     ctaResearcher: "मलाई प्रयोगकर्ता अनुसन्धान चाहिन्छ",
     ctaParticipant: "म एउटा अध्ययनमा सहभागी हुन चाहन्छु",
-    voiceHoverHint: "वास्तविक सत्रको एक क्षण सुन्न होभर गर्नुहोस्।",
-    voicePlayAriaLabel: "अनुसन्धान सत्रको नमूना क्षण बजाउनुहोस्",
 
 
     twoPathsTitle: "दुई पक्ष। एउटै प्लेटफर्म।",
