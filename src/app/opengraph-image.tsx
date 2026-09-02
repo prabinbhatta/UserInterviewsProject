@@ -21,10 +21,12 @@ export default async function Image() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <svg width="34" height="34" viewBox="0 0 96 96" fill="none">
-            <rect x="8" y="19" width="53" height="42" rx="14" fill="#1B2F45" />
-            <path d="M18 61 Q13 71 10 78 Q21 74 31 61 Z" fill="#1B2F45" />
-            <rect x="35" y="35" width="53" height="42" rx="14" fill="#29527C" stroke="#EEF1F4" strokeWidth="3" />
-            <path d="M76 77 Q81 87 84 94 Q73 90 63 77 Z" fill="#29527C" stroke="#EEF1F4" strokeWidth="3" strokeLinejoin="round" />
+            <circle cx="76" cy="39" r="8" fill="#1B2F45" opacity="0.85" />
+            <circle cx="66" cy="72" r="8" fill="#1B2F45" opacity="0.85" />
+            <circle cx="30" cy="72" r="8" fill="#1B2F45" opacity="0.85" />
+            <circle cx="20" cy="39" r="8" fill="#1B2F45" opacity="0.85" />
+            <circle cx="48" cy="18" r="8" fill="#29527C" />
+            <circle cx="48" cy="18" r="13" stroke="#29527C" strokeWidth="2" fill="none" />
           </svg>
           <div
             style={{
@@ -51,7 +53,7 @@ export default async function Image() {
             maxWidth: 900,
           }}
         >
-          Every great insight starts as someone&apos;s voice.
+          Real research participants, screened and ready to meet.
         </div>
         <div
           style={{

@@ -5,17 +5,17 @@ export const translations = {
     brand: "PanelMeet",
     logIn: "Log in",
     heroKicker: "User research · Starting in Nepal",
-    heroTitleLead: "Every great insight starts as",
-    heroTitleEmphasis: "someone's voice.",
+    heroTitleLead: "Real research participants,",
+    heroTitleEmphasis: "screened and ready to meet.",
     heroBody:
-      "Post a study, get matched with real people ready to talk, and pay them directly once it's done — screened, scheduled, and verified, without the back-and-forth.",
+      "Post a study, get matched with real people who fit your screener, and pay them directly once it's done — scheduled and verified, without the back-and-forth.",
     ctaResearcher: "I need user research",
-    ctaParticipant: "I want to share my voice",
+    ctaParticipant: "I want to join a study",
     voiceHoverHint: "Hover to hear a moment from a real session.",
     voicePlayAriaLabel: "Play a sample moment from a research session",
 
 
-    twoPathsTitle: "Two sides. One conversation.",
+    twoPathsTitle: "Two sides. One platform.",
     forCompanies: "For companies",
     forCompaniesTitle: "Teams who build things people use",
     forCompaniesLi1: "A screener that actually disqualifies bad-fit applicants — automatically.",
@@ -63,7 +63,7 @@ export const translations = {
     // Landing page: platform flow diagram
     flowStep1Label: "A company posts a study",
     flowStep2Label: "The platform matches & screens",
-    flowStep3Label: "A participant shares their voice",
+    flowStep3Label: "A participant takes part in the session",
 
     // Signup page
     signupTitle: "Create an account",
@@ -345,17 +345,17 @@ export const translations = {
     brand: "PanelMeet",
     logIn: "लगइन",
     heroKicker: "प्रयोगकर्ता अनुसन्धान · नेपालबाट सुरु",
-    heroTitleLead: "हरेक उत्कृष्ट अन्तर्दृष्टि सुरु हुन्छ",
-    heroTitleEmphasis: "कसैको आवाजबाट।",
+    heroTitleLead: "वास्तविक अनुसन्धान सहभागीहरू,",
+    heroTitleEmphasis: "स्क्रिन गरिएका र भेट्न तयार।",
     heroBody:
-      "अध्ययन पोस्ट गर्नुहोस्, कुरा गर्न तयार वास्तविक मानिसहरूसँग जोडिनुहोस्, र सकिएपछि सिधै भुक्तानी गर्नुहोस् — स्क्रिन, तालिकाबद्ध, र प्रमाणित, बारम्बार आदानप्रदान बिना।",
+      "अध्ययन पोस्ट गर्नुहोस्, तपाईंको स्क्रिनरसँग मेल खाने वास्तविक मानिसहरूसँग म्याच हुनुहोस्, र सकिएपछि सिधै भुक्तानी गर्नुहोस् — तालिकाबद्ध र प्रमाणित, बारम्बार आदानप्रदान बिना।",
     ctaResearcher: "मलाई प्रयोगकर्ता अनुसन्धान चाहिन्छ",
-    ctaParticipant: "म मेरो आवाज साझा गर्न चाहन्छु",
+    ctaParticipant: "म एउटा अध्ययनमा सहभागी हुन चाहन्छु",
     voiceHoverHint: "वास्तविक सत्रको एक क्षण सुन्न होभर गर्नुहोस्।",
     voicePlayAriaLabel: "अनुसन्धान सत्रको नमूना क्षण बजाउनुहोस्",
 
 
-    twoPathsTitle: "दुई पक्ष। एउटै कुराकानी।",
+    twoPathsTitle: "दुई पक्ष। एउटै प्लेटफर्म।",
     forCompanies: "कम्पनीहरूका लागि",
     forCompaniesTitle: "मानिसहरूले प्रयोग गर्ने कुरा बनाउने टिमहरू",
     forCompaniesLi1: "स्क्रिनरले नमिल्ने आवेदकहरूलाई स्वतः अस्वीकार गर्छ।",
@@ -403,7 +403,7 @@ export const translations = {
     // Landing page: platform flow diagram
     flowStep1Label: "कम्पनीले अध्ययन पोस्ट गर्छ",
     flowStep2Label: "प्लेटफर्मले मिलान र स्क्रिन गर्छ",
-    flowStep3Label: "सहभागीले आफ्नो आवाज साझा गर्छ",
+    flowStep3Label: "सहभागीले सत्रमा भाग लिन्छ",
 
     // Signup page
     signupTitle: "खाता बनाउनुहोस्",

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { LinkButton } from "@/components/ui/LinkButton";
 import { VoiceWaveform } from "./VoiceWaveform";
+import { StudyPreviewCard } from "./StudyPreviewCard";
 import { Reveal } from "./Reveal";
 import { JourneyTimeline } from "./JourneyTimeline";
 import { PlatformFlow } from "./PlatformFlow";
@@ -61,7 +62,7 @@ export default function Home() {
           </div>
 
           <div className="motion-safe:animate-[riseIn_0.9s_ease-out]">
-            <VoiceWaveform />
+            <StudyPreviewCard />
           </div>
         </div>
       </section>
@@ -209,6 +210,15 @@ export default function Home() {
               </p>
             </Reveal>
           </div>
+
+          <Reveal delay={340} className="mt-10">
+            <p className="font-mono-utility text-xs uppercase tracking-widest text-[var(--ink)]/50">
+              One more thing — don&apos;t take our word for it
+            </p>
+            <div className="mt-3 max-w-md">
+              <VoiceWaveform />
+            </div>
+          </Reveal>
         </div>
       </section>
 
