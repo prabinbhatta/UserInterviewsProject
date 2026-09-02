@@ -4,6 +4,26 @@ Running list of scoped-but-not-yet-built work, grouped by priority. Update as it
 
 ## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
+### ~~Landing page read as a voice/translation product~~ — shipped 2026-08-30
+Real external signal: a designer shown panelmeet.com cold thought it was
+a speech/voice translation product. Cause was the visual stack, not the
+copy — a two-speech-bubble logo (chat/translate app convention) next to
+a real audio waveform hero visual, under a headline centered on "voice."
+
+Logo changed again (third revision) to "Panel Ring" — five dots in a
+circle, one ringed as the match — zero chat/audio connotation, verified
+at true 32x32 favicon size. Hero visual swapped from the audio waveform
+to a new `StudyPreviewCard` (title, format/incentive, screener
+checklist, applicant count) — the actual product, shown literally
+instead of implied. Headline and both CTAs rewritten to drop "voice" as
+the central image; `VoiceWaveform` kept (it's honest, real proof) but
+relocated into the trust section, clearly labeled as one piece of
+supporting evidence rather than the first thing anyone sees. All copy
+changes made in both English and Nepali.
+
+Design system reference doc updated in the same pass this time, unlike
+the last two mark changes — logo section, color-role callouts, and the
+sample headline all reflect current state.
 ### ~~Logo mark: Conversation~~ — shipped 2026-08-30
 Explored 10 distinct concepts (video-call ring, app-icon tile, speech
 bubbles, waveform panel, P monogram, round table, converging arrows,
