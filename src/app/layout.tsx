@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Manrope, IBM_Plex_Mono } from "next/font/google";
 import { cookies } from "next/headers";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { LanguageProvider } from "./LanguageProvider";
 import { PageviewTracker } from "./PageviewTracker";
@@ -25,6 +26,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const TITLE = "PanelMeet";
 const DESCRIPTION = "PanelMeet connects Nepali companies with research participants.";
 
@@ -60,6 +62,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <PageviewTracker />
         <LanguageProvider initialLang={initialLang}>{children}</LanguageProvider>
       </body>
+      {GA_MEASUREMENT_ID && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
     </html>
   );
 }

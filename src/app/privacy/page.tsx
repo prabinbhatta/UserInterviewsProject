@@ -49,6 +49,13 @@ export default function PrivacyPage() {
                 Basic activity data (which studies you applied to, session
                 scheduling, incentive status) needed to operate the platform.
               </li>
+              <li>
+                Standard web analytics via Google Analytics (pages visited,
+                approximate location, device/browser type) to understand how
+                the site is used. This is separate from the account and study
+                data above, and Google processes it under its own privacy
+                terms.
+              </li>
             </ul>
           </section>
 
