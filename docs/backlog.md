@@ -4,6 +4,34 @@ Running list of scoped-but-not-yet-built work, grouped by priority. Update as it
 
 ## P0 — Launch blockers (trust, legal, or basic function real users will hit immediately)
 
+### ~~Production error monitoring~~ — shipped 2026-09-05
+Wired up `@sentry/nextjs` (server, edge, and client instrumentation via
+`src/instrumentation.ts`/`src/instrumentation-client.ts`, plus
+`next.config.ts` wrapped in `withSentryConfig`) and a `global-error.tsx`
+that reports uncaught render errors before showing a branded fallback
+instead of a blank screen. Entirely inert until `NEXT_PUBLIC_SENTRY_DSN`
+is set — same "leave unset to disable" pattern as GA4 — so it ships with
+zero cost or risk until a Sentry project actually exists. Optional
+`SENTRY_ORG`/`SENTRY_PROJECT`/`SENTRY_AUTH_TOKEN` enable source-map
+upload for readable prod stack traces; skippable, error capture works
+without them. Verified with a full production build (`next build`) —
+compiles clean, no config-wrapping issues. Follow-up, founder-side:
+create the Sentry project and set the DSN in Vercel before public launch.
+
+### ~~Public FAQ page~~ — shipped 2026-09-05
+New `/faq`, matching the existing `/terms`/`/privacy` static-page
+convention (same header, back-home link, English-only — consistent with
+those pages not being part of the bilingual i18n system). Five grouped,
+accordion-style (native `<details>`) sections — General, Participants,
+Researchers, Trust & Safety, Account/Technical — written from the
+platform's actual current behavior (off-platform incentives, the
+report/dispute flow, waitlists, no-shows, CSV/search invites) rather than
+generic boilerplate. Linked from the landing page footer (new `faqLink`
+i18n key, EN/नेपाली) alongside Terms/Privacy. No support email exists
+anywhere in the codebase, so it reuses the one real contact channel
+(+977-9715633635) already used on the legal pages, with an honest note
+that replies aren't instant.
+
 ### ~~Landing page read as a voice/translation product~~ — shipped 2026-08-30
 Real external signal: a designer shown panelmeet.com cold thought it was
 a speech/voice translation product. Cause was the visual stack, not the

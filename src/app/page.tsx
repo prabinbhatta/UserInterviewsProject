@@ -229,6 +229,9 @@ export default function Home() {
             {t("footerTagline")}
           </p>
           <div className="flex items-center gap-4 text-sm text-[var(--ink)]/60">
+            <Link href="/faq" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--accent)]">
+              {t("faqLink")}
+            </Link>
             <Link href="/terms" className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--accent)]">
               {t("termsLink")}
             </Link>

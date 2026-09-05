@@ -118,6 +118,7 @@ export const translations = {
 
     termsLink: "Terms of Service",
     privacyLink: "Privacy Policy",
+    faqLink: "FAQ",
     agreeToTerms: "By signing up, you agree to our",
     and: "and",
 
@@ -456,6 +457,7 @@ export const translations = {
 
     termsLink: "सेवाका सर्तहरू",
     privacyLink: "गोपनीयता नीति",
+    faqLink: "बारम्बार सोधिने प्रश्न",
     agreeToTerms: "साइन अप गरेर, तपाईं हाम्रो",
     and: "र",
 
